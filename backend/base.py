@@ -86,9 +86,9 @@ def dashboard():
         db.session.add(new_user_search)
         db.session.commit()
 
-    if targeted_name != "":
-        with open('{0}.json'.format(targeted_name), 'w') as json_file:
-            json.dump(result_dict, json_file)
+    # if targeted_name != "":
+    #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
+    #         json.dump(result_dict, json_file)
 
     return json.dumps(result_dict)
     # return render_template('dashboard.html', result=result_dict, targeted_name=targeted_name)
@@ -119,15 +119,8 @@ def popularSearchesInfo():
         all()
 
     if results:
-        # results.sort(key=lambda x: x[1])
-        # print(results)
-        # return {}
-        return {result[0]: result[1] for result in results}
-        # print(results_dict)
-        # return dict(sorted(results_dict.items(), key=lambda item: item[1], reverse=True))
-        # return dict(sorted(results_dict.items(), key=lambda item: item[1]))
-        # return results_dict
-        # return {result[0]: result[1] for result in sorted(results, key=lambda x: x[1])}
-# [('Noa', 33), ('Sophia', 23), ('Noam', 10), ('Mike', 10), ('Tom', 7)]
-    return {} 
+        # return {result[0]: result[1] for result in results}
+        return json.dumps([(result[0], result[1]) for result in results])
+
+    return {}
         
