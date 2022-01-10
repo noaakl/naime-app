@@ -1,12 +1,7 @@
-# # import json
-# # from flask import Flask, request
 from PhoneticAlgorithmsCodes import PhoneticAlgorithmsCodes
 from flask_application import FlaskApplication
 import jellyfish
 import phonetics
-# from sqlalchemy import or_
-
-# # from flask_sqlalchemy import SQLAlchemy
 
 from datetime import datetime
 flask_app = FlaskApplication()

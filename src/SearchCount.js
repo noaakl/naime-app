@@ -2,16 +2,11 @@ import Styles from './App.module.scss'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react'
 import axios from "axios";
 
 const SearchCount = ({ searchedName }) => {
     const [count, setCount] = useState(0);
-    // const [name, setName] = useState(searchedName);
-    // const [target, setTarget] = useState(null);
-    // const ref = useRef(null);
-
 
     const getNameInfo = (searchVal) => {
         axios({
@@ -19,7 +14,6 @@ const SearchCount = ({ searchedName }) => {
           url: `/searchList?name=${searchVal}`
         })
         .then((response) => {
-            // setName(searchVal)
             setCount(response.data.count)
         })}
 
@@ -31,12 +25,9 @@ const SearchCount = ({ searchedName }) => {
                 placement={"right"}
                 overlay={
                     <Popover id={`popover-info`}>
-                        {/* <PopoverHeader/> */}
-                         {/* bsPrefix={Styles.popover} as="h3">{`The name '${searchedName}' was searched ${count} times.`}</PopoverHeader> */}
                         <PopoverBody bsPrefix={Styles.popover}>
                             The name <strong>'{searchedName}'</strong>{'\n'} was searched <strong>{count}</strong> times
                         </PopoverBody>
-                        {/* <PopoverHeader/> */}
                     </Popover>
                 }
             >
