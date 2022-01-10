@@ -1,3 +1,5 @@
+![logo](https://github.com/noaakl/naime-app/blob/main/src/images/nAIme.png)
+
 # nAIme
 Our nAime website delivers the SpokenName2Vec and GRAFT novelty algorithms along with the Jellyfish package algorithms.
 Using these algorithms you will be able to retrieve alternative and similar names for a given name query.
@@ -24,6 +26,12 @@ the DB file can not be added to git due to size limitation.
 ### Use-cases
 
 - Search for alternative names to a given name query
+
+##
+
+### Development
+
+nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](https://flask.palletsprojects.com/en/2.0.x/) on the server side, and designed using [Bootstrap](https://react-bootstrap.github.io/) components.
 
 ##
 
