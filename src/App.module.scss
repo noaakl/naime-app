@@ -95,13 +95,24 @@ body:before {
         float: left;
         color: white;
         cursor: pointer;
+		font-size: 22px;
 
         h2 {
             list-style: none;
             position: relative;
             float: left;
         }
+
+		.sort {
+			font-size: 10;
+		}
+
     }
+	// .result {
+	// 	font-size: 17px;
+	// 	list-style: none;
+	// }
+
 
     .info_icon{
         margin: 40px 0 25px;
