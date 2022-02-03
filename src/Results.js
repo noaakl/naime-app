@@ -2,27 +2,35 @@ import React, { useState } from "react";
 import Styles from './App.module.scss'
 import SearchCount from './SearchCount'
 import { Dropdown } from "react-bootstrap";
+import { HandThumbsUp } from 'react-bootstrap-icons';
+import Button from 'react-bootstrap/Button'
 
 const Results = ({ searchedName, algorithemsData }) => {
-    console.log(algorithemsData)
+    // console.log(algorithemsData)
     const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
     const [sortValue, setSortValue] = useState("None")
     const [isAZData, setAZData] = useState(false)
-    if (isAZData) {
-        Object.keys(algorithemsData).forEach(algorithem => {
-            console.log(algorithemsData[algorithem])
+    Object.keys(algorithemsData).forEach(algorithem => {
+        // console.log(algorithemsData[algorithem])
+        if (isAZData) {
             algorithemsData[algorithem].sort(function(a, b) {
-                return a.rank > b.rank;
-              })
-            algorithemsData[algorithem].forEach(data => {
-                // console.log(data.candidate)
-            })
+                return a > b;
+                })
+        } else {
+            algorithemsData[algorithem].sort(function(a, b) {
+                return a.usr_rank > b.usr_rank;
+                })
+        }
         });
+
+        // algorithemsData[algorithem].forEach(data => {
+        //     // console.log(data.candidate)
+        // })
         // algorithemsData.map((algorithem) => {
         //     return algorithemsData[algorithem].map((name) => {
 
         //     })})
-    }
+    // }
 
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
@@ -64,7 +72,9 @@ const Results = ({ searchedName, algorithemsData }) => {
                         </li>
                         {algorithemsData[algorithem].map((name) => {
                             return (
-                                <span key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}</span>
+                                <span key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
+                                <Button><HandThumbsUp/></Button>
+                                </span>
                             )
                         })}
                     </ul>)

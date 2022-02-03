@@ -37,6 +37,7 @@ class FlaskApplication:
     def convert_name_suggestion_into_spoken_name_2_vec_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.candidate
+        candidate_dict['user_rank'] = name_suggestion.user_rank
         candidate_dict['edit_distance'] = name_suggestion.edit_distance
         candidate_dict['distance'] = name_suggestion.distance
         candidate_dict['rank'] = name_suggestion.rank
@@ -55,8 +56,9 @@ class FlaskApplication:
 
     def convert_name_suggestion_into_soundex_result(self, name_suggestion):
         candidate_dict = {}
+        print(name_suggestion)
         candidate_dict['candidate'] = name_suggestion.name
-        # candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['soundex'] = name_suggestion.soundex
         return candidate_dict
@@ -64,7 +66,7 @@ class FlaskApplication:
     def convert_name_suggestion_into_metaphone_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.name
-        # candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['metaphone'] = name_suggestion.metaphone
         return candidate_dict
@@ -72,7 +74,7 @@ class FlaskApplication:
     def convert_name_suggestion_into_double_metaphone_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.name
-        # candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['double_metaphone_primary'] = name_suggestion.double_metaphone_primary
         candidate_dict['double_metaphone_secondary'] = name_suggestion.double_metaphone_secondary
@@ -81,7 +83,7 @@ class FlaskApplication:
     def convert_name_suggestion_into_nysiis_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.name
-        # candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['nysiis'] = name_suggestion.nysiis
         return candidate_dict
@@ -89,7 +91,7 @@ class FlaskApplication:
     def convert_name_suggestion_into_match_rating_codex_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.name
-        # candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['match_rating_codex'] = name_suggestion.match_rating_codex
         return candidate_dict

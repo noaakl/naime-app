@@ -52,8 +52,8 @@ const Home = () => {
 
     return (
         <>
-        <div className={Styles.bar}>
-            <Button onClick={handleAbout} className={Styles.about_button} style={{ border: "#000" }} variant="Success"><strong>About</strong></Button>
+            <div className={Styles.bar}>
+                <Button onClick={handleAbout} className={Styles.about_button} style={{ border: "#000" }} variant="Success"><strong>About</strong></Button>
             </div>
             <div className={Styles.container_fluid}>
                 <div className={Styles.page_title}>
@@ -96,9 +96,9 @@ const Home = () => {
                         <Modal.Title>nAIme</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    Our nAime website delivers the SpokenName2Vec and GRAFT novelty algorithms along with the Jellyfish package algorithms.
-Using these algorithms you will be able to retrieve alternative and similar names for a given name query.
-In this nAime website you will also see different statistics on name searches such as all time top names searched and how many searches included your very own query. You will be able to rank the quality of the retrieved names, sort and filter the results to your liking. Enjoy our website and happy searching!
+                        Our nAime website delivers the SpokenName2Vec and GRAFT novelty algorithms along with the Jellyfish package algorithms.
+                        Using these algorithms you will be able to retrieve alternative and similar names for a given name query.
+                        In this nAime website you will also see different statistics on name searches such as all time top names searched and how many searches included your very own query. You will be able to rank the quality of the retrieved names, sort and filter the results to your liking. Enjoy our website and happy searching!
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleAbout}>

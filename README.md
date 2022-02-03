@@ -10,9 +10,8 @@ The nAime website is part of our Name Search Final Project.
 For more information about this project [Click Here](https://github.com/noaakl/Final_Project_Names)
 
 ### Run the Project:
-- run `yarn run start-backend`
-- run `cd naime-app`
-- run `yarn start`
+- on one terminal run `cd naime-app && yarn run start-backend`
+- on a second trminal run `cd naime-app && yarn start`
 
 ##
 
