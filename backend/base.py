@@ -5,21 +5,10 @@ from sqlalchemy import func
 from utils import spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
 from UserSearch import UserSearch
 from NameSuggestion import NameSuggestion
-# from flask_sqlalchemy import SQLAlchemy
 
 app = FlaskApplication()
 api = app.get_app()
 db = app.get_db()
-
-
-# @api.route('/profile')
-# def my_profile():
-#     response_body = {
-#         "name": "Nagato",
-#         "about" :"Hello! I'm a full stack developer that loves python and javascript"
-#     }
-
-#     return response_body
 
 @api.route('/nameList', methods=['GET'])
 def dashboard():

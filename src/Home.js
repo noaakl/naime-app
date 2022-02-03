@@ -1,18 +1,14 @@
 import { useState } from 'react'
 import axios from "axios";
-// import './App.css';
 import Styles from "./App.module.scss";
 import { Button } from 'react-bootstrap';
 import Results from './Results';
 import PopularNames from './PopularNames';
-import Menu from './Menu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal'
 
 const Home = () => {
 
-    // new line start
-    // const [profileData, setProfileData] = useState(null)
     const [nameToSearch, setNameToSearch] = useState("")
     const [algorithemsData, setAlgorithemsData] = useState({})
     const [searchedName, setSearchedName] = useState("")
@@ -56,9 +52,7 @@ const Home = () => {
 
     return (
         <>
-            {/* <Menu/> */}
-            {/* <Button onClick={handleAbout} className={Styles.about_button} style={{ border: "#000" }} variant="Success">About</Button> */}
-            <div className={Styles.bar}>
+        <div className={Styles.bar}>
             <Button onClick={handleAbout} className={Styles.about_button} style={{ border: "#000" }} variant="Success"><strong>About</strong></Button>
             </div>
             <div className={Styles.container_fluid}>
@@ -71,7 +65,6 @@ const Home = () => {
                         <p>Suggest synonyms for the name...</p>
                         <div className={Styles.top}>
                             <div className={Styles.top}>
-                                {/* <PopularNames /> */}
                             </div>
                         </div>
                     </div>
@@ -102,7 +95,11 @@ const Home = () => {
                     <Modal.Header closeButton>
                         <Modal.Title>nAIme</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>
+                    Our nAime website delivers the SpokenName2Vec and GRAFT novelty algorithms along with the Jellyfish package algorithms.
+Using these algorithms you will be able to retrieve alternative and similar names for a given name query.
+In this nAime website you will also see different statistics on name searches such as all time top names searched and how many searches included your very own query. You will be able to rank the quality of the retrieved names, sort and filter the results to your liking. Enjoy our website and happy searching!
+                    </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleAbout}>
                             Close
@@ -113,35 +110,5 @@ const Home = () => {
         </>
     )
 }
-
-// const About = () => {
-//     const [show, setShow] = useState(false);
-
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
-
-//     return (
-//         <>
-//             <Button variant="primary" onClick={handleShow}>
-//                 Launch demo modal
-//             </Button>
-
-//             <Modal show={show} onHide={handleClose}>
-//                 <Modal.Header closeButton>
-//                     <Modal.Title>Modal heading</Modal.Title>
-//                 </Modal.Header>
-//                 <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-//                 <Modal.Footer>
-//                     <Button variant="secondary" onClick={handleClose}>
-//                         Close
-//                     </Button>
-//                     <Button variant="primary" onClick={handleClose}>
-//                         Save Changes
-//                     </Button>
-//                 </Modal.Footer>
-//             </Modal>
-//         </>
-//     )
-// }
 
 export default Home;
