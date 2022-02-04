@@ -5,6 +5,7 @@ from sqlalchemy import func
 from utils import spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
 from UserSearch import UserSearch
 from NameSuggestion import NameSuggestion
+from AlgorithemsConstants import algorithems
 
 app = FlaskApplication()
 api = app.get_app()
@@ -112,4 +113,22 @@ def popularSearchesInfo():
         return json.dumps([(result[0], result[1]) for result in results])
 
     return {}
+
+@api.route('/rankResults', methods=['PUT'])
+def rankResults():
+    if not request.json:
+        abort(400)
+    rankData = request.json
+    rankData['user_rank'] = rankData['user_rank'] + rankData['add_rank']
+    name = {
+        "selected_name": rankData['selected_name'],
+        "type_name": algorithems[rankData['type_name']],
+        "language": rankData['language'],
+        "candidate": rankData['candidate'],
+        }
+    name_suggestion = db.session.query(NameSuggestion).get(name)
+    name_suggestion.user_rank = rankData['user_rank']
+    db.session.commit()
+    name['user_rank'] = rankData['user_rank']
+    return name
         

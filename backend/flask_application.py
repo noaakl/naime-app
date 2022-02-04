@@ -42,6 +42,7 @@ class FlaskApplication:
         candidate_dict['distance'] = name_suggestion.distance
         candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['language'] = name_suggestion.language
+        candidate_dict['add_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_family_tree_result(self, name_suggestion):
@@ -52,6 +53,7 @@ class FlaskApplication:
         candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['language'] = name_suggestion.language
         candidate_dict['type_name'] = name_suggestion.type_name
+        candidate_dict['add_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_soundex_result(self, name_suggestion):
@@ -61,6 +63,7 @@ class FlaskApplication:
         candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['soundex'] = name_suggestion.soundex
+        # candidate_dict['add_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_metaphone_result(self, name_suggestion):
@@ -69,6 +72,7 @@ class FlaskApplication:
         candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['metaphone'] = name_suggestion.metaphone
+        # candidate_dict['add_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_double_metaphone_result(self, name_suggestion):
@@ -78,6 +82,7 @@ class FlaskApplication:
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['double_metaphone_primary'] = name_suggestion.double_metaphone_primary
         candidate_dict['double_metaphone_secondary'] = name_suggestion.double_metaphone_secondary
+        # candidate_dict['add_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_nysiis_result(self, name_suggestion):
@@ -86,6 +91,7 @@ class FlaskApplication:
         candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['nysiis'] = name_suggestion.nysiis
+        # candidate_dict['add_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_match_rating_codex_result(self, name_suggestion):
@@ -94,4 +100,5 @@ class FlaskApplication:
         candidate_dict['user_rank'] = name_suggestion.user_rank
         # candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['match_rating_codex'] = name_suggestion.match_rating_codex
+        # candidate_dict['add_rank'] = 0
         return candidate_dict

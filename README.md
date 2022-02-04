@@ -10,8 +10,19 @@ The nAime website is part of our Name Search Final Project.
 For more information about this project [Click Here](https://github.com/noaakl/Final_Project_Names)
 
 ### Run the Project:
-- on one terminal run `cd naime-app && yarn run start-backend`
-- on a second trminal run `cd naime-app && yarn start`
+- cd backend
+ - For mac/unix users:
+    - create virtual environment:
+        - run `python3 -m venv env`
+        - run `source env/bin/activate`
+- For windows users:
+    - create virtual environment:
+        - run `py -m venv env`
+        - run `.\env\Scripts\activate`
+    - change the `start-backend` script in package.json to `"start-backend": "cd backend && env/Scripts/flask run"`
+- pip install -r requirements.txt
+- on one terminal on the base root run `yarn run start-backend`
+- on a second trminal n the base root run `yarn start`
 
 ##
 
