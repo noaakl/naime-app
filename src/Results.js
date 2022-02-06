@@ -15,7 +15,6 @@ const Results = ({ searchedName, algorithemsData }) => {
     const [isAZData, setAZData] = useState(true)
 
     const sortFunc = (a, b) => {
-        console.log(a);
         return isAZData ? a.candidate.localeCompare(b.candidate) : b.user_rank - a.user_rank
     }
 
@@ -83,8 +82,8 @@ const Results = ({ searchedName, algorithemsData }) => {
                             <h3>{algorithem}</h3>
                         </li>
                         {algorithemsData[algorithem].map((name) => {
-                            const showLikeRank = algorithem in algorithems && name.add_rank !== -1
-                            const showDislikeRank = algorithem in algorithems && name.add_rank !== 1
+                            const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
+                            const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                             return (
                                 <span key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                     {showLikeRank && <Button disabled={name.add_rank !== 0} variant="text" className={Styles.rank_button}

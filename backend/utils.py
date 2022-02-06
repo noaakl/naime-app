@@ -85,7 +85,6 @@ def family_trees_suggest_names(selected_name, name_suggestions, result_dict):
 def soundex_suggest_names(selected_name, result_dict):
     result_dict['soundex'] = []
     selected_name_soundex = jellyfish.soundex(selected_name)
-
     name_suggestions = db.session.query(PhoneticAlgorithmsCodes).filter(
         PhoneticAlgorithmsCodes.soundex == selected_name_soundex).limit(10).all()
 

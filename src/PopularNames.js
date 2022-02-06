@@ -13,14 +13,11 @@ const PopularNames = ({ searchedName }) => {
         })
         .then((response) => {
             if (response.data!=={}) {
-                console.log((response.data))
                 const data = {}
                 for(const i in response.data) {
                     const nameData = response.data[i]
-                    console.log(nameData)
                     data[nameData[0]] = nameData[1];
                 }
-                console.log((data))
                 setTopSearches(data)
             }
         })}
