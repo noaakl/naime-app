@@ -31,7 +31,7 @@ const PopularNames = ({ searchedName }) => {
 <Accordion bsPrefix={Styles.info_accordion} defaultActiveKey="0">
   <Accordion.Item>
     <Accordion.Header onClick={() => getPopularNames(searchedName)}>
-        <div className={Styles.info_accordion_title}>
+        <div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;More Info
         </div>
         </Accordion.Header>

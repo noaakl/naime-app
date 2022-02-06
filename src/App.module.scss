@@ -93,12 +93,14 @@ body:before {
         float: left;
         color: white;
         cursor: pointer;
+		font-size: 22px;
 
         h2 {
             list-style: none;
             position: relative;
             float: left;
         }
+
     }
 
     .info_icon{
@@ -107,6 +109,11 @@ body:before {
         position: relative;
         margin-left: 15px;
     }}
+
+	.sort {
+		opacity: 0.6;
+	}
+
 
 .page_title {
     text-align: center;
@@ -183,7 +190,7 @@ body:before {
     width: 100%;
     margin-bottom: 15px;
     h3 {
-        font-size: 15px;
+        font-size: 17px;
         margin-bottom: 15px;
         text-decoration: underline;
     }
@@ -209,10 +216,14 @@ body:before {
     // }
     span {
         display: block;
-        font-size: 12px;
+        font-size: 16px;
         margin-bottom: 5px;
-        padding-left: 15px;
+        padding-left: 20px;
         position: relative;
+
+		// .rank_button {
+		// 	padding-left: 20px;	
+		// }
     }
     span:before {
         content: "";
@@ -226,6 +237,12 @@ body:before {
         height: 0px;
         background: #fff;
     }
+
+	.rank_button {
+		margin-left: 5px;
+		margin-right: -20px;
+		color: white;
+	}
 }
 
 .ui-helper-hidden {
