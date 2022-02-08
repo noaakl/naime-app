@@ -35,12 +35,9 @@ const Results = ({ searchedName, algorithemsData }) => {
                 rank: name.rank,
                 user_rank: name.user_rank
             }
-            axios.put('/rankResults', rankData).then(function (response) {
-                console.log(response);
-            })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            axios.put('/rankResults', rankData).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 
@@ -55,7 +52,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                 {/* <div > */}
 
                 <Dropdown>
-                <strong>sort by </strong> <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
+                    <strong>sort by &nbsp;</strong> <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
                         {sortValue}
                     </Dropdown.Toggle>
 
