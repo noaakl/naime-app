@@ -3,6 +3,9 @@ import axios from "axios";
 import { algorithems } from './AlgorithemsConstants'
 import Styles from './App.module.scss'
 import SearchCount from './SearchCount'
+import {Card} from 'react-bootstrap'
+import {Row} from 'react-bootstrap'
+import {Col} from 'react-bootstrap'
 import { Dropdown } from "react-bootstrap";
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button'
@@ -72,12 +75,15 @@ const Results = ({ searchedName, algorithemsData }) => {
                 </Dropdown>
                 {/* </div> */}
             </div>
+            <Row md={4} className="g-4" style={{margin:0, padding:0}}>
             {Object.keys(algorithemsData).map((algorithem) => {
                 return (
-                    <ul key={algorithem}>
-                        <li id={algorithem}>
-                            <h3>{algorithem}</h3>
-                        </li>
+                    <Col key={algorithem} style={{margin:0, padding:0}}>
+                    <Card id={algorithem} className="shadow-sm p-3 mb-3 bg-white rounded"
+                    style={{height:'300px', margin:5, padding:0}}
+                    >
+                        <Card.Body style={{margin:0, padding:0}}>
+                            <h3 style={{textAlign:"center"}}>{algorithem}</h3>
                         {algorithemsData[algorithem].map((name) => {
                             const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
                             const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
@@ -89,10 +95,10 @@ const Results = ({ searchedName, algorithemsData }) => {
                                         onClick={() => { rankResults(name, algorithem, -1) }}><HandThumbsDownFill /></Button>}
                                 </span>
                             )
-                        })}
-                    </ul>)
+                        })}</Card.Body>
+                    </Card></Col>)
             })}
-
+            </Row>
         </div>
         : <div className={Styles.result_wrapper}>
             <h2>No Synonyms Suggested</h2>

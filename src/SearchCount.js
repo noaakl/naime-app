@@ -4,6 +4,7 @@ import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
 import { useState } from 'react'
 import axios from "axios";
+import { BsFillChatLeftDotsFill } from "react-icons/bs";
 
 const SearchCount = ({ searchedName }) => {
     const [count, setCount] = useState(0);
@@ -19,12 +20,12 @@ const SearchCount = ({ searchedName }) => {
 
     return (
         <>
-            <OverlayTrigger
+            <OverlayTrigger 
                 trigger="click"
                 key="info"
                 placement={"right"}
                 overlay={
-                    <Popover id={`popover-info`}>
+                    <Popover id={`popover-info`} >
                         <PopoverBody bsPrefix={Styles.popover}>
                             The name <strong>'{searchedName}'</strong>{'\n'} was searched <strong>{count}</strong> times
                         </PopoverBody>
