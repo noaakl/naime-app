@@ -4,7 +4,6 @@ import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
 import { useState } from 'react'
 import axios from "axios";
-import { BsFillChatLeftDotsFill } from "react-icons/bs";
 
 const SearchCount = ({ searchedName }) => {
     const [count, setCount] = useState(0);
