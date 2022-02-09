@@ -37,7 +37,9 @@ class FlaskApplication:
     def convert_name_suggestion_into_spoken_name_2_vec_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.candidate
-        candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.like + name_suggestion.dislike
+        candidate_dict['like'] = name_suggestion.like
+        candidate_dict['dislike'] = name_suggestion.dislike
         candidate_dict['edit_distance'] = name_suggestion.edit_distance
         candidate_dict['distance'] = name_suggestion.distance
         candidate_dict['rank'] = name_suggestion.rank
@@ -48,7 +50,9 @@ class FlaskApplication:
     def convert_name_suggestion_into_family_tree_result(self, name_suggestion):
         candidate_dict = {}
         candidate_dict['candidate'] = name_suggestion.candidate
-        candidate_dict['user_rank'] = name_suggestion.user_rank
+        candidate_dict['user_rank'] = name_suggestion.like + name_suggestion.dislike
+        candidate_dict['like'] = name_suggestion.like
+        candidate_dict['dislike'] = name_suggestion.dislike
         candidate_dict['edit_distance'] = name_suggestion.edit_distance
         candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['language'] = name_suggestion.language

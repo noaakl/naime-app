@@ -259,6 +259,13 @@ body:before {
 		margin-right: -20px;
 		color: black;
 	}
+
+	.disable_rank_button {
+		margin-left: 5px;
+		margin-right: -20px;
+		color: rgb(109, 108, 108);
+		cursor: text;
+	}
 }
 
 .ui-helper-hidden {

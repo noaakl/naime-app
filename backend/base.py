@@ -119,7 +119,6 @@ def rankResults():
     if not request.json:
         abort(400)
     rankData = request.json
-    rankData['user_rank'] = rankData['user_rank'] + rankData['add_rank']
     name = {
         "selected_name": rankData['selected_name'],
         "type_name": algorithems[rankData['type_name']],
@@ -127,8 +126,10 @@ def rankResults():
         "candidate": rankData['candidate'],
         }
     name_suggestion = db.session.query(NameSuggestion).get(name)
-    name_suggestion.user_rank = rankData['user_rank']
+    if rankData['add_rank'] > 0:
+        name_suggestion.like += 1
+    else:
+        name_suggestion.dislike -= 1
     db.session.commit()
-    name['user_rank'] = rankData['user_rank']
     return name
         
