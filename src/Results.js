@@ -57,31 +57,32 @@ const Results = ({ searchedName, algorithemsData }) => {
                         {/* <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
-                        {/*<br/><br/>*/}
                 </Col>
-                <Col style={{marginTop:5, marginLeft:-270}}>
-                <Dropdown>
-                    <strong>filter by  </strong><FunnelFill style={{ marginRight:"15px", marginLeft:"5px" }}/>
-                    <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
-                        {sortValue}
 
-                    </Dropdown.Toggle>
+                {/*<Col style={{marginTop:5, marginLeft:-270}}>*/}
+                {/*<Dropdown>*/}
+                {/*    <strong>filter by  </strong><FunnelFill style={{ marginRight:"15px", marginLeft:"5px" }}/>*/}
+                {/*    <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">*/}
+                {/*        {sortValue}*/}
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setAZData(false)
-                                setSortValue("User Rank")
-                            }}>
-                            User Rank</Dropdown.Item>
-                        <Dropdown.Item onClick={() => {
-                            setAZData(true)
-                            setSortValue("Default A-Z")
-                        }}>Default A-Z</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                </Col>
+                {/*    </Dropdown.Toggle>*/}
+
+                {/*    <Dropdown.Menu>*/}
+                {/*        <Dropdown.Item*/}
+                {/*            onClick={() => {*/}
+                {/*                setAZData(false)*/}
+                {/*                setSortValue("User Rank")*/}
+                {/*            }}>*/}
+                {/*            User Rank</Dropdown.Item>*/}
+                {/*        <Dropdown.Item onClick={() => {*/}
+                {/*            setAZData(true)*/}
+                {/*            setSortValue("Default A-Z")*/}
+                {/*        }}>Default A-Z</Dropdown.Item>*/}
+                {/*        <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item>*/}
+                {/*    </Dropdown.Menu>*/}
+                {/*</Dropdown>*/}
+                {/*</Col>*/}
+
                 {/*<Col style={{margin:5}}>*/}
                 {/*<strong>more info</strong><SearchCount searchedName={searchedName} />*/}
                 {/*</Col>*/}

@@ -125,6 +125,10 @@ body:before {
         position: relative;
         margin-left: 15px;
 		vertical-align: middle;
+		color: gray;
+		:hover{
+			color: rgb(63, 63, 63);
+		}
     }}
 
 	.sort {
