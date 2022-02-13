@@ -19,9 +19,7 @@
     // font-weight: 600;
 	text-decoration: underline;
 }
-.about_text {
-	text-align: center;
-}
+
 .about_title {
 	text-align: center;
 }
@@ -53,7 +51,7 @@ body{
 }
 
 body:before {
-    background: rgba(149, 160, 143, 0.788);
+    background: rgba(158, 160, 143, 0.788);
     position: fixed;
     content: "";
     width: 100%;
@@ -93,6 +91,17 @@ body:before {
 	margin: 5px;
 }
 
+.result{
+	vertical-align: bottom;
+}
+
+.resultcol{
+	text-align: left;
+	margin-left: 8px;
+}
+
+
+
 .result_wrapper{
     margin: 40px 0 50px;
 
@@ -112,10 +121,10 @@ body:before {
     }
 
     .info_icon{
-        margin: 40px 0 25px;
         cursor: pointer;
         position: relative;
         margin-left: 15px;
+		vertical-align: middle;
     }}
 
 	.sort {
@@ -254,10 +263,14 @@ body:before {
         // background: #fff;
     }
 
+
 	.rank_button {
 		margin-left: 5px;
 		margin-right: -20px;
 		color: black;
+		padding-bottom:0px;
+		padding-top:0px;
+		vertical-align: bottom;
 	}
 
 	.disable_rank_button {
@@ -265,6 +278,9 @@ body:before {
 		margin-right: -20px;
 		color: rgb(109, 108, 108);
 		cursor: text;
+		padding-bottom:0px;
+		padding-top:0px;
+		vertical-align: bottom;
 	}
 }
 

@@ -3,7 +3,7 @@ import Styles from './App.module.scss'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
-import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
+import { HandThumbsUpFill, HandThumbsDownFill, InfoSquare } from 'react-bootstrap-icons';
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
 const LikeButton = ({ show, name, rankFunc, rank }) => {
@@ -29,7 +29,7 @@ const LikeButton = ({ show, name, rankFunc, rank }) => {
                 <ToggleButton variant="text" className={disable ? Styles.rank_button : Styles.disable_rank_button}
                     onClick={() => { rankFunc(rank) }}
                 >
-                    {like ? <HandThumbsUpFill /> : <HandThumbsDownFill />}
+                    {like ? <HandThumbsUpFill color="rgba(54, 105, 35, 1)" /> : <HandThumbsDownFill color="rgba(240, 92, 62, 1)" />}
                 </ToggleButton>
             </OverlayTrigger>}
         </>
