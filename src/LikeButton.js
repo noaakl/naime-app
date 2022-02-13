@@ -3,12 +3,12 @@ import Styles from './App.module.scss'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
-import { HandThumbsUpFill, HandThumbsDownFill, InfoSquare } from 'react-bootstrap-icons';
+import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
 const LikeButton = ({ show, name, rankFunc, rank }) => {
     const disable = name.add_rank === 0
-    const like = rank == 1
+    const like = rank === 1
 
     return (
         <>

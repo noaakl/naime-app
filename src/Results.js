@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { algorithems } from './AlgorithemsConstants'
 import Styles from './App.module.scss'
 import SearchCount from './SearchCount'
 import RankInfo from './RankInfo'
@@ -8,8 +6,7 @@ import {Card} from 'react-bootstrap'
 import {Row} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
 import { Dropdown } from "react-bootstrap";
-import { HandThumbsUpFill, HandThumbsDownFill, SortDown, InfoCircle, FunnelFill } from 'react-bootstrap-icons';
-import Button from 'react-bootstrap/Button'
+import { SortDown } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithemsData }) => {
     const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
@@ -100,8 +97,8 @@ const Results = ({ searchedName, algorithemsData }) => {
                         <Card.Body style={{margin:0, padding:0}}>
                             <h3 style={{textAlign:"center"}}>{algorithem}</h3>
                         {algorithemsData[algorithem].map((name) => {
-                            const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
-                            const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
+                            // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
+                            // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                             return (
                                 <>
                                 <Row>
@@ -114,7 +111,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                                 </div>
                                 </Col>
                                 <Col className={Styles.resultcolrank}>
-                                 <RankInfo searchedName={searchedName} candidateName={name} algorithem={algorithem}/>
+                                 <RankInfo searchedName={searchedName} name={name} algorithem={algorithem}/>
                                  </Col>
                                 </Row>
                                 </>

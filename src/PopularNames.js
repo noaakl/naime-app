@@ -1,5 +1,4 @@
 import Styles from './App.module.scss'
-import Accordion from 'react-bootstrap/Accordion'
 import { useState } from 'react'
 import axios from "axios";
 import { NavDropdown } from 'react-bootstrap';

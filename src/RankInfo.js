@@ -3,8 +3,8 @@ import LikeButton from "./LikeButton";
 import { algorithems } from './AlgorithemsConstants'
 import axios from "axios";
 
-const RankInfo = ({ searchedName, candidateName, algorithem }) => {
-    const [name, setName] = useState(candidateName)
+const RankInfo = ({ searchedName, name, algorithem }) => {
+    // const [name, setName] = useState(candidateName)
     const [likedRanks, setLikedRanks] = useState([])
     const [dislikedRanks, setDislikedRanks] = useState([])
     const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
