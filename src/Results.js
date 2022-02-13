@@ -30,6 +30,11 @@ const Results = ({ searchedName, algorithemsData }) => {
                 <Row>
                 <h2 className={Styles.result_title}>Suggested Synonyms for the name '{searchedName}'</h2>
                 </Row>
+                <Row>
+                <Col style={{marginTop:-20, marginBottom:30}}>
+                <strong>more info</strong><SearchCount searchedName={searchedName} />
+                </Col>
+                </Row>
                 <Row xs={1} md={1} lg={4}>
                     <Col style={{margin:5}}>
                 <Dropdown>
@@ -52,12 +57,14 @@ const Results = ({ searchedName, algorithemsData }) => {
                         {/* <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
+                        {/*<br/><br/>*/}
                 </Col>
-                {/* <Col style={{margin:5}}>
+                <Col style={{marginTop:5, marginLeft:-270}}>
                 <Dropdown>
-                    <strong>filter by  </strong><FunnelFill style={{marginRight:"15px", marginLeft:"5px"}}/><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
+                    <strong>filter by  </strong><FunnelFill style={{ marginRight:"15px", marginLeft:"5px" }}/>
+                    <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
                         {sortValue}
-                    
+
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -71,13 +78,13 @@ const Results = ({ searchedName, algorithemsData }) => {
                             setAZData(true)
                             setSortValue("Default A-Z")
                         }}>Default A-Z</Dropdown.Item>
-                        {/* <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item> */}
-                    {/* </Dropdown.Menu> */}
-                {/* </Dropdown> */}
-                {/* </Col> */} 
-                <Col style={{margin:5}}>
-                <strong>more info</strong><SearchCount searchedName={searchedName} />
+                        <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
                 </Col>
+                {/*<Col style={{margin:5}}>*/}
+                {/*<strong>more info</strong><SearchCount searchedName={searchedName} />*/}
+                {/*</Col>*/}
                 </Row>
                 {/* </div> */}
             </div>
@@ -87,7 +94,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                     <Col key={algorithem} style={{margin:0, display: "flex",
                         flexWrap: "wrap", padding:0}}>
                     <Card id={algorithem} className="shadow-sm p-3 mb-3 bg-white rounded"
-                    style={{height:'380px', width:"270px", margin:5, padding:0}}
+                    style={{height:'380px', width:"95%", margin:5, padding:0}}
                     >
                         <Card.Body style={{margin:0, padding:0}}>
                             <h3 style={{textAlign:"center"}}>{algorithem}</h3>
