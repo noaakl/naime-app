@@ -6,6 +6,7 @@ from utils import spoken_name_2_vec_suggest_names, family_trees_suggest_names, s
 from UserSearch import UserSearch
 from NameSuggestion import NameSuggestion
 from AlgorithemsConstants import algorithems
+from Users import Users
 
 app = FlaskApplication()
 api = app.get_app()
@@ -132,4 +133,40 @@ def rankResults():
         name_suggestion.dislike -= 1
     db.session.commit()
     return name
+
+
+@api.route('/SignUp', methods=['POST'])
+def SignUp():
+    if not request.json:
+        abort(400)
+    user_info = request.json
+    new_user = Users(user_name=user_info['user_name'], password=user_info['password'])
+    db.session.add(new_user)
+    db.session.commit()
+    return {}
+
+
+@api.route('/SignUpCheck', methods=['GET'])
+def SignUpCheck():
+    # user_info = request.json
+    # print(user_info)
+    user_name = request.args.get('name')
+    print(user_name)
+    user_name_search = db.session.query(Users).filter(Users.user_name == user_name).all()
+    if len(user_name_search) > 0:
+        return {"result": False}
+    return {"result": True}
+
+@api.route('/token', methods=["POST"])
+def create_token():
+    user_name = request.json.get("user_name", None)
+    password = request.json.get("password", None)
+    user_name_search = db.session.query(Users).filter(Users.user_name == user_name).filter(Users.password == password).all()
+    if len(user_name_search) == 0:
+        return {"msg": "Wrong email or password"}, 401
+    # access_token = create_access_token(identity=user_name)
+    response = {"access_token":'yay'}
+    return response
+
+
         
