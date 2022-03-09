@@ -1,4 +1,4 @@
-import Styles from './App.module.scss'
+import Styles from '../App.module.scss'
 import { useState } from 'react'
 import axios from "axios";
 import { NavDropdown } from 'react-bootstrap';

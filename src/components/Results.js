@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Styles from './App.module.scss'
+import Styles from '../App.module.scss'
 import SearchCount from './SearchCount'
 import RankInfo from './RankInfo'
 import {Card} from 'react-bootstrap'
 import {Row} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
 import { Dropdown } from "react-bootstrap";
-import { SortDown } from 'react-bootstrap-icons';
+import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithemsData }) => {
     const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
@@ -56,33 +56,33 @@ const Results = ({ searchedName, algorithemsData }) => {
                 </Dropdown>
                 </Col>
 
-                {/*<Col style={{marginTop:5, marginLeft:-270}}>*/}
-                {/*<Dropdown>*/}
-                {/*    <strong>filter by  </strong><FunnelFill style={{ marginRight:"15px", marginLeft:"5px" }}/>*/}
-                {/*    <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">*/}
-                {/*        {sortValue}*/}
+                {/* <Col style={{marginTop:5, marginLeft:-270}}> */}
+                <Col style={{margin:5}}>
+                <Dropdown>
+                   <strong>filter by  </strong><FunnelFill style={{ marginRight:"15px", marginLeft:"5px" }}/>
+                   <Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
+                       {sortValue}
 
-                {/*    </Dropdown.Toggle>*/}
+                   </Dropdown.Toggle>
 
-                {/*    <Dropdown.Menu>*/}
-                {/*        <Dropdown.Item*/}
-                {/*            onClick={() => {*/}
-                {/*                setAZData(false)*/}
-                {/*                setSortValue("User Rank")*/}
-                {/*            }}>*/}
-                {/*            User Rank</Dropdown.Item>*/}
-                {/*        <Dropdown.Item onClick={() => {*/}
-                {/*            setAZData(true)*/}
-                {/*            setSortValue("Default A-Z")*/}
-                {/*        }}>Default A-Z</Dropdown.Item>*/}
-                {/*        <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item>*/}
-                {/*    </Dropdown.Menu>*/}
-                {/*</Dropdown>*/}
-                {/*</Col>*/}
+                   <Dropdown.Menu>
+                       <Dropdown.Item bsPrefix="input"
+                           onClick={() => {
+                               setAZData(false)
+                               setSortValue("User Rank")
+                           }}>
+                           User Rank</Dropdown.Item>
+                       <Dropdown.Item type="radio" onClick={() => {
+                           setAZData(true)
+                           setSortValue("Default A-Z")
+                       }}>Default A-Z</Dropdown.Item>
+                   </Dropdown.Menu>
+                </Dropdown>
+                </Col>
 
-                {/*<Col style={{margin:5}}>*/}
-                {/*<strong>more info</strong><SearchCount searchedName={searchedName} />*/}
-                {/*</Col>*/}
+                <Col style={{margin:5}}>
+                <strong>more info</strong><SearchCount searchedName={searchedName} />
+                </Col>
                 </Row>
                 {/* </div> */}
             </div>
@@ -104,10 +104,6 @@ const Results = ({ searchedName, algorithemsData }) => {
                                 <Row>
                                  <Col className={Styles.resultcol}>
                                 <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
-                                   
-                                    {/* {showDislikeRank && <RankInfo icon={HandThumbsDownFill} searchedName={searchedName} name={name} algorithem={algorithem} rank={-1}/>} */}
-                                    {/* {showDislikeRank && <Button disabled={name.add_rank !== 0} variant="text" className={Styles.rank_button}
-                                        onClick={() => { rankResults(name, algorithem, -1) }}><HandThumbsDownFill /></Button>} */}
                                 </div>
                                 </Col>
                                 <Col className={Styles.resultcolrank}>

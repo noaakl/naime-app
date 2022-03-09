@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LikeButton from "./LikeButton";
-import { algorithems } from './AlgorithemsConstants'
+import { algorithems } from '../global/AlgorithemsConstants'
 import axios from "axios";
 
 const RankInfo = ({ searchedName, name, algorithem }) => {

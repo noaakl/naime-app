@@ -1,27 +1,34 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Styles from "./App.module.scss";
-import {Form, Button, Card, Row, Col, Container} from 'react-bootstrap'
+import { login } from '../store/action';
+import { useDispatch, useSelector } from "react-redux";
+import Styles from "../App.module.scss";
+import {Form, Button, Card, Container} from 'react-bootstrap'
 
-const SingUp = () => {
+const Login = () => {
+    const navigate = useNavigate();
+    const navigateHome = useCallback(() => navigate('/', { replace: true }), [navigate]);
+    const dispatch = useDispatch()
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [errorName, setErrorName] = useState(false);
-    const [errorNameTaken, setErrorNameTaken] = useState(false);
+    const [errorWrong, setErrorWrong] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
     const res = false;
     const handleName = (e) => {
         setName(e.target.value);
         setSubmitted(false);
         setErrorName(false);
-        setErrorNameTaken(false);
+        setErrorWrong(false);
       };
     
     const handlePassword = (e) => {
         setPassword(e.target.value);
         setSubmitted(false);
         setErrorPassword(false);
+        setErrorWrong(false);
       };
 
     const handleSubmit = (e) => {
@@ -31,31 +38,22 @@ const SingUp = () => {
         else if (password === '')
             setErrorPassword(true);
         else {
-            const user_info = {
-                user_name: name,
-                password: password
-            }
-            axios({
-                method: "GET",
-                url: `/SignUpCheck?name=${name}`
-            })
-                .then((response) => {
-                    console.log(response.data)
-                    if (response.data.result == true) {
-                        console.log(response.data)
-                        setSubmitted(true);
-                        setErrorName(false);
-                        setErrorPassword(false);
-                        axios.post('/SignUp', user_info)
-                            .catch(function (error) {
-                                 console.log(error);});
-                    }
-                    else {
-                        setErrorNameTaken(true);
-                    }
+          const login_data = {
+            user_name: name,
+            password: password
+           }
+          axios.post('/login', login_data)
+              .then((response) => {
+                dispatch(login(response.data))
+                navigateHome()
+              }).catch((error) => {
+                console.log(error)
+                if (error.response) {
+                    setErrorWrong(true)
+                  }
+              })
     
-                })
-        }
+                }
       };
     
     const successMessage = () => {
@@ -84,14 +82,14 @@ const SingUp = () => {
         );
       };
 
-    const NameTaken = () => {
+    const wrongPassName = () => {
         return (
           <div
-            className="errorNameTaken"
+            className="errorWrong"
             style={{
-              display: errorNameTaken ? '' : 'none',
+              display: errorWrong ? '' : 'none',
             }}>
-            <h5 style={{color:'red', fontSize:'12px'}}>User name already exist. Please enter again</h5>
+            <h5 style={{color:'red', fontSize:'12px'}}>The Password or Username is incorrect. Please try again.</h5>
           </div>
         );
       };
@@ -103,7 +101,7 @@ const SingUp = () => {
             style={{
               display: errorPassword ? '' : 'none',
             }}>
-            <h5 style={{color:'red', fontSize:'12px' }}>Please enter password</h5>
+            <h5 style={{color:'red'}}>Please enter password</h5>
           </div>
         );
       };
@@ -113,11 +111,9 @@ const SingUp = () => {
     <Container className="d-flex h-100" id ={Styles.signup}>
     <Card className="text-center" style={{ width: '40rem', margin:'20px', padding:'15px', position:"center",alignItems:"center", justifyContent:"center" }}>
         <Card.Body>
-            <h3>Sign Up</h3>
-            <h5>sign up to keep track on your searches and ranks</h5>
+            <h3>Login</h3>
             <br></br>
-            <div className="messages">
-        
+            <div className="messages">    
       </div>
             <Form onSubmit={handleSubmitRefresh} > 
   <Form.Group className="mb-3" controlId="formUserName">
@@ -126,7 +122,6 @@ const SingUp = () => {
         <Form.Control placeholder="Enter User Name" onChange={handleName} className="input"
           value={name} type="text"/>
           {emptyName()}
-          {NameTaken()}
     </Form.Group>
 
   <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -135,19 +130,22 @@ const SingUp = () => {
           value={password} />
           {emptyPassword()}
   </Form.Group>
-  <Button variant="success" onClick={handleSubmit} className="btn" type="submit">
+  <Button variant="success" onClick={handleSubmit} className="btn" type="submit" style={{marginBottom:'15px'}}>
     Submit
   </Button>
+  {wrongPassName()}
   {successMessage()}
+  <br></br>
+    <h5 style={{fontSize:'15px'}}>Not a memeber? Click <Link to={"/signup"}>HERE</Link> to sign up</h5>
 </Form>
-<br></br>
-<h5 style={{fontSize:'15px'}}>If you already have an account click HERE to login</h5>
     </Card.Body>
+
     </Card>
+
       </Container>
        </div>
 
     );
 }
-export default SingUp;
+export default Login;
 

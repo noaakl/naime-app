@@ -1,5 +1,5 @@
 import React from "react";
-import Styles from './App.module.scss'
+import Styles from '../App.module.scss'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'

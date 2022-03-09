@@ -11,7 +11,7 @@ For more information about this project [Click Here](https://github.com/noaakl/F
 
 ### Run the Project:
 - cd backend
- - For mac/unix users:
+- For mac/unix users:
     - create virtual environment:
         - run `python3 -m venv env`
         - run `source env/bin/activate`

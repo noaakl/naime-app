@@ -1,26 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home";
-import SingUp from "./SignUp";
+import { Provider } from 'react-redux'
+import store from './store/store'
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from "./components/Home";
+import SingUp from "./components/SignUp";
 import { useState } from 'react';
-// import Noaa from "./noaa";
 import Styles from "./App.module.scss";
-import { Button, Navbar, Nav, Container } from 'react-bootstrap';
-import PopularNames from './PopularNames';
-import Login from "./Login";
+import PopularNames from './components/PopularNames';
+import Login from "./components/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
+import { Button, Navbar, Nav, Container } from 'react-bootstrap';
+import NavBar from "./components/NavBar";
+
 
 
 export default function App() {
   const [showAbout, setShowAbout] = useState(false);
   const handleAbout = () => setShowAbout(!showAbout);
   return (
-    <>
-        <Navbar expand="lg" bg='light'>
+    <Provider store={store}>
+    <BrowserRouter>
+    <NavBar/>
+    
+    {/* <Navbar expand="lg" bg='light'>
         <Container fluid>
-        <Navbar.Brand href="/">nAIme</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">nAIme</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto" navbarScroll>
@@ -28,14 +34,13 @@ export default function App() {
                 <PopularNames />
              </Nav>
             <Nav className="ml-auto my-2 my-lg-0" >
-                <Nav.Link href="/signUp">Sign Up</Nav.Link>
-                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link as={Link} to="/signUp">Sign Up</Nav.Link>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link>
             </Nav>
         </Navbar.Collapse>
         </Container>
-    </Navbar>
-
-    <BrowserRouter>
+    </Navbar> */}
+    
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/signUp" element={<SingUp />}></Route>
@@ -43,7 +48,9 @@ export default function App() {
       </Routes>
     </BrowserRouter>
 
-    <div className={Styles.about}>
+
+
+    {/* <div className={Styles.about}>
                 <Modal show={showAbout} onHide={handleAbout}>
                     <Modal.Header closeButton>
                         <Modal.Title>nAIme</Modal.Title>
@@ -59,8 +66,8 @@ In this nAime website you will also see different statistics on name searches su
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </div>
-    </>
+            </div> */}
+    </Provider>
   );
 }
 

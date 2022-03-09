@@ -7,6 +7,7 @@ from UserSearch import UserSearch
 from NameSuggestion import NameSuggestion
 from AlgorithemsConstants import algorithems
 from Users import Users
+from passlib.hash import bcrypt
 
 app = FlaskApplication()
 api = app.get_app()
@@ -135,38 +136,47 @@ def rankResults():
     return name
 
 
-@api.route('/SignUp', methods=['POST'])
+@api.route('/signUp', methods=['POST'])
 def SignUp():
     if not request.json:
         abort(400)
     user_info = request.json
-    new_user = Users(user_name=user_info['user_name'], password=user_info['password'])
+    username_and_password = user_info['user_name'] + user_info['password']
+    hashed_password = bcrypt.encrypt(username_and_password)
+    new_user = Users(user_name=user_info['user_name'], first_name=user_info['first_name'], last_name=user_info['last_name'], email=user_info['email'], password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
     return {}
 
 
-@api.route('/SignUpCheck', methods=['GET'])
+@api.route('/signUpCheck', methods=['GET'])
 def SignUpCheck():
-    # user_info = request.json
-    # print(user_info)
-    user_name = request.args.get('name')
-    print(user_name)
+    user_name = request.args.get('user_name')
     user_name_search = db.session.query(Users).filter(Users.user_name == user_name).all()
     if len(user_name_search) > 0:
         return {"result": False}
     return {"result": True}
 
-@api.route('/token', methods=["POST"])
-def create_token():
+@api.route('/login', methods=["POST"])
+def login():
     user_name = request.json.get("user_name", None)
     password = request.json.get("password", None)
-    user_name_search = db.session.query(Users).filter(Users.user_name == user_name).filter(Users.password == password).all()
+    user_name_search = db.session.query(Users).filter(Users.user_name == user_name).all()
     if len(user_name_search) == 0:
-        return {"msg": "Wrong email or password"}, 401
+        return {"msg": "Wrong user name or password"}, 401
+    user = user_name_search[0]
+    username_and_password = user_name + password
+    valid_password = bcrypt.verify(username_and_password, user.password)
+    if not valid_password:
+        return {"msg": "Wrong user name or password"}, 401
+    user_info = {
+        "user_name": user.user_name,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+    }
     # access_token = create_access_token(identity=user_name)
-    response = {"access_token":'yay'}
-    return response
+    return user_info
 
 
         
