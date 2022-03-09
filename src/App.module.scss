@@ -132,8 +132,13 @@ body:before {
 		}
     }}
 
-	.sort {
-		opacity: 0.6;
+	// .sort {
+	// 	opacity: 0.6;
+	// }
+
+	.filter .checked {
+			background-color: red;
+			border-color: red;
 	}
 
 	.signup {
