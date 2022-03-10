@@ -9,8 +9,6 @@ import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 const Results = ({ searchedName, algorithemsData }) => {
     const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
     const algorithemsNames = Object.keys(algorithemsData).slice()
-    // const [likedRanks, setLikedRanks] = useState([])
-    // const [dislikedRanks, setDislikedRanks] = useState([])
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
 
@@ -18,7 +16,7 @@ const Results = ({ searchedName, algorithemsData }) => {
 
     useEffect(() => {
         setAlgorithems(algorithemsNames)
-    }, [suggestionsExist]);
+    }, [algorithemsData]);
 
     const sortFunc = (a, b) => {
         return isAZData ? a.candidate.localeCompare(b.candidate) : b.user_rank - a.user_rank
@@ -77,54 +75,36 @@ const Results = ({ searchedName, algorithemsData }) => {
                         </Dropdown>
                     </Col>
 
-                    {/* <Col style={{marginTop:5, marginLeft:-270}}> */}
                     <Col style={{ margin: 5 }}>
                         <Dropdown>
                             <strong>filter by  </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
                             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
-                                {sortValue}
+                                {"Type"}
 
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                {Object.keys(algorithemsData).map((algorithem) => {
-                                    return (
-                                        <Dropdown.Item className={Styles.filter} key={algorithem}>
-                                            {/* <Form.Check type="checkbox" id={algorithem}>
-                                                <Form.Check.Input type="checkbox" isValid onChange={() => handleFilterCheck(algorithem)}/>
-                                                <Form.Check.Label>{algorithem}</Form.Check.Label>
-                                            </Form.Check> */}
-
-
-                                            <input
-                                            key={algorithem}
-                                            className={Styles.filter}
-                                            label={algorithem}
-                                            name="controlled"
-                                            type="checkbox"
-                                            id={algorithem}
-                                            checked={isChecked(algorithem)}
-                                            onChange={() => handleFilterCheck(algorithem)}
-                                        /><label>{` ${algorithem}`}</label>
-
-
-
-                                            {/* <Form.Check className={Styles.filter} type="checkbox" id={`check-api-checkbox`} value="option1" checked={true}> */}
-                                            {/* User Rank */}
-                                            {/* </Form.Check> */}
-                                        </Dropdown.Item>
-                                    )
-                                })
-                                }
+                                <Form>
+                                    {Object.keys(algorithemsData).map((algorithem) => {
+                                        return (
+                                            <div className={Styles.filter}>
+                                            <Form.Check
+                                                label={algorithem}
+                                                type="checkbox"
+                                                id={algorithem}
+                                                name="algorithems"
+                                                checked={isChecked(algorithem)}
+                                                onClick={() => handleFilterCheck(algorithem)} />
+                                                </div>
+                                        )
+                                    })
+                                    }
+                                </Form>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
 
-                    <Col style={{ margin: 5 }}>
-                        <strong>more info</strong><SearchCount searchedName={searchedName} />
-                    </Col>
                 </Row>
-                {/* </div> */}
             </div>
             <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
                 {algorithems.map((algorithem) => {
