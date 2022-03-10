@@ -4,6 +4,8 @@ from flask_application import FlaskApplication
 from sqlalchemy import func
 from utils import spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
 from UserSearch import UserSearch
+from UsersLikes import UsersLikes
+from UsersDislikes import UsersDislikes
 from NameSuggestion import NameSuggestion
 from AlgorithemsConstants import algorithems
 from Users import Users
@@ -18,8 +20,8 @@ def dashboard():
     result_dict = {}
     targeted_name = ""
     if request.method == 'GET':
-        # selected_name = request.form['name']
         selected_name = request.args.get('name')
+        username = request.args.get('username')
         selected_name = selected_name.capitalize()
         targeted_name = selected_name
 
@@ -73,8 +75,11 @@ def dashboard():
         else:
             result_dict = {}
             # result_dict = name_not_exists_suggest_names(selected_name, result_dict)
-
-        new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
+        new_user_search = ""
+        if username:
+            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English", user_name=username)
+        else:
+            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
         db.session.add(new_user_search)
         db.session.commit()
 
@@ -121,17 +126,26 @@ def rankResults():
     if not request.json:
         abort(400)
     rankData = request.json
+    username = rankData['username']
+    selected_name = rankData['selected_name']
+    type_name = algorithems[rankData['type_name']]
+    language = rankData['language']
+    candidate = rankData['candidate']
     name = {
-        "selected_name": rankData['selected_name'],
-        "type_name": algorithems[rankData['type_name']],
-        "language": rankData['language'],
-        "candidate": rankData['candidate'],
+        "selected_name": selected_name,
+        "type_name": type_name,
+        "language": language,
+        "candidate": candidate,
         }
     name_suggestion = db.session.query(NameSuggestion).get(name)
+    user_rank = {}
     if rankData['add_rank'] > 0:
         name_suggestion.like += 1
+        user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
     else:
         name_suggestion.dislike -= 1
+        user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
+    db.session.add(user_rank)
     db.session.commit()
     return name
 
@@ -169,14 +183,58 @@ def login():
     valid_password = bcrypt.verify(username_and_password, user.password)
     if not valid_password:
         return {"msg": "Wrong user name or password"}, 401
+    user_likes = db.session.query(UsersLikes).filter(UsersLikes.user_name == user_name).all()
+    user_dislikes = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == user_name).all()
+    likes = {user_like.selected_name: [] for user_like in user_likes}
+    dislikes = {user_dislike.selected_name: [] for user_dislike in user_dislikes}
+    for user_like in user_likes:
+        likes[user_like.selected_name].append(user_like.candidate)
+    dislikes = {user_dislike.selected_name: [] for user_dislike in user_dislikes}
+    for user_dislike in user_dislikes:
+        dislikes[user_dislike.selected_name].append(user_dislike.candidate)
     user_info = {
         "user_name": user.user_name,
         "first_name": user.first_name,
         "last_name": user.last_name,
         "email": user.email,
+        "likes": likes,
+        "dislikes": dislikes
     }
     # access_token = create_access_token(identity=user_name)
     return user_info
+
+@api.route('/lastSearches', methods=["GET"])
+def lastSearches():
+    username = request.args.get('username')
+    if username:
+        limit=5
+        results = db.session.query(UserSearch.selected_name).\
+            filter(UserSearch.selected_name != '' and UserSearch.user_name == username).\
+            group_by(UserSearch.selected_name).\
+            order_by(UserSearch.search_date.desc()).\
+            limit(limit).\
+            all()
+
+        if results:
+            # return {result[0]: result[1] for result in results}
+            return json.dumps([(result[0]) for result in results])
+
+    return {}
+
+@api.route('/lastRanks', methods=["GET"])
+def lastRanks():
+    username = request.args.get('username')
+    if username:
+        limit=5
+        results = db.session.query(UsersLikes.selected_name, UsersLikes.candidate).\
+            filter(UsersLikes.user_name == username).\
+            limit(limit).\
+            all()
+
+        if results:
+            return json.dumps([(result[0], result[1]) for result in results])
+
+    return {}
 
 
         

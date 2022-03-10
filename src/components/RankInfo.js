@@ -1,20 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addLikes, addDislikes } from "../store/action";
 import LikeButton from "./LikeButton";
 import { algorithems } from '../global/AlgorithemsConstants'
 import axios from "axios";
 
 const RankInfo = ({ searchedName, name, algorithem }) => {
-    // const [name, setName] = useState(candidateName)
-    const [likedRanks, setLikedRanks] = useState([])
+    const dispatch = useDispatch()
+    const username = useSelector((state) => state.reduser.username);
+    const likes = useSelector((state) => state.reduser.likes);
+    const dislikes = useSelector((state) => state.reduser.dislikes);
+
     const [dislikedRanks, setDislikedRanks] = useState([])
-    const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
-    const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
+    // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
+    const showLikeRank = algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
+    const showDislikeRank = algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
 
     const rankResults = (rank) => {
         name.add_rank = rank
-        rank > 0 ? setLikedRanks([name].concat(likedRanks)) : setDislikedRanks([name].concat(dislikedRanks))
+        rank > 0 && username ? dispatch(addLikes(searchedName, name.candidate)) : dispatch(addDislikes(searchedName, name.candidate))
         if (algorithem in algorithems) {
             const rankData = {
+                username: username,
                 type_name: algorithem,
                 selected_name: searchedName,
                 add_rank: name.add_rank,
@@ -41,7 +48,7 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
     return (
         <>
             <LikeButton show={showLikeRank} name={name} rankFunc={rankResults} rank={1}/>
-            <LikeButton show={showDislikeRank} name={name} rankFunc={rankResults} rank={-1}/>
+            <LikeButton show={showDislikeRank && algorithem in algorithems} name={name} rankFunc={rankResults} rank={-1}/>
         </>
     );
 }

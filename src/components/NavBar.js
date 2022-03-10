@@ -7,7 +7,7 @@ import PopularNames from './PopularNames';
 import Logout from "./Logout";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
-import { Button, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 
 
 const NavBar = () => {
@@ -25,6 +25,7 @@ const NavBar = () => {
                         <Nav className="me-auto" navbarScroll>
                             <Nav.Link onClick={handleAbout} variant="Success">About</Nav.Link>
                             <PopularNames />
+                            <Nav.Link as={Link} to="/userInfo" style={{ display: username ? '' : 'none' }}>My info</Nav.Link>
                         </Nav>
                         <Nav className="ml-auto my-2 my-lg-0" >
                             <Nav.Link as={Link} to="/signUp" style={{ display: !username ? '' : 'none' }}>Sign Up</Nav.Link>

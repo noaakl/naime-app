@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { login } from '../store/action';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Styles from "../App.module.scss";
 import {Form, Button, Card, Container} from 'react-bootstrap'
 
@@ -44,6 +44,7 @@ const Login = () => {
            }
           axios.post('/login', login_data)
               .then((response) => {
+                console.log(response.data)
                 dispatch(login(response.data))
                 navigateHome()
               }).catch((error) => {
