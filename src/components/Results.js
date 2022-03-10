@@ -8,11 +8,11 @@ import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithemsData }) => {
     const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
-    const algorithemsNames = Object.keys(algorithemsData).slice()
+    const algorithemsNames = Object.keys(algorithemsData)
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
-
-    const [algorithems, setAlgorithems] = useState(algorithemsNames)
+    const [algorithems, setAlgorithems] = useState([])
+    const algorithemMapping = {}
 
     useEffect(() => {
         setAlgorithems(algorithemsNames)
@@ -29,7 +29,8 @@ const Results = ({ searchedName, algorithemsData }) => {
             checkedAlgorithems.splice(valueIndex, 1);
         }
         else {
-            checkedAlgorithems.push(value)
+            const valueIndex = algorithemsNames.indexOf(value);
+            checkedAlgorithems.splice(valueIndex, 0, value);
         }
         setAlgorithems(checkedAlgorithems)
     }
@@ -94,7 +95,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                                                 id={algorithem}
                                                 name="algorithems"
                                                 checked={isChecked(algorithem)}
-                                                onClick={() => handleFilterCheck(algorithem)} />
+                                                onChange={() => handleFilterCheck(algorithem)} />
                                                 </div>
                                         )
                                     })
