@@ -11,10 +11,12 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
     const likes = useSelector((state) => state.reduser.likes);
     const dislikes = useSelector((state) => state.reduser.dislikes);
 
-    const [dislikedRanks, setDislikedRanks] = useState([])
-    // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
     const showLikeRank = algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
     const showDislikeRank = algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
+
+    const disable = (ranks) => {
+        return(!(ranks[searchedName] && ranks[searchedName].includes(name.candidate)))
+    }
 
     const rankResults = (rank) => {
         name.add_rank = rank
@@ -47,8 +49,8 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
 
     return (
         <>
-            <LikeButton show={showLikeRank} name={name} rankFunc={rankResults} rank={1}/>
-            <LikeButton show={showDislikeRank && algorithem in algorithems} name={name} rankFunc={rankResults} rank={-1}/>
+            <LikeButton show={showLikeRank} name={name} rankFunc={rankResults} rank={1} disable={disable(likes)}/>
+            <LikeButton show={showDislikeRank} name={name} rankFunc={rankResults} rank={-1} disable={disable(dislikes)}/>
         </>
     );
 }

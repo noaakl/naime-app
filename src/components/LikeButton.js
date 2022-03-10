@@ -6,8 +6,7 @@ import PopoverBody from 'react-bootstrap/PopoverBody'
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
-const LikeButton = ({ show, name, rankFunc, rank }) => {
-    const disable = name.add_rank === 0
+const LikeButton = ({ show, name, rankFunc, rank, disable }) => {
     const like = rank === 1
 
     return (

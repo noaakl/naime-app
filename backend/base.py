@@ -1,7 +1,7 @@
 import json
 from flask import request
 from flask_application import FlaskApplication
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from utils import spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
 from UserSearch import UserSearch
 from UsersLikes import UsersLikes
@@ -208,12 +208,12 @@ def lastSearches():
     username = request.args.get('username')
     if username:
         limit=5
-        results = db.session.query(UserSearch.selected_name).\
+        results = db.session.query(UserSearch.selected_name, UserSearch.search_date).\
             filter(UserSearch.selected_name != '' and UserSearch.user_name == username).\
-            group_by(UserSearch.selected_name).\
-            order_by(UserSearch.search_date.desc()).\
+            order_by(desc(UserSearch.search_date)).\
             limit(limit).\
             all()
+            # group_by(UserSearch.selected_name).\
 
         if results:
             # return {result[0]: result[1] for result in results}
@@ -226,8 +226,9 @@ def lastRanks():
     username = request.args.get('username')
     if username:
         limit=5
-        results = db.session.query(UsersLikes.selected_name, UsersLikes.candidate).\
+        results = db.session.query(UsersLikes.selected_name, UsersLikes.candidate, UsersLikes.date).\
             filter(UsersLikes.user_name == username).\
+            order_by(desc(UsersLikes.date)).\
             limit(limit).\
             all()
 
