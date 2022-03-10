@@ -56,7 +56,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                 </Dropdown>
                 </Col>
 
-                {/* <Col style={{marginTop:5, marginLeft:-270}}> */}
+                {/* <Col style={{marginTop:5, marginLeft:-270}}>
                 <Col style={{margin:5}}>
                 <Dropdown>
                    <strong>filter by  </strong><FunnelFill style={{ marginRight:"15px", marginLeft:"5px" }}/>
@@ -78,7 +78,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                        }}>Default A-Z</Dropdown.Item>
                    </Dropdown.Menu>
                 </Dropdown>
-                </Col>
+                </Col> */}
 
                 <Col style={{margin:5}}>
                 <strong>more info</strong><SearchCount searchedName={searchedName} />
