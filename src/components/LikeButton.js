@@ -28,7 +28,7 @@ const LikeButton = ({ show, name, rankFunc, rank, disable }) => {
                 <ToggleButton variant="text" className={disable ? Styles.rank_button : Styles.disable_rank_button}
                     onClick={() => { rankFunc(rank) }}
                 >
-                    {like ? <HandThumbsUpFill color="rgba(54, 105, 35, 1)" /> : <HandThumbsDownFill color="rgba(240, 92, 62, 1)" />}
+                    {like ? <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"10px"}} /> : <HandThumbsDownFill color="rgba(240, 92, 62, 1)" />}
                 </ToggleButton>
             </OverlayTrigger>}
         </>

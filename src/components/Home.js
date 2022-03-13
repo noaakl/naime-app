@@ -17,10 +17,10 @@ const Home = () => {
     const searchName = (searchVal) => {
         setShowResults(searchVal !== '')
         setAlgorithemsData({})
-        const searchInfo = {
-            user_name: username,
-            selected_name: searchVal
-        }
+        // const searchInfo = {
+        //     user_name: username,
+        //     selected_name: searchVal
+        // }
         axios({
             method: "GET",
             url: `/nameList?name=${searchVal}&username=${username}`
@@ -53,7 +53,7 @@ const Home = () => {
 
     return (
         <>
-            <div className={Styles.page_title}>
+            <div className={showResults ? Styles.page_title : Styles.page_title_before}>
                 <h1>nAIme</h1>
                 <div>Similar Name Suggestor</div>
                 <div className={Styles.search_wraper} >

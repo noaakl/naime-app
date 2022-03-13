@@ -2,24 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux'
 import store from './store/store'
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import UserInfo from "./components/UserInfo";
 import SingUp from "./components/SignUp";
-import { useState } from 'react';
-import Styles from "./App.module.scss";
-import PopularNames from './components/PopularNames';
+// import { useState } from 'react';
 import Login from "./components/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from 'react-bootstrap/Modal';
-import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 import NavBar from "./components/NavBar";
 
 
 
 export default function App() {
-  const [showAbout, setShowAbout] = useState(false);
-  const handleAbout = () => setShowAbout(!showAbout);
+  // const [showAbout, setShowAbout] = useState(false);
+  // const handleAbout = () => setShowAbout(!showAbout);
   return (
     <Provider store={store}>
     <BrowserRouter>
