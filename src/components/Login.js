@@ -16,7 +16,7 @@ const Login = () => {
     const [errorName, setErrorName] = useState(false);
     const [errorWrong, setErrorWrong] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
-    const res = false;
+    // const res = false;
     const handleName = (e) => {
         setName(e.target.value);
         setSubmitted(false);
@@ -44,7 +44,6 @@ const Login = () => {
            }
           axios.post('/login', login_data)
               .then((response) => {
-                console.log(response.data)
                 dispatch(login(response.data))
                 navigateHome()
               }).catch((error) => {
@@ -108,8 +107,8 @@ const Login = () => {
       };
 
     return (
-        <div className={Styles.signup} >
-    <Container className="d-flex h-100" id ={Styles.signup}>
+        <div className={Styles.login} >
+    <Container className="d-flex h-100" id ={Styles.login}>
     <Card className="text-center" style={{ width: '40rem', margin:'20px', padding:'15px', position:"center",alignItems:"center", justifyContent:"center" }}>
         <Card.Body>
             <h3>Login</h3>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Styles from "../App.module.scss";
@@ -17,7 +17,7 @@ const SingUp = () => {
   const isPasswordMatch = !confirmPassword || password === confirmPassword;
   const isEmailValid = String(email).toLowerCase().match(
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-  const error = !username.length>3 || !firstName.length>3 || !lastName.length>3 || !isEmailValid || !password.length>3 || !isNameNotTaken || !isPasswordMatch;
+  const error = !username.length>3 || !firstName.length>3 || !lastName.length>3 || !isEmailValid || !password.length>6 || !isNameNotTaken || !isPasswordMatch;
   // const [error, setError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);

@@ -1,3 +1,5 @@
+bcrypt==3.2.0
+cffi==1.15.0
 click==8.0.3
 Flask==2.0.2
 Flask-SQLAlchemy==2.5.1
@@ -6,7 +8,10 @@ itsdangerous==2.0.1
 jellyfish==0.8.9
 Jinja2==3.0.3
 MarkupSafe==2.0.1
+passlib==1.7.4
 phonetics==1.0.5
+pycparser==2.21
 python-dotenv==0.19.2
+six==1.16.0
 SQLAlchemy==1.4.29
 Werkzeug==2.0.2

@@ -12,7 +12,7 @@ const Results = ({ searchedName, algorithemsData }) => {
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
     const [algorithems, setAlgorithems] = useState([])
-    const algorithemMapping = {}
+    // const algorithemMapping = {}
 
     useEffect(() => {
         setAlgorithems(algorithemsNames)
@@ -110,26 +110,26 @@ const Results = ({ searchedName, algorithemsData }) => {
             <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
                 {algorithems.map((algorithem) => {
                     return (
-                        <Col key={algorithem} style={{
+                        <Col key={`${algorithem}col`} style={{
                             margin: 0, display: "flex",
                             flexWrap: "wrap", padding: 0
                         }}>
-                            <Card id={algorithem} className="shadow-sm p-3 mb-3 bg-white rounded"
+                            <Card key={`${algorithem}card`} id={algorithem} className="shadow-sm p-3 mb-3 bg-white rounded"
                                 style={{ height: '380px', width: "95%", margin: 5, padding: 0 }}
                             >
-                                <Card.Body style={{ margin: 0, padding: 0 }}>
+                                <Card.Body key={`${algorithem}cardbody`} style={{ margin: 0, padding: 0 }}>
                                     <h3 style={{ textAlign: "center" }}>{algorithem}</h3>
                                     {algorithemsData[algorithem].map((name) => {
                                         // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
                                         // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                                         return (
                                             <>
-                                                <Row>
-                                                    <Col className={Styles.resultcol}>
+                                                <Row key={name} >
+                                                    <Col key={`${name}_col`} className={Styles.resultcol}>
                                                         <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>
                                                     </Col>
-                                                    <Col className={Styles.resultcolrank}>
+                                                    <Col key={`${name}_rank`} className={Styles.resultcolrank}>
                                                         <RankInfo searchedName={searchedName} name={name} algorithem={algorithem} />
                                                     </Col>
                                                 </Row>

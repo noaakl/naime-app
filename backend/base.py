@@ -217,6 +217,7 @@ def lastSearches():
 
         if results:
             # return {result[0]: result[1] for result in results}
+            print(json.dumps([(result[0]) for result in results]))
             return json.dumps([(result[0]) for result in results])
 
     return {}
@@ -236,6 +237,23 @@ def lastRanks():
             return json.dumps([(result[0], result[1]) for result in results])
 
     return {}
+
+@api.route('/lastDislike', methods=["GET"])
+def lastDislike():
+    username = request.args.get('username')
+    if username:
+        limit=5
+        results = db.session.query(UsersDislikes.selected_name, UsersDislikes.candidate, UsersDislikes.date).\
+            filter(UsersDislikes.user_name == username).\
+            order_by(desc(UsersDislikes.date)).\
+            limit(limit).\
+            all()
+
+        if results:
+            return json.dumps([(result[0], result[1]) for result in results])
+
+    return {}
+
 
 
         
