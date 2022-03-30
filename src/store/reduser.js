@@ -33,7 +33,9 @@ const Reduser = (state = INITIAL_STATE, action) => {
         firstName: "",
         lastName: "",
         username: "",
-        email: ""
+        email: "",
+        likes: {},
+        dislikes: {},
       };
     }
 

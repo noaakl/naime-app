@@ -33,7 +33,6 @@ const UserInfo = () => {
         })
             .then((response) => {
                 setlastsearch(response.data)
-                console.log(response.data)
             })
     }
 
@@ -96,7 +95,7 @@ const UserInfo = () => {
                     <thead><tr><th>Name</th>
                     <th>candidate</th></tr></thead>
                     <tbody>
-                    {lastranks.map((rank) => {
+                    {lastranks && lastranks !== {} && lastranks.map((rank) => {
                     return (
                         <tr><td>{rank[0]}</td>
                         <td>{rank[1]}</td></tr>
@@ -114,7 +113,7 @@ const UserInfo = () => {
                     <thead><tr><th>Name</th>
                     <th>candidate</th></tr></thead>
                     <tbody>
-                    {lastdislike.map((dislike) => {
+                    {lastdislike && lastdislike !== {} && lastdislike.map((dislike) => {
                     return (
                         <tr><td>{dislike[0]}</td>
                         <td>{dislike[1]}</td></tr>
@@ -127,7 +126,7 @@ const UserInfo = () => {
                             ><Card.Body style={{ margin: 0, padding: 0, marginTop:"20px", textAlign:"center"}}>
                     <div><h5>Searches <Search/></h5></div>
                     
-                    {lastsearch.map((search) => {
+                    {lastsearch && lastsearch !== {} && lastsearch.map((search) => {
                     return (<div style={{marginRight:"10px", marginBottom:"7px"}}>{search}</div>)})}</Card.Body></Card></Col>
             </Row></Container>
 

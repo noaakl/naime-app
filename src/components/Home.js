@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Styles from "../App.module.scss";
@@ -12,6 +12,13 @@ const Home = () => {
     const [algorithemsData, setAlgorithemsData] = useState({})
     const [searchedName, setSearchedName] = useState("")
     const [showResults, setShowResults] = useState(false)
+
+    useEffect(() => {
+        setNameToSearch("")
+        setAlgorithemsData({})
+        setSearchedName("")
+        setShowResults(false)
+    }, [username]);
 
 
     const searchName = (searchVal) => {
