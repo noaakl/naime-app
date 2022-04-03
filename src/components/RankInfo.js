@@ -11,8 +11,8 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
     const likes = useSelector((state) => state.reduser.likes);
     const dislikes = useSelector((state) => state.reduser.dislikes);
 
-    const showLikeRank = algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
-    const showDislikeRank = algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
+    const showLikeRank = username && algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
+    const showDislikeRank = username && algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
 
     const disable = (ranks) => {
         return(!(ranks[searchedName] && ranks[searchedName].includes(name.candidate)))
