@@ -42,7 +42,7 @@ const Login = () => {
             user_name: name,
             password: password
            }
-          axios.post('/login', login_data)
+          axios.post('/api/login', login_data)
               .then((response) => {
                 dispatch(login(response.data))
                 navigateHome()

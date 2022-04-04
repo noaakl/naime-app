@@ -34,13 +34,14 @@ const SingUp = () => {
     }
     axios({
       method: "GET",
-      url: `/signUpCheck?user_name=${username}`
+      url: `/api/signUpCheck?user_name=${username}`
     })
       .then((response) => {
+        console.log(response)
         if (response.data.result === true) {
           setIsNameNotTaken(true)
           if (!error) {
-            axios.post('/signUp', user_info)
+            axios.post('/api/signUp', user_info)
               .then(() => setShowSuccessMessage(true))
               .catch(function (error) {
                 console.log(error);

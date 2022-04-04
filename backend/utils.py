@@ -176,3 +176,28 @@ def match_rating_codex_suggest_names(selected_name, result_dict):
 
     result_dict['match_rating_codex'] = candidates
     return result_dict
+
+
+def convertSuggestionsToJson(suggestions):
+    res = {}
+    for algorithem in suggestions:
+        if algorithem == "name":
+            res[algorithem] = suggestions[algorithem]
+        else:
+            res[algorithem] = []
+            for candidate in suggestions[algorithem]:
+                res[algorithem].append(candidate["candidate"])
+                # print(candidate["candidate"])
+                # candidate = candidate["candidate"]
+
+        # if algorithem != "name":
+        #     print(suggestions[algorithem])
+            # suggestions[algorithem] = suggestions[algorithem]["candidate"]
+        # print(algorithem)
+        # for candidate in algorithem:
+        # noaa = suggestions[algorithem]
+        # print(noaa)
+        # print(candidate)
+            # print(noaa["candidate"])
+    #         uggestions[algorithem] = suggestions[algorithem]["candidate"]
+    return res

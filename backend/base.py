@@ -1,8 +1,10 @@
 import json
+
+import secrets
 from flask import request
 from flask_application import FlaskApplication
 from sqlalchemy import func, desc
-from utils import spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
+from utils import convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
 from UserSearch import UserSearch
 from UsersLikes import UsersLikes
 from UsersDislikes import UsersDislikes
@@ -15,13 +17,15 @@ app = FlaskApplication()
 api = app.get_app()
 db = app.get_db()
 
-@api.route('/nameList', methods=['GET'])
+@api.route('/api/suggestions', methods=['GET'])
 def dashboard():
+    print(request)
     result_dict = {}
     targeted_name = ""
     if request.method == 'GET':
         selected_name = request.args.get('name')
         username = request.args.get('username')
+        key = request.args.get('key')
         selected_name = selected_name.capitalize()
         targeted_name = selected_name
 
@@ -83,6 +87,12 @@ def dashboard():
         db.session.add(new_user_search)
         db.session.commit()
 
+        if key:
+            user_name_search = db.session.query(Users).filter(Users.api_key == key).all()
+            if len(user_name_search) == 0:
+                return {"401": "Not Found"}, 401
+            result_dict = convertSuggestionsToJson(result_dict)
+
     # if targeted_name != "":
     #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
     #         json.dump(result_dict, json_file)
@@ -92,7 +102,7 @@ def dashboard():
     # return render_template('index_naime.html', result=result_dict, targeted_name=targeted_name)
 
 
-@api.route('/searchList', methods=['GET'])
+@api.route('/api/searchList', methods=['GET'])
 def searchCountInfo():
     result_dict = {}
     targeted_name = ""
@@ -104,7 +114,7 @@ def searchCountInfo():
         return result_dict
 
 
-@api.route('/popularSearches', methods=['GET'])
+@api.route('/api/popularSearches', methods=['GET'])
 def popularSearchesInfo():
     count_ = func.count('*')
     limit=5
@@ -121,7 +131,7 @@ def popularSearchesInfo():
 
     return {}
 
-@api.route('/rankResults', methods=['PUT'])
+@api.route('/api/rankResults', methods=['PUT'])
 def rankResults():
     if not request.json:
         abort(400)
@@ -150,20 +160,21 @@ def rankResults():
     return name
 
 
-@api.route('/signUp', methods=['POST'])
+@api.route('/api/signUp', methods=['POST'])
 def SignUp():
     if not request.json:
         abort(400)
     user_info = request.json
     username_and_password = user_info['user_name'] + user_info['password']
     hashed_password = bcrypt.encrypt(username_and_password)
-    new_user = Users(user_name=user_info['user_name'], first_name=user_info['first_name'], last_name=user_info['last_name'], email=user_info['email'], password=hashed_password)
+    api_key = secrets.token_urlsafe(16)
+    new_user = Users(user_name=user_info['user_name'], first_name=user_info['first_name'], last_name=user_info['last_name'], email=user_info['email'], password=hashed_password, api_key=api_key)
     db.session.add(new_user)
     db.session.commit()
     return {}
 
 
-@api.route('/signUpCheck', methods=['GET'])
+@api.route('/api/signUpCheck', methods=['GET'])
 def SignUpCheck():
     user_name = request.args.get('user_name')
     user_name_search = db.session.query(Users).filter(Users.user_name == user_name).all()
@@ -171,7 +182,7 @@ def SignUpCheck():
         return {"result": False}
     return {"result": True}
 
-@api.route('/login', methods=["POST"])
+@api.route('/api/login', methods=["POST"])
 def login():
     user_name = request.json.get("user_name", None)
     password = request.json.get("password", None)
@@ -197,13 +208,14 @@ def login():
         "first_name": user.first_name,
         "last_name": user.last_name,
         "email": user.email,
+        "api_key": user.api_key,
         "likes": likes,
         "dislikes": dislikes
     }
     # access_token = create_access_token(identity=user_name)
     return user_info
 
-@api.route('/lastSearches', methods=["GET"])
+@api.route('/api/lastSearches', methods=["GET"])
 def lastSearches():
     username = request.args.get('username')
     if username:
@@ -220,9 +232,9 @@ def lastSearches():
             print(json.dumps([(result[0]) for result in results]))
             return json.dumps([(result[0]) for result in results])
 
-    return {}
+    return json.dumps([])
 
-@api.route('/lastRanks', methods=["GET"])
+@api.route('/api/lastRanks', methods=["GET"])
 def lastRanks():
     username = request.args.get('username')
     if username:
@@ -236,9 +248,9 @@ def lastRanks():
         if results:
             return json.dumps([(result[0], result[1]) for result in results])
 
-    return {}
+    return json.dumps([])
 
-@api.route('/lastDislike', methods=["GET"])
+@api.route('/api/lastDislike', methods=["GET"])
 def lastDislike():
     username = request.args.get('username')
     if username:
@@ -251,8 +263,30 @@ def lastDislike():
 
         if results:
             return json.dumps([(result[0], result[1]) for result in results])
+    return json.dumps([])
 
-    return {}
+
+# @api.route('/api/suggestions, methods=["GET"])
+# def suggestions():
+#     selected_name = request.args.get('name')
+#     username = request.args.get('username')
+#     return dashboard()
+#     # key = request.args.get('key')
+#     # name = request.args.get('name')
+    
+#     # if key == "123":
+#     #     return 
+
+#     # # try:
+#     # #     api_key = ApiKey.objects.get(user=someuser)
+#     # #     api_key.key = None
+#     # #     api_key.save()
+#     # # except ApiKey.DoesNotExist:
+#     # #     api_key = ApiKey.objects.create(user=someuser)
+
+#     # return {"noaa": "yay"}
+
+
 
 
 

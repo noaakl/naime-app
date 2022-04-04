@@ -9,7 +9,7 @@ const PopularNames = ({ searchedName }) => {
     const getPopularNames = (searchVal) => {
         axios({
           method: "GET",
-          url: `/popularSearches?name=${searchVal}`
+          url: `/api/popularSearches?name=${searchVal}`
         })
         .then((response) => {
             if (response.data!=={}) {

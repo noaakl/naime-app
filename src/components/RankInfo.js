@@ -36,7 +36,7 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
                 like: name.like,
                 dislike: name.dislike
             }
-            axios.put('/rankResults', rankData)
+            axios.put('/api/rankResults', rankData)
             // .then(
             //     function (response) {
             //         setName(response.data)

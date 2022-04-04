@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Styles from '../App.module.scss'
 import SearchCount from './SearchCount'
 import RankInfo from './RankInfo'
+import Api from './Api'
 import { Card, Row, Col, Dropdown } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
@@ -45,15 +46,20 @@ const Results = ({ searchedName, algorithemsData }) => {
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}>
                 <Row>
-                    <h2 className={Styles.result_title}>Suggested Synonyms for the name '{searchedName}'</h2>
+                    <Col className={Styles.result_title}>
+                    <h2>Suggested Synonyms for the name '{searchedName}'</h2>
+                    <Col >
+                    <Api name={searchedName}/>
+                    </Col>
+                    </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: -20, marginBottom: 30 }}>
                         <strong>more info</strong><SearchCount searchedName={searchedName} />
                     </Col>
                 </Row>
-                <Row xs={1} md={1} lg={4}>
-                    <Col style={{ margin: 5 }}>
+                <Row className={Styles.dropdowns} xs={1} md={1} lg={4}>
+                    <Col>
                         <Dropdown>
                             <strong>sort by  </strong><SortDown style={{ marginRight: "15px", marginLeft: "5px" }} /><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
                                 {sortValue}
@@ -76,7 +82,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                         </Dropdown>
                     </Col>
 
-                    <Col style={{ margin: 5 }}>
+                    <Col>
                         <Dropdown>
                             <strong>filter by  </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
                             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">

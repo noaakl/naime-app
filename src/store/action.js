@@ -8,6 +8,7 @@ export function login(userInfo) {
   const firstName = userInfo.first_name
   const lastName = userInfo.last_name
   const email = userInfo.email
+  const api_key = userInfo.api_key
   const likes = userInfo.likes
   const dislikes = userInfo.dislikes
   return {
@@ -17,6 +18,7 @@ export function login(userInfo) {
         firstName,
         lastName,
         email,
+        api_key,
         likes,
         dislikes,
     },

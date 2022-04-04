@@ -30,7 +30,7 @@ const Home = () => {
         // }
         axios({
             method: "GET",
-            url: `/nameList?name=${searchVal}&username=${username}`
+            url: `/api/suggestions?name=${searchVal}&username=${username}`
         })
             .then((response) => {
                 if (typeof response.data.soundex !== 'undefined') {

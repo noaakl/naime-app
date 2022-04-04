@@ -101,16 +101,13 @@ body:before {
 	margin-left: 8px;
 }
 
-
-
 .result_wrapper{
-    margin: 40px 0 50px;
+    // margin: 40px 0 50px;
 
     .result_title{
-        margin: 40px 0 25px;
+        margin: 40px 0 15px;
         float: left;
         // color: white;
-        cursor: pointer;
 		font-size: 22px;
 
         h2 {
@@ -118,7 +115,6 @@ body:before {
             position: relative;
             float: left;
         }
-
     }
 
     .info_icon{
@@ -130,7 +126,19 @@ body:before {
 		:hover{
 			color: rgb(63, 63, 63);
 		}
-    }}
+	}
+
+	.api{
+		margin: -10px;
+	}
+
+	.dropdowns{
+		margin: 55px 5px 5px 5px;
+	}
+
+    }
+
+	
 
 	// .sort {
 	// 	opacity: 0.6;

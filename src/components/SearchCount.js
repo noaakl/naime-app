@@ -12,7 +12,7 @@ const SearchCount = ({ searchedName }) => {
     const getNameInfo = (searchVal) => {
         axios({
           method: "GET",
-          url: `/searchList?name=${searchVal}`
+          url: `/api/searchList?name=${searchVal}`
         })
         .then((response) => {
             setCount(response.data.count)
