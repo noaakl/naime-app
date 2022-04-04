@@ -48,9 +48,9 @@ const Results = ({ searchedName, algorithemsData }) => {
                 <Row>
                     <Col className={Styles.result_title}>
                     <h2>Suggested Synonyms for the name '{searchedName}'</h2>
-                    <Col >
+                    {/* <Col > */}
                     <Api name={searchedName}/>
-                    </Col>
+                    {/* </Col> */}
                     </Col>
                 </Row>
                 <Row>
