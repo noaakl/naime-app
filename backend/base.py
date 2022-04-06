@@ -210,7 +210,9 @@ def login():
         "email": user.email,
         "api_key": user.api_key,
         "likes": likes,
-        "dislikes": dislikes
+        "dislikes": dislikes,
+        "likes_count": len(user_likes),
+        "dislikes_count": len(user_dislikes)
     }
     # access_token = create_access_token(identity=user_name)
     return user_info
@@ -264,30 +266,4 @@ def lastDislike():
         if results:
             return json.dumps([(result[0], result[1]) for result in results])
     return json.dumps([])
-
-
-# @api.route('/api/suggestions, methods=["GET"])
-# def suggestions():
-#     selected_name = request.args.get('name')
-#     username = request.args.get('username')
-#     return dashboard()
-#     # key = request.args.get('key')
-#     # name = request.args.get('name')
-    
-#     # if key == "123":
-#     #     return 
-
-#     # # try:
-#     # #     api_key = ApiKey.objects.get(user=someuser)
-#     # #     api_key.key = None
-#     # #     api_key.save()
-#     # # except ApiKey.DoesNotExist:
-#     # #     api_key = ApiKey.objects.create(user=someuser)
-
-#     # return {"noaa": "yay"}
-
-
-
-
-
-        
+       

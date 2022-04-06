@@ -8,8 +8,11 @@ const INITIAL_STATE = {
     firstName: "",
     lastName: "",
     email: "",
+    apiKey: "",
     likes: {},
     dislikes: {},
+    likesCount: {},
+    dislikesCount: {},
 };
 
 const Reduser = (state = INITIAL_STATE, action) => {
@@ -22,9 +25,11 @@ const Reduser = (state = INITIAL_STATE, action) => {
         lastName: user.lastName,
         username: user.username,
         email: user.email,
-        api_key: user.api_key,
+        apiKey: user.apiKey,
         likes: user.likes,
-        dislikes: user.dislikes
+        dislikes: user.dislikes,
+        likesCount: user.likesCount,
+        dislikesCount: user.dislikesCount
       };
     }
 
@@ -38,6 +43,8 @@ const Reduser = (state = INITIAL_STATE, action) => {
         api_key: "",
         likes: {},
         dislikes: {},
+        likesCount: {},
+        dislikesCount: {},
       };
     }
 

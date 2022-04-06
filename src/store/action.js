@@ -8,9 +8,11 @@ export function login(userInfo) {
   const firstName = userInfo.first_name
   const lastName = userInfo.last_name
   const email = userInfo.email
-  const api_key = userInfo.api_key
+  const apiKey = userInfo.api_key
   const likes = userInfo.likes
   const dislikes = userInfo.dislikes
+  const likesCount = userInfo.likes_count
+  const dislikesCount = userInfo.dislikes_count
   return {
     type: LOGIN,
     payload: {
@@ -18,9 +20,11 @@ export function login(userInfo) {
         firstName,
         lastName,
         email,
-        api_key,
+        apiKey,
         likes,
         dislikes,
+        likesCount,
+        dislikesCount
     },
   };
 }

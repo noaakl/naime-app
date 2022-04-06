@@ -15,9 +15,11 @@ const UserInfo = () => {
     const [lastdislike, setlastdislike] = useState([])
 
     const likes = useSelector((state) => state.reduser.likes);
-    const likesNumber = Object.keys(likes).length;
+    const likesNumber = useSelector((state) => state.reduser.likesCount);
+    // const likesNumber = Object.keys(likes).length;
     const dislikes = useSelector((state) => state.reduser.dislikes);
-    const dislikesNumber = Object.keys(dislikes).length;
+    const dislikesNumber = useSelector((state) => state.reduser.dislikesCount);
+    // const dislikesNumber = Object.keys(dislikes).length;
 
     const username = useSelector((state) => state.reduser.username);
     const first_name = useSelector((state) => state.reduser.firstName);
