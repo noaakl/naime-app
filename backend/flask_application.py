@@ -12,7 +12,8 @@ __author__ = "Aviad Elyashar"
 class FlaskApplication:
     def __init__(self):
         # app = Flask(__name__, template_folder='../templates', static_folder='../static')
-        app = Flask(__name__)
+        # app = Flask(__name__)
+        app = Flask(__name__, static_folder='../build', static_url_path='/')
         self._app = app
 
         self._app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spoken_names_app.db?check_same_thread=False'

@@ -70,9 +70,9 @@ jwt = JWTManager(api)
 
 
 
-
-
-
+@api.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
