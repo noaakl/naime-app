@@ -76,7 +76,6 @@ jwt = JWTManager(api)
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
-    print(request)
     result_dict = {}
     targeted_name = ""
     if request.method == 'GET':
@@ -291,7 +290,6 @@ def lastSearches():
 
         if results:
             # return {result[0]: result[1] for result in results}
-            print(json.dumps([(result[0]) for result in results]))
             return json.dumps([(result[0]) for result in results])
 
     return json.dumps([])
