@@ -17,7 +17,7 @@ const SingUp = () => {
   const isPasswordMatch = !confirmPassword || password === confirmPassword;
   const isEmailValid = String(email).toLowerCase().match(
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-  const error = !username.length>3 || !firstName.length>3 || !lastName.length>3 || !isEmailValid || !password.length>6 || !isNameNotTaken || !isPasswordMatch;
+  const error = !username.length>2 || !firstName.length>2 || !lastName.length>2 || !isEmailValid || !password.length>6 || !isNameNotTaken || !isPasswordMatch;
   // const [error, setError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -92,7 +92,7 @@ const SingUp = () => {
                 <Form.Label className="label">User Name</Form.Label>
                 <Form.Control placeholder="Enter User Name" onChange={(e) => handleFill(e, setUsername)} className="input"
                   value={username} type="text" />
-                {validateValue(username, "User name must contain atleat 3 characters", 3)}
+                {validateValue(username, "User name must contain atleat 2 characters", 2)}
                 {validateValue(isNameNotTaken, "User Name already exist. Please try again")}
               </Form.Group>
 
@@ -100,14 +100,14 @@ const SingUp = () => {
                 <Form.Label className="label">First Name</Form.Label>
                 <Form.Control placeholder="Enter First Name" onChange={(e) => handleFill(e, setFirstName)} className="input"
                   value={firstName} type="text" />
-                {validateValue(firstName, "First name must contain atleat 3 characters", 3)}
+                {validateValue(firstName, "First name must contain atleat 2 characters", 2)}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formLastName">
                 <Form.Label className="label">Last Name</Form.Label>
                 <Form.Control placeholder="Enter Last Name" onChange={(e) => handleFill(e, setLastName)} className="input"
                   value={lastName} type="text" />
-                {validateValue(lastName, "Last name must contain atleat 3 characters", 3)}
+                {validateValue(lastName, "Last name must contain atleat 2 characters", 2)}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formEmail">

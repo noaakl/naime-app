@@ -7,10 +7,10 @@ import { Download } from 'react-bootstrap-icons';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
-import ToggleButton from 'react-bootstrap/ToggleButton'
 
 const Api = ({ name }) => {
-    const apiKey = useSelector((state) => state.reduser.api_key);
+    const apiKey = useSelector((state) => state.reduser.apiKey);
+    console.log(apiKey)
     const fileName = `naime suggestions for ${name}`
     // const [fileName, setfileName] = useState(`naime suggestions for ${name}`)
     const [copied, setCopied] = useState(false)

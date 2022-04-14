@@ -11,8 +11,8 @@ const INITIAL_STATE = {
     apiKey: "",
     likes: {},
     dislikes: {},
-    likesCount: {},
-    dislikesCount: {},
+    likesCount: 0,
+    dislikesCount: 0,
 };
 
 const Reduser = (state = INITIAL_STATE, action) => {
@@ -40,11 +40,11 @@ const Reduser = (state = INITIAL_STATE, action) => {
         lastName: "",
         username: "",
         email: "",
-        api_key: "",
+        apiKey: "",
         likes: {},
         dislikes: {},
-        likesCount: {},
-        dislikesCount: {},
+        likesCount: 0,
+        dislikesCount: 0,
       };
     }
 
@@ -54,6 +54,7 @@ const Reduser = (state = INITIAL_STATE, action) => {
       const prevLikes = name in state.likes? state.likes[name] : null
       return {
         ...state,
+        likesCount: state.likesCount + 1,
         likes: {
           ...state.likes,
           [name]: prevLikes? [...prevLikes, candidate] : [candidate]
@@ -67,6 +68,7 @@ const Reduser = (state = INITIAL_STATE, action) => {
       const prevDislikes = name in state.dislikes? state.dislikes[name] : null
       return {
         ...state,
+        dislikesCount: state.dislikesCount + 1,
         dislikes: {
           ...state.dislikes,
           [name]: prevDislikes? [...prevDislikes, candidate] : [candidate]

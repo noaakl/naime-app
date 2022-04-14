@@ -28,7 +28,7 @@ const SearchCount = ({ searchedName }) => {
                     <Popover id={`popover-info`} >
                         <PopoverBody bsPrefix={Styles.popover}>
                             The name <strong>'{searchedName}'</strong> was searched {'\n'}<strong>{count}</strong> times.{'\n'}{'\n'}
-                            For more information about '{searchedName}' please see <a target="_blank" href={`https://www.behindthename.com/name/${searchedName}`}>Behind The Names</a>
+                            For more information about '{searchedName}' please see <a target="_blank" href={`https://www.behindthename.com/name/${searchedName}`}>Behind The Name</a>
                         </PopoverBody>
                     </Popover>
                 }
