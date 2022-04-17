@@ -13,9 +13,8 @@ class PhoneticAlgorithmsCodes(db.Model):
     double_metaphone_secondary = db.Column(db.TEXT, nullable=False)
     nysiis = db.Column(db.TEXT, nullable=False)
     match_rating_codex = db.Column(db.TEXT, nullable=False)
-    user_rank = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return "<PhoneticAlgorithmsCodes(name='%s',soundex='%s',metaphone='%s', double_metaphone_primary='%s',double_metaphone_secondary='%s', nysiis='%s', match_rating_codex='%s', user_rank='%s')>" % (
+        return "<PhoneticAlgorithmsCodes(name='%s',soundex='%s',metaphone='%s', double_metaphone_primary='%s',double_metaphone_secondary='%s', nysiis='%s', match_rating_codex='%s')>" % (
             self.name, self.soundex, self.metaphone, self.double_metaphone_primary, self.double_metaphone_secondary,
-            self.nysiis, self.match_rating_codex, self.user_rank)
+            self.nysiis, self.match_rating_codex)
