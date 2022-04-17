@@ -130,22 +130,22 @@ body:before {
 	// 	}
 	// }
 
-	.api{
-		margin: -10px;
-		display: inline;
-	}
+	// .api{
+	// 	margin: -10px;
+	// 	display: inline;
+	// }
 
-	.dropdowns{
-		margin-right: 5px;
-		margin-left: 5px;
-		margin-top: 55px;
-		margin-bottom: 5px;
-	}
+	// .dropdowns{
+	// 	margin-right: 5px;
+	// 	margin-left: 5px;
+	// 	margin-top: 55px;
+	// 	margin-bottom: 5px;
+	// }
 
-	.dropdownsCol{
-		margin: 5px;
-	}
-}
+	// .dropdownsCol{
+	// 	margin: 5px;
+	// }
+// }
 
 	
 
@@ -435,10 +435,18 @@ body:before {
 
 	.api{
 		margin: -10px;
+		display: inline;
 	}
 
 	.dropdowns{
-		margin: 55px 5px 5px 5px;
+		margin-right: 5px;
+		margin-left: 5px;
+		margin-top: 55px;
+		margin-bottom: 5px;
+	}
+
+	.dropdownsCol{
+		margin: 5px;
 	}
 }
 
