@@ -22,7 +22,7 @@ const Api = ({ name }) => {
 
     useEffect(() => {
         getSuggestions()
-        ConvertSuggestionsToCSV()
+        // ConvertSuggestionsToCSV()
     }, [name]);
 
     const getSuggestions = () => {
@@ -35,12 +35,12 @@ const Api = ({ name }) => {
             })
     }
 
-    const ConvertSuggestionsToCSV = () => {
-        let json2csv = require("json2csv");
-        setCsvData(json2csv.parse(suggestions, { fields: Object.keys(suggestions) }))
+    // const ConvertSuggestionsToCSV = () => {
+    //     let json2csv = require("json2csv");
+    //     setCsvData(json2csv.parse(suggestions, { fields: Object.keys(suggestions) }))
 
 
-    }
+    // }
 
     const downloadCSV = () => {
         const data = csvData
@@ -82,7 +82,7 @@ const Api = ({ name }) => {
     }
 
     return (
-        <div style={{ display: apiKey ? '' : 'none', }}>
+        <div style={{ display: apiKey ? 'inline' : 'none', }}>
 
 
             <Dropdown className={Styles.api} >

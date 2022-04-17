@@ -20,8 +20,7 @@ const LikeButton = ({ show, name, rankFunc, rank, disable }) => {
                     <Popover id={`popover-rank-info`} >
                         <PopoverBody bsPrefix={Styles.popover}>
                             Liked by {name.add_rank>0 ? `you and ${name.like}` : name.like} others{'\n'}
-                            DisLiked by {name.add_rank<0 ? `you and ${name.like}` : name.like} others
-                        </PopoverBody>
+                            DisLiked by {name.add_rank<0 ? `you and ${-name.dislike}` : -name.dislike} others                        </PopoverBody>
                     </Popover>) : (<></>)
                 }
             >

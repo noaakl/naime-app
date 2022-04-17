@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Styles from '../App.module.scss'
 import SearchCount from './SearchCount'
 import RankInfo from './RankInfo'
@@ -13,6 +14,8 @@ const Results = ({ searchedName, algorithemsData }) => {
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
     const [algorithems, setAlgorithems] = useState([])
+    const rankStates = ["likes","dislikes","both","no rank"]
+    const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","both","no rank"])
     // const algorithemMapping = {}
 
     useEffect(() => {
@@ -36,6 +39,36 @@ const Results = ({ searchedName, algorithemsData }) => {
         setAlgorithems(checkedAlgorithems)
     }
 
+    const handleFilterByRankCheck = (value) => {
+        const checkedRank = rankStatesChecked.slice()
+        if (checkedRank.includes(value)) {
+            const valueIndex = rankStatesChecked.indexOf(value);
+            checkedRank.splice(valueIndex, 1);
+        }
+        else {
+            checkedRank.splice(0, 0, value);
+        }
+        setRankStatesChecked(checkedRank)
+    }
+
+    const handleFilterByRankShow = (like,dislike,algorithem) => {
+        if (algorithem!="spoken_name_2_vec" && algorithem!="family_trees")
+            return true
+        else {
+            const checkedRank = rankStatesChecked.slice()
+            if (checkedRank.includes("likes") && like > 0 && dislike == 0){return true}
+            if (checkedRank.includes("dislikes") && dislike < 0 && like == 0) {return true}
+            if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
+            if (checkedRank.includes("no rank") && dislike == 0 && like == 0){return true}
+        }
+
+        return false
+    }
+
+    const isCheckedRank = (value) => {
+        return rankStatesChecked.includes(value)
+    }
+
     const isChecked = (value) => {
         return algorithems.includes(value)
     }
@@ -47,19 +80,25 @@ const Results = ({ searchedName, algorithemsData }) => {
             <div className={Styles.result_wrapper}>
                 <Row>
                     <Col className={Styles.result_title}>
-                    <h2>Suggested Synonyms for the name '{searchedName}'</h2>
+                    <h2 style={{textAlign:"center"}}>Suggested Synonyms for the name '{searchedName}'</h2>
                     {/* <Col > */}
                     <Api name={searchedName}/>
                     {/* </Col> */}
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{ marginTop: -20, marginBottom: 30 }}>
+                    <Col style={{ marginTop: -20, marginBottom: 30 , textAlign:"center"}}>
                         <strong>more info</strong><SearchCount searchedName={searchedName} />
                     </Col>
                 </Row>
+                <Row>
+                    <Card><Card.Body style={{textAlign:"center"}}><b>Do you want to rank your results? keep track on your searchs? <br/><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                </Row>
+                {/* <Row style ={{marginTop:"15px"}}>
+                    <Card><Card.Body style={{textAlign:"center"}}>Search in google </Card.Body></Card>
+                </Row> */}
                 <Row className={Styles.dropdowns} xs={1} md={1} lg={4}>
-                    <Col>
+                    <Col className={Styles.dropdownsCol}>
                         <Dropdown>
                             <strong>sort by  </strong><SortDown style={{ marginRight: "15px", marginLeft: "5px" }} /><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
                                 {sortValue}
@@ -82,11 +121,11 @@ const Results = ({ searchedName, algorithemsData }) => {
                         </Dropdown>
                     </Col>
 
-                    <Col>
-                        <Dropdown>
-                            <strong>filter by  </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
+                    <Col style={{width:"500px"}} className={Styles.dropdownsCol}>
+                        <Dropdown style={{display:"inline", margin:"5px"}}>
+                            <strong>Filter by </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
                             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
-                                {"Type"}
+                                {"Algorithem"}
 
                             </Dropdown.Toggle>
 
@@ -109,7 +148,34 @@ const Results = ({ searchedName, algorithemsData }) => {
                                 </Form>
                             </Dropdown.Menu>
                         </Dropdown>
+                        <Dropdown style={{display:"inline"}}>
+                            <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
+                                {"Rank"}
+
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Form>
+                                    {rankStates.map((rankOption) => {
+                                        return (
+                                            <div className={Styles.filter}>
+                                            <Form.Check
+                                                label={rankOption}
+                                                type="checkbox"
+                                                id={rankOption}
+                                                name="algorithems"
+                                                checked={isCheckedRank(rankOption)}
+                                                onChange={() => handleFilterByRankCheck(rankOption)} />
+                                                </div>
+                                        )
+                                    })
+                                    }
+                                </Form>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Col>
+
+         
 
                 </Row>
             </div>
@@ -130,7 +196,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                                         // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                                         return (
                                             <>
-                                                <Row key={name} >
+                                                {handleFilterByRankShow(name.like,name.dislike, algorithem) && <Row key={name} >
                                                     <Col key={`${name}_col`} className={Styles.resultcol}>
                                                         <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>
@@ -139,6 +205,7 @@ const Results = ({ searchedName, algorithemsData }) => {
                                                         <RankInfo searchedName={searchedName} name={name} algorithem={algorithem} />
                                                     </Col>
                                                 </Row>
+                                    }
                                             </>
                                         )
                                     })}</Card.Body>

@@ -109,11 +109,14 @@ body:before {
         float: left;
         // color: white;
 		font-size: 22px;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
 
         h2 {
             list-style: none;
             position: relative;
-            float: left;
+			display: inline;
         }
     }
 
@@ -130,13 +133,20 @@ body:before {
 
 	.api{
 		margin: -10px;
+		display: inline;
 	}
 
 	.dropdowns{
-		margin: 55px 5px 5px 5px;
+		margin-right: 5px;
+		margin-left: 5px;
+		margin-top: 55px;
+		margin-bottom: 5px;
 	}
 
-    }
+	.dropdownsCol{
+		margin: 5px;
+	}
+}
 
 	
 
