@@ -10,7 +10,6 @@ import PopoverBody from 'react-bootstrap/PopoverBody'
 
 const Api = ({ name }) => {
     const apiKey = useSelector((state) => state.reduser.apiKey);
-    console.log(apiKey)
     const fileName = `naime suggestions for ${name}`
     // const [fileName, setfileName] = useState(`naime suggestions for ${name}`)
     const [copied, setCopied] = useState(false)
@@ -22,7 +21,7 @@ const Api = ({ name }) => {
 
     useEffect(() => {
         getSuggestions()
-        ConvertSuggestionsToCSV()
+        // ConvertSuggestionsToCSV()
     }, [name]);
 
     const getSuggestions = () => {
@@ -35,19 +34,19 @@ const Api = ({ name }) => {
             })
     }
 
-    const ConvertSuggestionsToCSV = () => {
-        let json2csv = require("json2csv");
-        setCsvData(json2csv.parse(suggestions, { fields: Object.keys(suggestions) }))
+    // const ConvertSuggestionsToCSV = () => {
+    //     let json2csv = require("json2csv");
+    //     setCsvData(json2csv.parse(suggestions, { fields: Object.keys(suggestions) }))
 
 
-    }
+    // }
 
-    const downloadCSV = () => {
-        const data = csvData
-        console.log(data)
-        const type = 'text/csv'
-        return download(data, type)
-    }
+    // const downloadCSV = () => {
+    //     const data = csvData
+    //     console.log(data)
+    //     const type = 'text/csv'
+    //     return download(data, type)
+    // }
 
     const downloadJson = () => {
         const data = JSON.stringify(suggestions)
