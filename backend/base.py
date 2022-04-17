@@ -3,11 +3,13 @@ import json
 import secrets
 from flask import Flask, request, jsonify
 from datetime import datetime, timedelta, timezone
-from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
-                               unset_jwt_cookies, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, \
+    unset_jwt_cookies, jwt_required, JWTManager
 from flask_application import FlaskApplication
 from sqlalchemy import func, desc
-from utils import convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, match_rating_codex_suggest_names
+from utils import createQuery, convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, \
+    soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, \
+    match_rating_codex_suggest_names
 from UserSearch import UserSearch
 from UsersLikes import UsersLikes
 from UsersDislikes import UsersDislikes
@@ -23,6 +25,7 @@ db = app.get_db()
 api.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
+
 
 # @api.after_request
 # def refresh_expiring_jwts(response):
@@ -69,14 +72,9 @@ jwt = JWTManager(api)
 #     return response_body
 
 
-
-
-
-
-
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
-    print(request)
+    # print(request)
     result_dict = {}
     targeted_name = ""
     if request.method == 'GET':
@@ -138,7 +136,8 @@ def dashboard():
             # result_dict = name_not_exists_suggest_names(selected_name, result_dict)
         new_user_search = ""
         if username:
-            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English", user_name=username)
+            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
+                                         user_name=username)
         else:
             new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
         db.session.add(new_user_search)
@@ -153,7 +152,6 @@ def dashboard():
     # if targeted_name != "":
     #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
     #         json.dump(result_dict, json_file)
-
     return json.dumps(result_dict)
     # return render_template('dashboard.html', result=result_dict, targeted_name=targeted_name)
     # return render_template('index_naime.html', result=result_dict, targeted_name=targeted_name)
@@ -174,12 +172,12 @@ def searchCountInfo():
 @api.route('/api/popularSearches', methods=['GET'])
 def popularSearchesInfo():
     count_ = func.count('*')
-    limit=5
-    results = db.session.query(UserSearch.selected_name, count_).\
-        filter(UserSearch.selected_name != '').\
-        group_by(UserSearch.selected_name).\
-        order_by(count_.desc()).\
-        limit(limit).\
+    limit = 5
+    results = db.session.query(UserSearch.selected_name, count_). \
+        filter(UserSearch.selected_name != ''). \
+        group_by(UserSearch.selected_name). \
+        order_by(count_.desc()). \
+        limit(limit). \
         all()
 
     if results:
@@ -187,6 +185,7 @@ def popularSearchesInfo():
         return json.dumps([(result[0], result[1]) for result in results])
 
     return {}
+
 
 @api.route('/api/rankResults', methods=['PUT'])
 def rankResults():
@@ -203,7 +202,7 @@ def rankResults():
         "type_name": type_name,
         "language": language,
         "candidate": candidate,
-        }
+    }
     name_suggestion = db.session.query(NameSuggestion).get(name)
     user_rank = {}
     if rankData['add_rank'] > 0:
@@ -225,7 +224,9 @@ def SignUp():
     username_and_password = user_info['user_name'] + user_info['password']
     hashed_password = bcrypt.encrypt(username_and_password)
     api_key = secrets.token_urlsafe(16)
-    new_user = Users(user_name=user_info['user_name'], first_name=user_info['first_name'], last_name=user_info['last_name'], email=user_info['email'], password=hashed_password, api_key=api_key)
+    new_user = Users(user_name=user_info['user_name'], first_name=user_info['first_name'],
+                     last_name=user_info['last_name'], email=user_info['email'], password=hashed_password,
+                     api_key=api_key)
     db.session.add(new_user)
     db.session.commit()
     return {}
@@ -238,6 +239,7 @@ def SignUpCheck():
     if len(user_name_search) > 0:
         return {"result": False}
     return {"result": True}
+
 
 @api.route('/api/login', methods=["POST"])
 def login():
@@ -265,7 +267,7 @@ def login():
 
     user_info = {
         "user_name": user.user_name,
-        "access_token":access_token,
+        "access_token": access_token,
         "first_name": user.first_name,
         "last_name": user.last_name,
         "email": user.email,
@@ -277,53 +279,73 @@ def login():
     }
     return user_info
 
+
 @api.route('/api/lastSearches', methods=["GET"])
 def lastSearches():
     username = request.args.get('username')
     if username:
-        limit=5
-        results = db.session.query(UserSearch.selected_name, UserSearch.search_date).\
-            filter(UserSearch.selected_name != '' and UserSearch.user_name == username).\
-            order_by(desc(UserSearch.search_date)).\
-            limit(limit).\
+        limit = 5
+        results = db.session.query(UserSearch.selected_name, UserSearch.search_date). \
+            filter(UserSearch.selected_name != '' and UserSearch.user_name == username). \
+            order_by(desc(UserSearch.search_date)). \
+            limit(limit). \
             all()
-            # group_by(UserSearch.selected_name).\
+        # group_by(UserSearch.selected_name).\
 
         if results:
             # return {result[0]: result[1] for result in results}
-            print(json.dumps([(result[0]) for result in results]))
+            # print(json.dumps([(result[0]) for result in results]))
             return json.dumps([(result[0]) for result in results])
 
     return json.dumps([])
+
 
 @api.route('/api/lastRanks', methods=["GET"])
 def lastRanks():
     username = request.args.get('username')
     if username:
-        limit=5
-        results = db.session.query(UsersLikes.selected_name, UsersLikes.candidate, UsersLikes.date).\
-            filter(UsersLikes.user_name == username).\
-            order_by(desc(UsersLikes.date)).\
-            limit(limit).\
+        limit = 5
+        results = db.session.query(UsersLikes.selected_name, UsersLikes.candidate, UsersLikes.date). \
+            filter(UsersLikes.user_name == username). \
+            order_by(desc(UsersLikes.date)). \
+            limit(limit). \
             all()
 
         if results:
             return json.dumps([(result[0], result[1]) for result in results])
 
     return json.dumps([])
+
 
 @api.route('/api/lastDislike', methods=["GET"])
 def lastDislike():
     username = request.args.get('username')
     if username:
-        limit=5
-        results = db.session.query(UsersDislikes.selected_name, UsersDislikes.candidate, UsersDislikes.date).\
-            filter(UsersDislikes.user_name == username).\
-            order_by(desc(UsersDislikes.date)).\
-            limit(limit).\
+        limit = 5
+        results = db.session.query(UsersDislikes.selected_name, UsersDislikes.candidate, UsersDislikes.date). \
+            filter(UsersDislikes.user_name == username). \
+            order_by(desc(UsersDislikes.date)). \
+            limit(limit). \
             all()
 
         if results:
             return json.dumps([(result[0], result[1]) for result in results])
     return json.dumps([])
-       
+
+
+@api.route('/api/googleSearch', methods=["POST"])
+def googleSearch():
+    try:
+        from googlesearch import search
+        name = request.json.get("name", "")
+        suggestions = request.json.get("suggestions", {})
+        user_likes = request.json.get("userLikes", [])
+        # print(suggestions)
+        query = createQuery(name, suggestions, user_likes)
+        print(query)
+        # query = "noaa"
+        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2)]
+        return json.dumps(res)
+    except ImportError:
+        print("No module named 'google' found")
+        return {}

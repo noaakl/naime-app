@@ -3,15 +3,18 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Styles from "../App.module.scss";
 import Results from './Results';
+import GoogleSearch from './GoogleSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search } from 'react-bootstrap-icons';
 
 const Home = () => {
     const username = useSelector((state) => state.reduser.username);
+    const [suggestions, setSuggestions] = useState({})
     const [nameToSearch, setNameToSearch] = useState("")
     const [algorithemsData, setAlgorithemsData] = useState({})
     const [searchedName, setSearchedName] = useState("")
     const [showResults, setShowResults] = useState(false)
+    const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
 
     useEffect(() => {
         setNameToSearch("")
@@ -34,6 +37,8 @@ const Home = () => {
         })
             .then((response) => {
                 if (typeof response.data.soundex !== 'undefined') {
+                    // console.log(response.data)
+                    setSuggestions(response.data)
                     const spoken_name_2_vec = response.data.spoken_name_2_vec;
                     const double_metaphone = response.data.double_metaphone;
                     const family_trees = response.data.family_trees;
@@ -60,13 +65,13 @@ const Home = () => {
 
     return (
         <>
-            <div className={showResults ? Styles.page_title : Styles.page_title_before}>
+            <div className={showResults ? Styles.page : Styles.search_page}>
                 <h1>nAIme</h1>
                 <div>Similar Name Suggestor</div>
                 <div className={Styles.search_wraper} >
                     <div className={Styles.search_inner}>
-                        <input className={Styles.form_control} value={nameToSearch} onKeyPress={(e) => e.key === "Enter" ? searchName(nameToSearch) : ""} 
-                                onChange={(e) => setNameToSearch(e.target.value)} placeholder="Write name here (i.e Mike, Christina)" />
+                        <input className={Styles.form_control} value={nameToSearch} onKeyPress={(e) => e.key === "Enter" ? searchName(nameToSearch) : ""}
+                            onChange={(e) => setNameToSearch(e.target.value)} placeholder="Write name here (i.e Mike, Christina)" />
                         <span className={Styles.search_btn}>
                             <button className={Styles.search_btn} id="searchName" onClick={() => { searchName(nameToSearch) }} method="POST" >
                                 <Search size={20} />
@@ -79,11 +84,19 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className={Styles.container_fluid}>
-                {showResults && (
-                    <Results searchedName={searchedName} algorithemsData={algorithemsData} />)
-                }
-            </div>
+            {showResults && (
+                <>
+                    <div className={Styles.container_fluid}>
+                        <Results searchedName={searchedName} algorithemsData={algorithemsData} suggestionsExist={suggestionsExist} />
+                    </div>
+                    <div className={Styles.google}>
+                        <div className={Styles.container_fluid}>
+                            <GoogleSearch searchedName={searchedName} suggestions={suggestions} suggestionsExist={suggestionsExist} />
+                        </div>
+                    </div>
+                </>
+            )
+            }
 
         </>
     )

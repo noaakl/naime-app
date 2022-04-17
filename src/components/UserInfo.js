@@ -26,7 +26,6 @@ const UserInfo = () => {
     const last_name = useSelector((state) => state.reduser.lastName);
     const fullname = first_name+" "+last_name;
     const email = useSelector((state) => state.reduser.email);
-    console.log(likes)
     const getLastUserSearches = () => {
         axios({
             method: "GET",
@@ -67,7 +66,7 @@ const UserInfo = () => {
 
     return (
         <>
-            <div className={Styles.page_title}>
+            <div className={Styles.page}>
             <h1>Hello {username}</h1>
                 <div>Here is your info. Enjoy!</div>
             </div>

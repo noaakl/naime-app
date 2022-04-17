@@ -8,8 +8,8 @@ import { Card, Row, Col, Dropdown } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
-const Results = ({ searchedName, algorithemsData }) => {
-    const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
+const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
+    // const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
     const algorithemsNames = Object.keys(algorithemsData)
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)

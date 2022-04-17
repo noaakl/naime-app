@@ -1,9 +1,11 @@
+import math
+
 from PhoneticAlgorithmsCodes import PhoneticAlgorithmsCodes
 from flask_application import FlaskApplication
 import jellyfish
 import phonetics
+import editdistance
 
-from datetime import datetime
 flask_app = FlaskApplication()
 app = flask_app.get_app()
 db = flask_app.get_db()
@@ -133,6 +135,7 @@ def double_metaphone_suggest_names(selected_name, result_dict):
 
     candidates = []
     for name_suggestion in name_suggestions:
+        # print(name_suggestion)
         candidate_dict = flask_app.convert_name_suggestion_into_double_metaphone_result(name_suggestion)
         candidate_name = candidate_dict["candidate"]
         if candidate_name != selected_name:
@@ -187,17 +190,55 @@ def convertSuggestionsToJson(suggestions):
             res[algorithem] = []
             for candidate in suggestions[algorithem]:
                 res[algorithem].append(candidate["candidate"])
-                # print(candidate["candidate"])
-                # candidate = candidate["candidate"]
-
-        # if algorithem != "name":
-        #     print(suggestions[algorithem])
-            # suggestions[algorithem] = suggestions[algorithem]["candidate"]
-        # print(algorithem)
-        # for candidate in algorithem:
-        # noaa = suggestions[algorithem]
-        # print(noaa)
-        # print(candidate)
-            # print(noaa["candidate"])
-    #         uggestions[algorithem] = suggestions[algorithem]["candidate"]
     return res
+
+
+def createQuery(name, suggestions, user_likes):
+
+    def sort_by_likes_and_edit_distance(candidate, name=name, user_likes=user_likes):
+        if not name or not candidate:
+            return -math.inf
+        if candidate["name"] in user_likes:  # by specific user likes
+            return math.inf
+        if candidate["user_rank"] != 0:  # by all users likes and dislikes
+            return candidate["user_rank"]
+        # name = name.lower()
+        # candidate = candidate.lower()
+        edit_dist = editdistance.eval(name.lower(), candidate["name"].lower())  # by edit distance
+        return -edit_dist
+
+    top = 4
+    all_results = []
+    for algorithm in suggestions:
+        if algorithm != "name":
+            for suggestion in suggestions[algorithm]:
+                candidate_data = {
+                    "name": suggestion["candidate"],
+                    "user_rank": suggestion.get("user_rank", 0)
+                }
+                # print(candidate)
+                # all_results.append(candidate["candidate"])
+                all_results.append(candidate_data)
+    all_results.sort(key=sort_by_likes_and_edit_distance, reverse=True)
+    query = f"'{name}' OR "
+    for i in range(top):
+        if i < len(all_results):
+            candidate = all_results[i].get("name", '')
+            print(all_results[i])
+            if i < top - 1:
+                query += f"'{candidate}' OR "
+            else:
+                query += f"'{candidate}'"
+    print(query)
+    return query
+
+
+# def sort_by_likes_and_edit_distance(name, candidate, user_likes):
+#     if not name or not candidate:
+#         return math.inf
+#     if candidate in user_likes:
+#         return -1
+#     name = name.lower()
+#     candidate = candidate.lower()
+#     edit_dist = editdistance.eval(name, candidate)
+#     return edit_dist
