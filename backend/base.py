@@ -17,6 +17,8 @@ from NameSuggestion import NameSuggestion
 from AlgorithemsConstants import algorithems
 from Users import Users
 from passlib.hash import bcrypt
+import requests
+from lxml.html import fromstring
 
 app = FlaskApplication()
 api = app.get_app()
@@ -344,8 +346,16 @@ def googleSearch():
         query = createQuery(name, suggestions, user_likes)
         print(query)
         # query = "noaa"
-        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2)]
-        return json.dumps(res)
+        res = []
+        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
+        res_final = {}
+        for url in res:
+            print(url)
+            x = requests.get(url)
+            tree = fromstring(x.content)
+            print(tree.findtext('.//title'))
+            res_final[url]=tree.findtext('.//title')
+        return json.dumps(res_final)
     except ImportError:
         print("No module named 'google' found")
         return {}

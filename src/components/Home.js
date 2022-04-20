@@ -89,7 +89,7 @@ const Home = () => {
                     <div className={Styles.container_fluid}>
                         <Results searchedName={searchedName} algorithemsData={algorithemsData} suggestionsExist={suggestionsExist} />
                     </div>
-                    <div className={Styles.google}>
+                    <div>
                         <div className={Styles.container_fluid}>
                             <GoogleSearch searchedName={searchedName} suggestions={suggestions} suggestionsExist={suggestionsExist} />
                         </div>

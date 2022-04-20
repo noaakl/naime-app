@@ -78,21 +78,21 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}>
+            <Row style={{marginTop:"50px"}}>
+                    <Card><Card.Body style={{textAlign:"center"}}><b>Do you want to rank your results? keep track on your searchs? <br/><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                </Row>
                 <Row>
                     <Col className={Styles.result_title}>
-                    <h2 style={{textAlign:"center"}}>Suggested Synonyms for the name '{searchedName}'</h2>
+                    <h2>Suggested Synonyms for the name '{searchedName}'</h2>
                     {/* <Col > */}
                     <Api name={searchedName}/>
                     {/* </Col> */}
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{ marginTop: -20, marginBottom: 30 , textAlign:"center"}}>
+                    <Col style={{ marginTop: -20}}>
                         <strong>more info</strong><SearchCount searchedName={searchedName} />
                     </Col>
-                </Row>
-                <Row>
-                    <Card><Card.Body style={{textAlign:"center"}}><b>Do you want to rank your results? keep track on your searchs? <br/><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
                 </Row>
                 {/* <Row style ={{marginTop:"15px"}}>
                     <Card><Card.Body style={{textAlign:"center"}}>Search in google </Card.Body></Card>

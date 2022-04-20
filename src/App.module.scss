@@ -422,6 +422,17 @@ body:before {
         }
     }
 
+	a.googleResults:hover {
+			color: #6c757d;
+		  }
+	
+	a.googleResults {
+			color: black;
+			text-decoration: none;
+			font-size: 17px;
+		}
+
+
     .info_icon{
         cursor: pointer;
         position: relative;

@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import Styles from '../App.module.scss'
 import axios from "axios";
 import { Card, Row, Col } from 'react-bootstrap'
+import { Google } from 'react-bootstrap-icons';
+
 
 const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
     const likes = useSelector((state) => state.reduser.likes);
-    const [googleResults, setGoogleResults] = useState([])
+    const [googleResults, setGoogleResults] = useState({})
     console.log(searchedName)
 
     useEffect(() => {
@@ -15,6 +17,11 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
             getGoogleResults()
     }, [searchedName, suggestions]);
 
+
+    const handleGoogleRes = (key) =>{
+        if (googleResults[key]==null || googleResults[key]=="403 Forbidden"){return "Title doesn't exist"} 
+        return googleResults[key]
+    }
     const getGoogleResults = () => {
         const searchData = {
             "name": searchedName,
@@ -23,43 +30,41 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
         }
         axios.post('/api/googleSearch', searchData)
         .then((response) => {
+            console.log(response)
             setGoogleResults(response.data)
+            console.log(googleResults)
         })
         .catch(function (error) {
           console.log(error);
         });
     }
 
-    return googleResults.length>0 && suggestionsExist ?
+    return suggestionsExist ?
         <div className={Styles.result_wrapper}>
-            <div className={Styles.result_wrapper}>
+            <div className={Styles.result_wrapper}></div>
                 <Row>
-                    <Col className={Styles.result_title}>
-                    <h2>Google search results for the name '{searchedName}'</h2>
-                    </Col>
+                
+                        <h2 className={Styles.result_title}>Google search results for the name '{searchedName}'</h2>
+                        <h2 style={{fontSize:"15px"}}><b>Google results using the algorithem's suggestions within the query</b></h2>
                 </Row>
-
-            </div>
-            {/* <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}> */}
-                {googleResults.map((googleResult) => {
+                <Row lg={5} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
+                {Object.keys(googleResults).map((key,value) => {
                     return (
-                        <Row key={`${googleResult}Row`} style={{
-                            margin: 0, display: "flex",
-                            flexWrap: "wrap", padding: 0
-                        }}>
-                            <Card key={`${googleResult}card`} id={googleResult} className="shadow-sm p-3 mb-3 bg-white rounded"
-                                // style={{ height: '380px', width: "95%", margin: 5, padding: 0 }}
-                            >
-                                <Card.Body key={`${googleResult}cardbody`} style={{ margin: 0, padding: 0 }}>
-                                    <h3 style={{ textAlign: "center" }}>{googleResult}</h3>
-                                    </Card.Body>
-                            </Card></Row>)
+                        <>
+                        <Col style={{justifyContent:"center"}}>
+                            <Card style={{minHeight:"200px"}} ><Card.Body>
+                            <div key={key}>
+                            <a className={Styles.googleResults} href={key} target="_blank">{handleGoogleRes(key)}</a>
+                            <p style={{fontSize:"11px"}}>URL: {key}</p>
+                            </div>
+                            </Card.Body></Card>
+                        </Col>
+                        </>
+                    )
                 })}
-            {/* </Row> */}
+                </Row>
         </div>
-        : <div className={Styles.result_wrapper}>
-            <h2></h2>
-        </div>
+        : <div></div>
 };
 
 export default GoogleSearch;
