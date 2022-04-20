@@ -347,16 +347,23 @@ def googleSearch():
         print(query)
         # query = "noaa"
         res = []
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
-        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en')]
-        res_final = {}
+        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=10, lang='en')] 'ie':'UTF-8' 'proxy_location': 'gb',  'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0' 'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.41 Safari/534.7'
+        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', extra_params={'filter': '0', '-site': 'youtube.com'})]
+        res_with_title = {}
+        print(res)
         for url in res:
-            print(url)
+            # print(url)
             x = requests.get(url)
+            # request.META['HTTP_HOST']
+            # print(x.META['HTTP_HOST'])
             tree = fromstring(x.content)
-            print(tree.findtext('.//title'))
-            res_final[url]=tree.findtext('.//title')
-        return json.dumps([res_final])
+            # print(str(url.title))
+            # print(tree.findtext('.//domain'))
+            # domain = request.build_absolute_uri('/')[:-1]
+            # print(domain)
+            res_with_title[url]=tree.findtext('.//title')
+            # res_with_title[url]=url.title
+        return json.dumps([res_with_title])
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])
