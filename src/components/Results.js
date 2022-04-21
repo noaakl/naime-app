@@ -51,14 +51,14 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
         setRankStatesChecked(checkedRank)
     }
 
-    const handleFilterByRankShow = (name, like,dislike,algorithem) => {
+    const handleFilterByRankShow = (name, likes, dislikes, algorithem) => {
         if (algorithem!=="spoken_name_2_vec" && algorithem!=="family_trees")
             return true
         else {
             console.log(name)
             const checkedRank = rankStatesChecked.slice()
-            if (checkedRank.includes("likes") && like > 0){return true}
-            if (checkedRank.includes("dislikes") && dislike < 0) {return true}
+            if (checkedRank.includes("likes") && likes > 0){return true}
+            if (checkedRank.includes("dislikes") && dislikes < 0) {return true}
             // if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
             // if (checkedRank.includes("no rank") && dislike == 0 && like == 0){return true}
         }
@@ -193,11 +193,16 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                                 <Card.Body key={`${algorithem}cardbody`} style={{ margin: 0, padding: 0 }}>
                                     <h3 style={{ textAlign: "center" }}>{algorithem}</h3>
                                     {algorithemsData[algorithem].map((name) => {
+                                        if (name.add_rank > 0)
+                                            name.like += name.add_rank
+                                        else
+                                            name.dislike += name.add_rank
+                                        name.add_rank = 0
                                         // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
                                         // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                                         return (
                                             <>
-                                                {handleFilterByRankShow(name,name.like,name.dislike, algorithem) && <Row key={name} >
+                                                {handleFilterByRankShow(name, name.like, name.dislike, algorithem) && <Row key={name} >
                                                     <Col key={`${name}_col`} className={Styles.resultcol}>
                                                         <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>
