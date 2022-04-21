@@ -90,10 +90,10 @@ const Api = ({ name }) => {
                 key="copy"
                 placement={"right"}
                 overlay={
-                    <Popover id={`popover-copy`} >
-                        {copied && <PopoverBody bsPrefix={Styles.popover}>
-                            copied!
-                        </PopoverBody>}
+                        <Popover id={`popover-copy`} style={{display: copied ? '' : 'none',}}>
+                         <PopoverBody bsPrefix={Styles.popover}>
+                            URL was copied to clipboard
+                        </PopoverBody>
                     </Popover>
                 }
             >
