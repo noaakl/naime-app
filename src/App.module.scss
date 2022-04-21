@@ -426,6 +426,7 @@ body:before {
             list-style: none;
             position: relative;
             float: left;
+			margin-top: 10px;
         }
     }
 
@@ -457,7 +458,10 @@ body:before {
 	}
 
 	.api{
-		margin: -10px;
+		margin-right: 5px;
+		margin-left: 5px;
+		// margin-top: 55px;
+		// padding-top: 15px;
 		display: inline;
 	}
 
