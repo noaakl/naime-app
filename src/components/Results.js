@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Styles from '../App.module.scss'
 import SearchCount from './SearchCount'
 import RankInfo from './RankInfo'
@@ -14,8 +14,8 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
     const [algorithems, setAlgorithems] = useState([])
-    const rankStates = ["likes","dislikes","both","no rank"]
-    const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","both","no rank"])
+    const rankStates = ["likes","dislikes"]
+    const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes"])
     // const algorithemMapping = {}
 
     useEffect(() => {
@@ -51,15 +51,16 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
         setRankStatesChecked(checkedRank)
     }
 
-    const handleFilterByRankShow = (like,dislike,algorithem) => {
-        if (algorithem!="spoken_name_2_vec" && algorithem!="family_trees")
+    const handleFilterByRankShow = (name, like,dislike,algorithem) => {
+        if (algorithem!=="spoken_name_2_vec" && algorithem!=="family_trees")
             return true
         else {
+            console.log(name)
             const checkedRank = rankStatesChecked.slice()
-            if (checkedRank.includes("likes") && like > 0 && dislike == 0){return true}
-            if (checkedRank.includes("dislikes") && dislike < 0 && like == 0) {return true}
-            if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
-            if (checkedRank.includes("no rank") && dislike == 0 && like == 0){return true}
+            if (checkedRank.includes("likes") && like > 0){return true}
+            if (checkedRank.includes("dislikes") && dislike < 0) {return true}
+            // if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
+            // if (checkedRank.includes("no rank") && dislike == 0 && like == 0){return true}
         }
 
         return false
@@ -196,7 +197,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                                         // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                                         return (
                                             <>
-                                                {handleFilterByRankShow(name.like,name.dislike, algorithem) && <Row key={name} >
+                                                {handleFilterByRankShow(name,name.like,name.dislike, algorithem) && <Row key={name} >
                                                     <Col key={`${name}_col`} className={Styles.resultcol}>
                                                         <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>

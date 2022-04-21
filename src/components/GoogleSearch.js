@@ -4,7 +4,6 @@ import Styles from '../App.module.scss'
 import axios from "axios";
 import { Card, Row, Col } from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner'
-import { Google } from 'react-bootstrap-icons';
 
 
 const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
