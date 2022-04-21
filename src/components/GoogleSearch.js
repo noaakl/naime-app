@@ -65,7 +65,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
                         <Col key={key} target="_blank" style={{justifyContent:"center"}}>
                             <Card style={{minHeight:"200px"}} ><Card.Body>
                             <div key={key}>
-                            <h3 className={Styles.googleResults} href={key} target="_blank">{handleGoogleRes(key)}</h3>
+                            <h3 className={Styles.googleResults}>{handleGoogleRes(key)}</h3>
                             {/* <p style={{fontSize:"11px"}}>URL: {key}</p> */}
                             <p className={Styles.url}>URL:<br/> {key}</p>
                             </div>

@@ -4,12 +4,28 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
 import ToggleButton from 'react-bootstrap/ToggleButton'
-import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
+import { Button } from 'react-bootstrap'
 
-const LikeButton = ({ show, name, rankFunc, rank, disable }) => {
+import { HandThumbsUpFill, HandThumbsDownFill,HandThumbsUp, HandThumbsDown } from 'react-bootstrap-icons';
+
+const LikeButton = ({ show, name, rankFunc, fill, rank, disable }) => {
     const like = rank === 1
-
+    const disables = disable
+    console.log(rank)
+    console.log(name.candidate)
+    console.log(disables)
     return (
+        // <>{show && (
+        // <Button  variant="text"  className={Styles.rank_button} disabled="true">
+        //         {disables && (<small>a</small>)}
+        //          {like  && fill ?<> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{name.like}</small></>:<></>}
+        //          {like && !fill ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{name.like}</small></>:<></>}
+                
+        //          {!like  && fill ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{-name.dislike}</small></>:<></>}
+        //          {!like && !fill ?<> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{-name.dislike}</small></>:<></>}
+
+        // </Button>)}
+        // </>
         <>
             {show && <OverlayTrigger
                 // trigger="hover"
@@ -28,7 +44,11 @@ const LikeButton = ({ show, name, rankFunc, rank, disable }) => {
                 <ToggleButton variant="text" className={disable ? Styles.rank_button : Styles.disable_rank_button}
                     onClick={() => { rankFunc(rank) }}
                 >
-                    {like ? <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"10px"}} /> : <HandThumbsDownFill color="rgba(240, 92, 62, 1)" />}
+                {like  && fill ?<> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/></>:<></>}
+                {like && !fill ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/></>:<></>}
+                
+                {!like  && fill ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/></>:<></>}
+                {!like && !fill ?<> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/></>:<></>}
                 </ToggleButton>
             </OverlayTrigger>}
         </>

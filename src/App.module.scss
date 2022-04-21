@@ -406,6 +406,11 @@ body:before {
 		vertical-align: bottom;
 	}
 
+	.rank_button :disabled {
+		-webkit-appearance: none;
+		opacity:1;
+	 }
+
 	.disable_rank_button {
 		margin-left: 5px;
 		margin-right: -20px;

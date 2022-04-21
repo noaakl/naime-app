@@ -14,8 +14,8 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
     const [algorithems, setAlgorithems] = useState([])
-    const rankStates = ["likes","dislikes"]
-    const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes"])
+    const rankStates = ["likes","dislikes","no rank"]
+    const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
     // const algorithemMapping = {}
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
             if (checkedRank.includes("likes") && likes > 0){return true}
             if (checkedRank.includes("dislikes") && dislikes < 0) {return true}
             // if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
-            // if (checkedRank.includes("no rank") && dislike == 0 && like == 0){return true}
+            if (checkedRank.includes("no rank") && dislikes == 0 && likes == 0){return true}
         }
 
         return false
@@ -91,7 +91,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 </Row>
                 <Row>
                     <Col>
-                        <SearchCount searchedName={searchedName} />
+                        {/* <SearchCount searchedName={searchedName} /> */}
                     </Col>
                 </Row>
                 {/* <Row style ={{marginTop:"15px"}}>
