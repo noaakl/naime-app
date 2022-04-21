@@ -14,7 +14,7 @@ const Api = ({ name }) => {
     // const [fileName, setfileName] = useState(`naime suggestions for ${name}`)
     const [copied, setCopied] = useState(false)
     const [suggestions, setSuggestions] = useState({})
-    const [csvData, setCsvData] = useState("")
+    // const [csvData, setCsvData] = useState("")
     // const hat = require('hat');
     // const apiKey = hat();
     // const textAreaRef = useRef(null);
@@ -97,9 +97,8 @@ const Api = ({ name }) => {
                     </Popover>
                 }
             >
-                    <Download style={{ marginRight: "15px", marginLeft: "5px" }}>
+                    <Download style={{ marginRight: "15px", marginLeft: "5px" , verticalAlign:"super" }}/>
 
-                    </Download>
                     </OverlayTrigger>
                 </Dropdown.Toggle>
 

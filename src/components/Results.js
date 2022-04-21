@@ -51,11 +51,10 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
         setRankStatesChecked(checkedRank)
     }
 
-    const handleFilterByRankShow = (name, like,dislike,algorithem) => {
+    const handleFilterByRankShow = (like,dislike,algorithem) => {
         if (algorithem!=="spoken_name_2_vec" && algorithem!=="family_trees")
             return true
         else {
-            console.log(name)
             const checkedRank = rankStatesChecked.slice()
             if (checkedRank.includes("likes") && like > 0){return true}
             if (checkedRank.includes("dislikes") && dislike < 0) {return true}
@@ -91,8 +90,8 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{ marginTop: -20}}>
-                        <strong>more info</strong><SearchCount searchedName={searchedName} />
+                    <Col>
+                        <SearchCount searchedName={searchedName} />
                     </Col>
                 </Row>
                 {/* <Row style ={{marginTop:"15px"}}>
@@ -197,7 +196,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                                         // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                                         return (
                                             <>
-                                                {handleFilterByRankShow(name,name.like,name.dislike, algorithem) && <Row key={name} >
+                                                {handleFilterByRankShow(name.like,name.dislike, algorithem) && <Row key={name} >
                                                     <Col key={`${name}_col`} className={Styles.resultcol}>
                                                         <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>
