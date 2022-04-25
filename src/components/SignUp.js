@@ -77,7 +77,7 @@ const SingUp = () => {
   return (
     <div className={Styles.signup} >
       <Container className="d-flex h-100" id={Styles.signup}>
-        <Card className="text-center" style={{ width: '40rem', margin: '20px', padding: '15px', position: "center", alignItems: "center", justifyContent: "center" }}>
+        <Card className="text-center h-100" style={{ width: '40rem', margin: '20px', padding: '15px', position: "center", alignItems: "center", justifyContent: "center" }}>
           <Card.Body>
             <h3>Sign Up</h3>
             <h5>sign up to keep track on your searches and ranks</h5>
