@@ -42,6 +42,10 @@
 	position: relative;
 	float: left;
 }
+// html{
+// 	height: 100%;
+
+// }
 
 body{
     margin: 40;
@@ -166,9 +170,10 @@ body:before {
 		background-image: linear-gradient(rgba(20, 39, 21, 0.5), rgba(35, 56, 45, 0.5)), url('./images/bg.jpg');
 		background-size: cover;
 		justify-content: center; // 1
-		flex-flow: column wrap; // 2
+		flex-flow: column wrap; // 2		
 		
 	}
+
 
 	.login {
 		position: fixed;
@@ -180,8 +185,8 @@ body:before {
 		background-size: cover;
 		justify-content: center; // 1
 		flex-flow: column wrap; // 2
-		
 	}
+
 
 	.search_page {
 		position: fixed;
@@ -405,11 +410,6 @@ body:before {
 		padding-top:0px;
 		vertical-align: bottom;
 	}
-
-	.rank_button :disabled {
-		-webkit-appearance: none;
-		opacity:1;
-	 }
 
 	.disable_rank_button {
 		margin-left: 5px;

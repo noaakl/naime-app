@@ -197,6 +197,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                                         else
                                             name.dislike += name.add_rank
                                         name.add_rank = 0
+
                                         // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
                                         // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
                                         return (

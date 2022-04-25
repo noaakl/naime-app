@@ -108,7 +108,7 @@ const Login = () => {
 
     return (
         <div className={Styles.login} >
-    <Container className="d-flex h-100" id ={Styles.login}>
+    <Container  id ={Styles.login}>
     <Card className="text-center" style={{ width: '40rem', margin:'20px', padding:'15px', position:"center",alignItems:"center", justifyContent:"center" }}>
         <Card.Body>
             <h3>Login</h3>
