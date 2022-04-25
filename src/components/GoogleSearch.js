@@ -20,7 +20,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
 
 
     const handleGoogleRes = (key) =>{
-        if (googleResults[key]==null || googleResults[key]=="403 Forbidden"){return "Title doesn't exist"} 
+        if (googleResults[key]===null || googleResults[key]==="403 Forbidden"){return "Title doesn't exist"} 
         return googleResults[key]
     }
     const getGoogleResults = () => {
@@ -42,9 +42,12 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}></div>
                 <Row>
-                
-                        <h2 className={Styles.result_title}>Google search results for the name '{searchedName}'</h2>
-                        <h2 style={{fontSize:"15px"}}><b>Google results using the algorithems suggestions within the query</b></h2>
+                    <Col className={Styles.result_title}>
+                        <h2>Google search results for the name '{searchedName}'</h2>
+                        </Col>
+                </Row>
+                <Row>
+                <p>Google results using the algorithems suggestions within the query</p>
                 </Row>
                 {googleResults.length === 0 &&
                     <span className={Styles.spinner}><Spinner
@@ -60,9 +63,9 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
                         <>
                         <a className={Styles.googleResults} href={key} target="_blank">
                         <Col key={key} target="_blank" style={{justifyContent:"center"}}>
-                            <Card style={{height:"200px"}} ><Card.Body>
+                            <Card style={{minHeight:"200px"}} ><Card.Body>
                             <div key={key}>
-                            <a className={Styles.googleResults} href={key} target="_blank">{handleGoogleRes(key)}</a>
+                            <h3 className={Styles.googleResults}>{handleGoogleRes(key)}</h3>
                             {/* <p style={{fontSize:"11px"}}>URL: {key}</p> */}
                             <p className={Styles.url}>URL:<br/> {key}</p>
                             </div>

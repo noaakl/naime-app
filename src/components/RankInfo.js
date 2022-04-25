@@ -6,21 +6,25 @@ import { algorithems } from '../global/AlgorithemsConstants'
 import axios from "axios";
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 
-
 const RankInfo = ({ searchedName, name, algorithem }) => {
     const dispatch = useDispatch()
     const username = useSelector((state) => state.reduser.username);
     const likes = useSelector((state) => state.reduser.likes);
     const dislikes = useSelector((state) => state.reduser.dislikes);
-    const likesNumber = useSelector((state) => state.reduser.likesCount);
-    const dislikesNumber = useSelector((state) => state.reduser.dislikesCount);
+    // const likesNumber = useSelector((state) => state.reduser.likesCount);
+    // const dislikesNumber = useSelector((state) => state.reduser.dislikesCount);
 
     const showNotUser = !username && algorithem in algorithems
-    const showLikeRank = username && algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
-    const showDislikeRank = username && algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
+    // const showLikeRank = username && algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
+    // const showDislikeRank = username && algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
+    
+    const likedThisName = username && algorithem in algorithems && likes[searchedName] && likes[searchedName].includes(name.candidate)
+    const dislikedThisName = username && algorithem in algorithems && dislikes[searchedName] && dislikes[searchedName].includes(name.candidate)
+    const show = username && algorithem in algorithems
 
-    const disable = (ranks) => {
-        return(!(ranks[searchedName] && ranks[searchedName].includes(name.candidate)))
+    const disable = () => {
+        // return(!(ranks[searchedName] && ranks[searchedName].includes(name.candidate)))
+        return(((dislikes[searchedName] && dislikes[searchedName].includes(name.candidate))||(likes[searchedName] && likes[searchedName].includes(name.candidate))))
     }
 
 
@@ -57,9 +61,11 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
     return (
         <>
             {showNotUser && <><HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{name.like}</small>
-            <HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px", marginLeft:"8px"}}/><small style={{fontSize:"10px"}}>{-name.dislike}</small></> }
-            <LikeButton show={showLikeRank} name={name} rankFunc={rankResults} rank={1} disable={disable(likes)}/>
-            <LikeButton show={showDislikeRank} name={name} rankFunc={rankResults} rank={-1} disable={disable(dislikes)}/>
+             <HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px", marginLeft:"8px"}}/><small style={{fontSize:"10px"}}>{-name.dislike}</small></> }
+            {/* <LikeButton show={showLikeRank} name={name} rankFunc={rankResults} rank={1} disable={disable(likes)}/>
+            <LikeButton show={showDislikeRank} name={name} rankFunc={rankResults} rank={-1} disable={disable(dislikes)}/> */}
+            <LikeButton show={show} fill={likedThisName} name={name} rankFunc={rankResults} rank={1} disable={disable()}/>
+            <LikeButton show={show} fill={dislikedThisName} name={name} rankFunc={rankResults} rank={-1} disable={disable()}/>
         </>
     );
 }
