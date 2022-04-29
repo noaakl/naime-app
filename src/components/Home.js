@@ -66,8 +66,8 @@ const Home = () => {
     return (
         <>
             <div className={showResults ? Styles.page : Styles.search_page}>
-                <h1>nAIme</h1>
-                <div>Similar Name Suggestor</div>
+                <h1 style={{textAlign:"center"}}>nAIme</h1>
+                <div style={{textAlign:"center"}}>Similar Name Suggestor</div>
                 <div className={Styles.search_wraper} >
                     <div className={Styles.search_inner}>
                         <input className={Styles.form_control} value={nameToSearch} onKeyPress={(e) => e.key === "Enter" ? searchName(nameToSearch) : ""}

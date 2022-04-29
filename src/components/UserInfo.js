@@ -14,10 +14,10 @@ const UserInfo = () => {
     const [lastranks, setlastranks] = useState([])
     const [lastdislike, setlastdislike] = useState([])
 
-    const likes = useSelector((state) => state.reduser.likes);
+    // const likes = useSelector((state) => state.reduser.likes);
     const likesNumber = useSelector((state) => state.reduser.likesCount);
     // const likesNumber = Object.keys(likes).length;
-    const dislikes = useSelector((state) => state.reduser.dislikes);
+    // const dislikes = useSelector((state) => state.reduser.dislikes);
     const dislikesNumber = useSelector((state) => state.reduser.dislikesCount);
     // const dislikesNumber = Object.keys(dislikes).length;
 

@@ -14,7 +14,7 @@ const Api = ({ name }) => {
     // const [fileName, setfileName] = useState(`naime suggestions for ${name}`)
     const [copied, setCopied] = useState(false)
     const [suggestions, setSuggestions] = useState({})
-    const [csvData, setCsvData] = useState("")
+    // const [csvData, setCsvData] = useState("")
     // const hat = require('hat');
     // const apiKey = hat();
     // const textAreaRef = useRef(null);
@@ -90,16 +90,15 @@ const Api = ({ name }) => {
                 key="copy"
                 placement={"right"}
                 overlay={
-                    <Popover id={`popover-copy`} >
-                        {copied && <PopoverBody bsPrefix={Styles.popover}>
-                            copied!
-                        </PopoverBody>}
+                        <Popover id={`popover-copy`} style={{display: copied ? '' : 'none',}}>
+                         <PopoverBody bsPrefix={Styles.popover}>
+                            URL was copied to clipboard
+                        </PopoverBody>
                     </Popover>
                 }
             >
-                    <Download style={{ marginRight: "15px", marginLeft: "5px" }}>
+                    <Download style={{ marginRight: "15px", marginLeft: "5px" , verticalAlign:"super" }}/>
 
-                    </Download>
                     </OverlayTrigger>
                 </Dropdown.Toggle>
 
