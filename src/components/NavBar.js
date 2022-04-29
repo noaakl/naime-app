@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useState } from 'react';
 import Styles from "../App.module.scss";
 import PopularNames from './PopularNames';
 import Logout from "./Logout";

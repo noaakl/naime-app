@@ -1,35 +1,45 @@
+import React, { useState } from "react";
 import Styles from '../App.module.scss'
-import { NavDropdown } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/action';
-import React from 'react';
-import { Link } from "react-router-dom";
+import { NavDropdown } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 
 const Logout = ({ username }) => {
     const dispatch = useDispatch()
+    const [show, setShow] = useState(false);
 
-    // const Logout = () => {
-    //     axios({
-    //         method: "POST",
-    //         url: `/logout`
-    //     })
-    //         .then((response) => {
-    //             console.log(response)
-    //             }
-    //         )
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    // }
+    const handleShow = () => setShow(!show);
+
+    const Logout = () => {
+        handleShow()
+        dispatch(logout())
+    }
 
     return (
+        <>
         <NavDropdown title={`Hello ${username}`} id="navbarScrollingDropdown" style={{ display: username ? '' : 'none' }}>
-            <NavDropdown.Item as={Link} to="/" className={Styles.info_accordion} onClick={()=>dispatch(logout())}> Log Out </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/" className={Styles.info_accordion} onClick={()=>setShow(true)}> Log Out </NavDropdown.Item>
         </NavDropdown>
+
+        <div className={Styles.about}>
+        <Modal show={show} onHide={handleShow}>
+                <Modal.Body>Are you sure you want to log out?</Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" onClick={handleShow} style={{ backgroundColor: "green" }}>
+                    No
+                </Button>
+                <Button variant="secondary" onClick={Logout}>
+                    Yes
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    </div>
+        </>
 
     );
 }
 
 export default Logout;
-
-
