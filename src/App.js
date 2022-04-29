@@ -9,14 +9,11 @@ import SingUp from "./components/SignUp";
 import Login from "./components/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import { PersistGate } from 'redux-persist/integration/react'
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
-import Styles from "./App.module.scss";
-import { Github ,Google ,Pypi } from 'react-bootstrap-icons';
 
 export default function App() {
   return (
-    // <div className={Styles.search_page}>
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
     <BrowserRouter>
@@ -28,21 +25,9 @@ export default function App() {
         <Route path="/login" element={<Login />}></Route>
       </Routes>
     </BrowserRouter>
-    <MDBFooter bgColor='light' className='text-center text-lg-left' id={Styles.footer}>
-      <div className='text-center p-3' style={{ backgroundColor: 'rgba(129, 138, 127, 0.7)' }}>
-        <section>
-        <a
-            href='#!'
-            role='button'
-          ><Github size={20} style={{margin:"0",display: 'inline-block', color:'black',marginRight:'10px'}}/></a>
-          <small>Name Suggestion Project &copy; 2022</small>
-        </section>
-      </div>
-    </MDBFooter>
-
+    <Footer/>
     </PersistGate>
     </Provider>
-    // </div>
   );
 }
 

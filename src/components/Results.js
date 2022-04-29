@@ -93,7 +93,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 </Row>
                 <Row>
                     <Col>
-                        {/* <SearchCount searchedName={searchedName} /> */}
+                        <SearchCount searchedName={searchedName} />
                     </Col>
                 </Row>
                 {/* <Row style ={{marginTop:"15px"}}>
