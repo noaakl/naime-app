@@ -222,7 +222,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 })}
             </Row>
         </div>
-        : <div className={Styles.result_wrapper}>
+        : <div className={Styles.no_result_wrapper}>
             <h2>No Synonyms Suggested</h2>
         </div>
 };

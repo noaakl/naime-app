@@ -65,6 +65,7 @@ const Home = () => {
 
     return (
         <>
+        <div className={Styles.Search_container}>
             <div className={showResults ? Styles.page : Styles.search_page}>
                 <h1 style={{textAlign:"center"}}>nAIme</h1>
                 <div style={{textAlign:"center"}}>Similar Name Suggestor</div>
@@ -97,7 +98,7 @@ const Home = () => {
                 </>
             )
             }
-
+</div>
         </>
     )
 }
