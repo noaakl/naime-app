@@ -26,7 +26,7 @@ const SearchCount = ({ searchedName }) => {
     return (
         <>
         {/* <Card style={{textAlign:"center"}}><Card.Body> */}
-        <InfoCircleFill /> The name <strong>'{searchedName}'</strong> was searched {'\n'}<strong>{count}</strong> times.{'\n'}{'\n'}
+        <InfoCircleFill style={{color: 'rgb(80, 128, 102)'}} /> The name <strong>'{searchedName}'</strong> was searched {'\n'}<strong>{count}</strong> times.{'\n'}{'\n'}
          <br/>
          For more information about '{searchedName}' please see <a target="_blank" href={`https://www.behindthename.com/name/${searchedName}`}>Behind The Name</a>
          {/* </Card.Body></Card> */}

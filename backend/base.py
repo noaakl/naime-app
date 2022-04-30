@@ -304,13 +304,16 @@ def googleSearch():
         res = []
         # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
         # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en')]
-        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '1'})]#, '-site': 'youtube.com'})]
+        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '1'})]#, 'sourceid': 'chrome', 'ie': 'UTF-8', '-site': 'wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
+        res = [search_result for search_result in search(query, num=10, stop=10, extra_params={'filter': '1'})]#, 'sourceid': 'chrome', 'ie': 'UTF-8', '-site': 'wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
+        # res = []
+        # for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '0'}):
+        #     res.append(search_result)
         res_final = {}
         for url in res:
             print(url)
             x = requests.get(url)
             tree = fromstring(x.content)
-            print(tree.findtext('.//title'))
             res_final[url]=tree.findtext('.//title')
         return json.dumps([res_final])
     except ImportError:
