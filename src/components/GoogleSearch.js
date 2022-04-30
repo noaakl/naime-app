@@ -47,7 +47,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
                         </Col>
                 </Row>
                 <Row>
-                <p>Google results using the algorithems suggestions within the query</p>
+                <p>Google results using the algorithms suggestions within the query</p>
                 </Row>
                 {googleResults.length === 0 &&
                     <span className={Styles.spinner}><Spinner

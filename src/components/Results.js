@@ -93,7 +93,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 </Row>
                 <Row>
                     <Col>
-                        {/* <SearchCount searchedName={searchedName} /> */}
+                        <SearchCount searchedName={searchedName} />
                     </Col>
                 </Row>
                 {/* <Row style ={{marginTop:"15px"}}>
@@ -222,7 +222,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 })}
             </Row>
         </div>
-        : <div className={Styles.result_wrapper}>
+        : <div className={Styles.no_result_wrapper}>
             <h2>No Synonyms Suggested</h2>
         </div>
 };

@@ -70,7 +70,7 @@ const UserInfo = () => {
             <h1>Hello {username}</h1>
                 <div>Here is your info. Enjoy!</div>
             </div>
-            <Container>
+            <Container style={{paddingBottom: '100px'}}>
             <Row style ={{margin:"0", marginTop:"20px"}}>
                 <Col>
                 <Card className="shadow-sm p-3 mb-3 bg-white rounded"
