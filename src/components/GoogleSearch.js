@@ -31,7 +31,8 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
         }
         axios.post('/api/googleSearch', searchData)
         .then((response) => {
-            setGoogleResults(response.data[0])
+            if (response.data.length > 0)
+                setGoogleResults(response.data[0])
         })
         .catch(function (error) {
           console.log(error);

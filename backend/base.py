@@ -303,7 +303,8 @@ def googleSearch():
         # query = "noaa"
         res = []
         # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
-        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en')]
+        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en')]
+        res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '1'})]#, '-site': 'youtube.com'})]
         res_final = {}
         for url in res:
             print(url)
