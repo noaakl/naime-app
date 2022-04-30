@@ -220,15 +220,15 @@ def createQuery(name, suggestions, user_likes):
                 # all_results.append(candidate["candidate"])
                 all_results.append(candidate_data)
     all_results.sort(key=sort_by_likes_and_edit_distance, reverse=True)
-    query = f"'{name}' OR "
+    query = f""""{name}" OR """
     for i in range(top):
         if i < len(all_results):
             candidate = all_results[i].get("name", '')
             print(all_results[i])
             if i < top - 1:
-                query += f"'{candidate}' OR "
+                query += f""""{candidate}" OR """
             else:
-                query += f"'{candidate}'"
+                query += f""""{candidate}" """
     print(query)
     return query
 
