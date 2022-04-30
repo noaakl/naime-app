@@ -60,7 +60,7 @@ const Footer = () => {
 
                             <p>
                             <a className='text-reset'
-                                    href='https://github.com/noaakl/Final_Project_Names' //TODO: change ref
+                                    href='https://github.com/noaakl/Final_Project_Names/tree/main/SiameseNetwork'
                                     target="_blank"
                                     role='button'
                                 ><Github size={20} style={{ margin: "0", display: 'inline-block', color: 'black', marginRight: '10px' }} />
