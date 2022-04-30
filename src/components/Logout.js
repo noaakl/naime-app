@@ -28,7 +28,7 @@ const Logout = ({ username }) => {
         <Modal show={show} onHide={handleShow}>
                 <Modal.Body>Are you sure you want to log out?</Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={handleShow} style={{ backgroundColor: "green" }}>
+                <Button variant="primary" onClick={handleShow} style={{ backgroundColor: "blue" }}>
                     No
                 </Button>
                 <Button variant="secondary" onClick={Logout}>

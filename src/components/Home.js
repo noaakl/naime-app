@@ -5,7 +5,8 @@ import Styles from "../App.module.scss";
 import Results from './Results';
 import GoogleSearch from './GoogleSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Search } from 'react-bootstrap-icons';
+import { Search, XCircle } from 'react-bootstrap-icons';
+
 
 const Home = () => {
     const username = useSelector((state) => state.reduser.username);
@@ -36,7 +37,7 @@ const Home = () => {
               display: !validSearchVal ? '' : 'none',
             }}
             >
-            <h5 style={{ color: 'white', fontSize: '13px', marginRight: '320px'}}><strong>{"Please enter name with English characters only"}</strong></h5>
+            <h5 style={{ color: 'red', fontSize: '15px', marginRight: '270px'}}><XCircle style={{marginBottom: '2px'}}/>{" Please enter name with English characters only"}</h5>
           </div>
         );
       };
@@ -88,7 +89,7 @@ const Home = () => {
                 <div className={Styles.search_wraper} >
                     <div className={Styles.search_inner}>
                         <input className={Styles.form_control} value={nameToSearch} onKeyPress={(e) => e.key === "Enter" ? searchName(nameToSearch) : ""}
-                            onChange={(e) => setNameToSearch(e.target.value)} placeholder="Write name here (i.e Mike, Christina)" />
+                            onChange={(e) => setNameToSearch(e.target.value)} placeholder="Write name here (i.e Mike, Christina)"/>
                         <span className={Styles.search_btn}>
                             <button className={Styles.search_btn} id="searchName" onClick={() => { searchName(nameToSearch) }} method="POST" >
                                 <Search size={20} />

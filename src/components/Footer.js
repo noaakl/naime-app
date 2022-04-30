@@ -10,9 +10,9 @@ const Footer = () => {
 
     return (
         <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
+            {/* <br/>
             <br/>
-            <br/>
-            <br/>
+            <br/> */}
             <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.06)' }}>
             <section className='d-flex justify-content-center justify-content-lg-between p-3 border-bottom'>
                 <div className='me-5 d-none d-lg-block'>
