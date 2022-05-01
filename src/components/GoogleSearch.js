@@ -20,7 +20,8 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
 
 
     const handleGoogleRes = (key) =>{
-        if (googleResults[key]===null || googleResults[key]==="403 Forbidden"){return "Title doesn't exist"} 
+        // if (googleResults[key]===null || googleResults[key]==="403 Forbidden"){return "Title doesn't exist"} 
+        if (googleResults[key]===null || googleResults[key]==="403 Forbidden"){return ""} 
         return googleResults[key]
     }
     const getGoogleResults = () => {
