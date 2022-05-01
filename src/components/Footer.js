@@ -18,7 +18,7 @@ const Footer = () => {
                 <div className='me-5 d-none d-lg-block'>
                     <span>
                         <img src={naimeLogo} alt="Logo" width="21" height="20" style={{ margin: "0", display: 'inline-block', color: 'black', marginRight: '10px' }} />
-                        <strong>nAIme</strong> - Name Suggestion Project
+                        <strong>nAIme</strong> - Similar Name Suggestor
                     </span>
                 </div>
             </section>
@@ -118,8 +118,8 @@ const Footer = () => {
             {/* <br/> */}
                 © 2022 Copyright:
                 {/* //TODO: change */}
-                <a style={{ marginLeft: '5px' }} className='text-reset fw-bold' href='https://naime.com/'>
-                    nAIme.com
+                <a style={{ marginLeft: '5px' }} className='text-reset fw-bold' href='https://naime.cs.bgu.ac.il'>
+                nAIme.cs.bgu.ac.il 
                 </a>
             </div>
             </div>
