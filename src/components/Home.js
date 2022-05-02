@@ -15,7 +15,7 @@ const Home = () => {
     const [algorithmsData, setAlgorithmsData] = useState({})
     const [searchedName, setSearchedName] = useState("")
     const [showResults, setShowResults] = useState(false)
-    const suggestionsExist = typeof algorithmsData.soundex !== 'undefined'
+    const suggestionsExist = typeof algorithmsData.Soundex !== 'undefined'
 
     useEffect(() => {
         setNameToSearch("")
@@ -66,13 +66,13 @@ const Home = () => {
     
                         setSearchedName(response.data.name);
                         setAlgorithmsData({
-                            'spoken_name_2_vec': spoken_name_2_vec,
-                            'double_metaphone': double_metaphone,
-                            'family_trees': family_trees,
-                            'match_rating_codex': match_rating_codex,
-                            'metaphone': metaphone,
-                            'nysiis': nysiis,
-                            'soundex': soundex
+                            'Spoken Name 2 Vec': spoken_name_2_vec,
+                            'Double Metaphone': double_metaphone,
+                            'Graft': family_trees,
+                            'Match Rating Codex': match_rating_codex,
+                            'Metaphone': metaphone,
+                            'Nysiis': nysiis,
+                            'Soundex': soundex
                         }
                         );
                     }

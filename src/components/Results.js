@@ -18,7 +18,7 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
     const [algorithms, setAlgorithms] = useState([])
     const rankStates = ["likes","dislikes","no rank"]
     const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
-    // const algorithemMapping = {}
+    // const algorithmMapping = {}
 
     useEffect(() => {
         setAlgorithms(algorithmsNames)
@@ -53,8 +53,8 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
         setRankStatesChecked(checkedRank)
     }
 
-    const handleFilterByRankShow = (likes, dislikes, algorithem) => {
-        if (algorithem!=="spoken_name_2_vec" && algorithem!=="family_trees")
+    const handleFilterByRankShow = (likes, dislikes, algorithm) => {
+        if (algorithm!=="spoken_name_2_vec" && algorithm!=="family_trees")
             return true
         else {
             const checkedRank = rankStatesChecked.slice()
@@ -75,7 +75,7 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
         return algorithms.includes(value)
     }
 
-    Object.keys(algorithmsData).forEach(algorithem => { algorithmsData[algorithem].sort(sortFunc) });
+    Object.keys(algorithmsData).forEach(algorithm => { algorithmsData[algorithm].sort(sortFunc) });
 
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
@@ -127,22 +127,22 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
                         <Dropdown style={{display:"inline", margin:"5px"}}>
                             <strong>Filter by </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
                             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
-                                {"Algorithem"}
+                                {"Algorithm"}
 
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
                                 <Form>
-                                    {Object.keys(algorithmsData).map((algorithem) => {
+                                    {Object.keys(algorithmsData).map((algorithm) => {
                                         return (
                                             <div className={Styles.filter}>
                                             <Form.Check
-                                                label={algorithem}
+                                                label={algorithm}
                                                 type="checkbox"
-                                                id={algorithem}
+                                                id={algorithm}
                                                 name="algorithms"
-                                                checked={isChecked(algorithem)}
-                                                onChange={() => handleFilterCheck(algorithem)} />
+                                                checked={isChecked(algorithm)}
+                                                onChange={() => handleFilterCheck(algorithm)} />
                                                 </div>
                                         )
                                     })
@@ -182,18 +182,18 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
                 </Row>
             </div>
             <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
-                {algorithms.map((algorithem) => {
+                {algorithms.map((algorithm) => {
                     return (
-                        <Col key={`${algorithem}col`} style={{
+                        <Col key={`${algorithm}col`} style={{
                             margin: 0, display: "flex",
                             flexWrap: "wrap", padding: 0
                         }}>
-                            <Card key={`${algorithem}card`} id={algorithem} className="shadow-sm p-3 mb-3 bg-white rounded"
+                            <Card key={`${algorithm}card`} id={algorithm} className="shadow-sm p-3 mb-3 bg-white rounded"
                                 style={{ height: '380px', width: "95%", margin: 5, padding: 0 }}
                             >
-                                <Card.Body key={`${algorithem}cardbody`} style={{ margin: 0, padding: 0 }}>
-                                    <h3 style={{ textAlign: "center" }}>{algorithem}</h3>
-                                    {algorithmsData[algorithem].map((name) => {
+                                <Card.Body key={`${algorithm}cardbody`} style={{ margin: 0, padding: 0 }}>
+                                    <h3 style={{ textAlign: "center" }}>{algorithm}</h3>
+                                    {algorithmsData[algorithm].map((name) => {
                                         if (name.add_rank > 0)
                                             name.like += name.add_rank
                                         else
@@ -201,17 +201,17 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
                                         name.add_rank = 0
                                         
 
-                                        // const showLikeRank = algorithem in algorithms && name?.add_rank !== -1
-                                        // const showDislikeRank = algorithem in algorithms && name?.add_rank !== 1
+                                        // const showLikeRank = algorithm in algorithms && name?.add_rank !== -1
+                                        // const showDislikeRank = algorithm in algorithms && name?.add_rank !== 1
                                         return (
                                             <>
-                                                {handleFilterByRankShow(name.like, name.dislike, algorithem) && <Row key={name} >
+                                                {handleFilterByRankShow(name.like, name.dislike, algorithm) && <Row key={name} >
                                                     <Col key={`${name}_col`} className={Styles.resultcol}>
-                                                        <div key={`${algorithem}_${name.candidate}`} className={Styles.result}>{name.candidate}
+                                                        <div key={`${algorithm}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>
                                                     </Col>
                                                     <Col key={`${name}_rank`} className={Styles.resultcolrank}>
-                                                        <RankInfo searchedName={searchedName} name={name} algorithem={algorithem} />
+                                                        <RankInfo searchedName={searchedName} name={name} algorithm={algorithm} />
                                                     </Col>
                                                 </Row>
                                     }
