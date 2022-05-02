@@ -8,37 +8,37 @@ import { Card, Row, Col, Dropdown } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
-const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
-    console.log(algorithemsData)
-    // const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
-    const algorithemsNames = Object.keys(algorithemsData)
+const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
+    console.log(algorithmsData)
+    // const suggestionsExist = typeof algorithmsData.soundex !== 'undefined'
+    const algorithmsNames = Object.keys(algorithmsData)
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
     const [Data, setData] = useState(2)
-    const [algorithems, setAlgorithems] = useState([])
+    const [algorithms, setAlgorithms] = useState([])
     const rankStates = ["likes","dislikes","no rank"]
     const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
     // const algorithemMapping = {}
 
     useEffect(() => {
-        setAlgorithems(algorithemsNames)
-    }, [algorithemsData]);
+        setAlgorithms(algorithmsNames)
+    }, [algorithmsData]);
 
     const sortFunc = (a, b) => {
         return isAZData ? a.candidate.localeCompare(b.candidate) : b.user_rank - a.user_rank
     }
 
     const handleFilterCheck = (value) => {
-        const checkedAlgorithems = algorithems.slice()
-        if (checkedAlgorithems.includes(value)) {
-            const valueIndex = checkedAlgorithems.indexOf(value);
-            checkedAlgorithems.splice(valueIndex, 1);
+        const checkedAlgorithms = algorithms.slice()
+        if (checkedAlgorithms.includes(value)) {
+            const valueIndex = checkedAlgorithms.indexOf(value);
+            checkedAlgorithms.splice(valueIndex, 1);
         }
         else {
-            const valueIndex = algorithemsNames.indexOf(value);
-            checkedAlgorithems.splice(valueIndex, 0, value);
+            const valueIndex = algorithmsNames.indexOf(value);
+            checkedAlgorithms.splice(valueIndex, 0, value);
         }
-        setAlgorithems(checkedAlgorithems)
+        setAlgorithms(checkedAlgorithms)
     }
 
     const handleFilterByRankCheck = (value) => {
@@ -72,10 +72,10 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
     }
 
     const isChecked = (value) => {
-        return algorithems.includes(value)
+        return algorithms.includes(value)
     }
 
-    Object.keys(algorithemsData).forEach(algorithem => { algorithemsData[algorithem].sort(sortFunc) });
+    Object.keys(algorithmsData).forEach(algorithem => { algorithmsData[algorithem].sort(sortFunc) });
 
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
@@ -102,7 +102,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 <Row className={Styles.dropdowns} xs={1} md={1} lg={4}>
                     <Col className={Styles.dropdownsCol}>
                         <Dropdown>
-                            <strong>sort by  </strong><SortDown style={{ marginRight: "15px", marginLeft: "5px" }} /><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
+                            <strong>Sort by  </strong><SortDown style={{ marginRight: "15px", marginLeft: "5px" }} /><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
                                 {sortValue}
 
                             </Dropdown.Toggle>
@@ -133,14 +133,14 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
 
                             <Dropdown.Menu>
                                 <Form>
-                                    {Object.keys(algorithemsData).map((algorithem) => {
+                                    {Object.keys(algorithmsData).map((algorithem) => {
                                         return (
                                             <div className={Styles.filter}>
                                             <Form.Check
                                                 label={algorithem}
                                                 type="checkbox"
                                                 id={algorithem}
-                                                name="algorithems"
+                                                name="algorithms"
                                                 checked={isChecked(algorithem)}
                                                 onChange={() => handleFilterCheck(algorithem)} />
                                                 </div>
@@ -165,7 +165,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                                                 label={rankOption}
                                                 type="checkbox"
                                                 id={rankOption}
-                                                name="algorithems"
+                                                name="algorithms"
                                                 checked={isCheckedRank(rankOption)}
                                                 onChange={() => handleFilterByRankCheck(rankOption)} />
                                                 </div>
@@ -182,7 +182,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                 </Row>
             </div>
             <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
-                {algorithems.map((algorithem) => {
+                {algorithms.map((algorithem) => {
                     return (
                         <Col key={`${algorithem}col`} style={{
                             margin: 0, display: "flex",
@@ -193,7 +193,7 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                             >
                                 <Card.Body key={`${algorithem}cardbody`} style={{ margin: 0, padding: 0 }}>
                                     <h3 style={{ textAlign: "center" }}>{algorithem}</h3>
-                                    {algorithemsData[algorithem].map((name) => {
+                                    {algorithmsData[algorithem].map((name) => {
                                         if (name.add_rank > 0)
                                             name.like += name.add_rank
                                         else
@@ -201,8 +201,8 @@ const Results = ({ searchedName, algorithemsData, suggestionsExist }) => {
                                         name.add_rank = 0
                                         
 
-                                        // const showLikeRank = algorithem in algorithems && name?.add_rank !== -1
-                                        // const showDislikeRank = algorithem in algorithems && name?.add_rank !== 1
+                                        // const showLikeRank = algorithem in algorithms && name?.add_rank !== -1
+                                        // const showDislikeRank = algorithem in algorithms && name?.add_rank !== 1
                                         return (
                                             <>
                                                 {handleFilterByRankShow(name.like, name.dislike, algorithem) && <Row key={name} >

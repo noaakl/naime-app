@@ -97,16 +97,16 @@ const Footer = () => {
 
                         <div className='col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4'>
                             <h6 style={{ marginLeft: '30px' }} className='text-uppercase fw-bold mb-4'>Contact</h6>
-                            <p>
+                            {/* <p>
                                 <i className='fas fa-home me-3'></i> P.O.B. 653 Beer-Sheva, Israel
-                            </p>
+                            </p> */}
                             <p>
                             {/* //TODO: change */}
                                 <i className='fas fa-envelope me-3'></i> 
-                                info@example.com
+                                aviade@post.bgu.ac.il
                             </p>
                             <p>
-                                <i className='fas fa-phone me-3'></i> + 972 8 6461111
+                                <i className='fas fa-phone me-3'></i> +972747795152
                             </p>
                         </div>
                     </div>

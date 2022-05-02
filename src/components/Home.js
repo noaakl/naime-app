@@ -12,14 +12,14 @@ const Home = () => {
     const username = useSelector((state) => state.reduser.username);
     const [suggestions, setSuggestions] = useState({})
     const [nameToSearch, setNameToSearch] = useState("")
-    const [algorithemsData, setAlgorithemsData] = useState({})
+    const [algorithmsData, setAlgorithmsData] = useState({})
     const [searchedName, setSearchedName] = useState("")
     const [showResults, setShowResults] = useState(false)
-    const suggestionsExist = typeof algorithemsData.soundex !== 'undefined'
+    const suggestionsExist = typeof algorithmsData.soundex !== 'undefined'
 
     useEffect(() => {
         setNameToSearch("")
-        setAlgorithemsData({})
+        setAlgorithmsData({})
         setSearchedName("")
         setShowResults(false)
     }, [username]);
@@ -30,6 +30,7 @@ const Home = () => {
 
     const validateSearchVal = (searchVal) => {
         const validSearchVal = isValidSearchVal(searchVal)
+        // const validSearchVal = true
         return (
           <div
             className="errorValue"
@@ -46,7 +47,7 @@ const Home = () => {
         const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
         setShowResults(doSearch)
         if (doSearch) {
-            setAlgorithemsData({})
+            setAlgorithmsData({})
             axios({
                 method: "GET",
                 url: `/api/suggestions?name=${searchVal}&username=${username}`
@@ -64,7 +65,7 @@ const Home = () => {
                         const soundex = response.data.soundex;
     
                         setSearchedName(response.data.name);
-                        setAlgorithemsData({
+                        setAlgorithmsData({
                             'spoken_name_2_vec': spoken_name_2_vec,
                             'double_metaphone': double_metaphone,
                             'family_trees': family_trees,
@@ -103,7 +104,7 @@ const Home = () => {
             {showResults && (
                 <>
                     <div className={Styles.container_fluid}>
-                        <Results searchedName={searchedName} algorithemsData={algorithemsData} suggestionsExist={suggestionsExist} />
+                        <Results searchedName={searchedName} algorithmsData={algorithmsData} suggestionsExist={suggestionsExist} />
                     </div>
                     <div>
                         <div className={Styles.container_fluid}>

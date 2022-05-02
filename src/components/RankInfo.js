@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLikes, addDislikes } from "../store/action";
 import LikeButton from "./LikeButton";
-import { algorithems } from '../global/AlgorithemsConstants'
+import { algorithms } from '../global/AlgorithmsConstants'
 import axios from "axios";
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 
@@ -14,13 +14,13 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
     // const likesNumber = useSelector((state) => state.reduser.likesCount);
     // const dislikesNumber = useSelector((state) => state.reduser.dislikesCount);
 
-    const showNotUser = !username && algorithem in algorithems
-    // const showLikeRank = username && algorithem in algorithems && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
-    // const showDislikeRank = username && algorithem in algorithems && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
+    const showNotUser = !username && algorithem in algorithms
+    // const showLikeRank = username && algorithem in algorithms && (!dislikes[searchedName] || (dislikes[searchedName] && !dislikes[searchedName].includes(name.candidate)))
+    // const showDislikeRank = username && algorithem in algorithms && (!likes[searchedName] || (likes[searchedName] && !likes[searchedName].includes(name.candidate)))
     
-    const likedThisName = username && algorithem in algorithems && likes[searchedName] && likes[searchedName].includes(name.candidate)
-    const dislikedThisName = username && algorithem in algorithems && dislikes[searchedName] && dislikes[searchedName].includes(name.candidate)
-    const show = username && algorithem in algorithems
+    const likedThisName = username && algorithem in algorithms && likes[searchedName] && likes[searchedName].includes(name.candidate)
+    const dislikedThisName = username && algorithem in algorithms && dislikes[searchedName] && dislikes[searchedName].includes(name.candidate)
+    const show = username && algorithem in algorithms
 
     const disable = () => {
         // return(!(ranks[searchedName] && ranks[searchedName].includes(name.candidate)))
@@ -32,7 +32,7 @@ const RankInfo = ({ searchedName, name, algorithem }) => {
     const rankResults = (rank) => {
         name.add_rank = rank
         rank > 0 && username ? dispatch(addLikes(searchedName, name.candidate)) : dispatch(addDislikes(searchedName, name.candidate))
-        if (algorithem in algorithems) {
+        if (algorithem in algorithms) {
             const rankData = {
                 username: username,
                 type_name: algorithem,
