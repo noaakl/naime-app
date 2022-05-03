@@ -9,7 +9,7 @@ import { Github } from 'react-bootstrap-icons';
 const Footer = () => {
 
     return (
-        <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
+        <MDBFooter className='text-center text-lg-start text-muted'>
             {/* <br/>
             <br/>
             <br/> */}

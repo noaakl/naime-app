@@ -2,6 +2,8 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_LIKES = "ADD_LIKES";
 export const ADD_DISLIKES = "ADD_DISLIKES";
+export const REMOVE_LIKES = "REMOVE_LIKES";
+export const REMOVE_DISLIKES = "REMOVE_DISLIKES";
 
 export function login(userInfo) {
   const username = userInfo.user_name
@@ -50,6 +52,26 @@ export function addLikes(name, candidate) {
 export function addDislikes(name, candidate) {
   return {
     type: ADD_DISLIKES,
+    payload: {
+      name,
+      candidate,
+    },
+  };
+}
+
+export function removeLikes(name, candidate) {
+  return {
+    type: REMOVE_LIKES,
+    payload: {
+      name,
+      candidate,
+    },
+  };
+}
+
+export function removeDislikes(name, candidate) {
+  return {
+    type: REMOVE_DISLIKES,
     payload: {
       name,
       candidate,

@@ -9,28 +9,43 @@ import { useState, useEffect } from "react";
 
 import { HandThumbsUpFill, HandThumbsDownFill,HandThumbsUp, HandThumbsDown } from 'react-bootstrap-icons';
 
-const LikeButton = ({ show, name, rankFunc, fill, rank, disable }) => {
+const LikeButton = ({ show, name, rankFunc,removeFunc, fill, rank, disable }) => {
     const like = rank === 1
     const disables = disable
+    const [filled, setFilled] = useState(fill)
+    // const [clicked, setClicked] = useState(disable)
     const [likesCount, setLikesCount] = useState(name.like)
-    const [dilikesCount, setDislikesCount] = useState(name.dislike)
+    const [dilikesCount, setDislikesCount] = useState(-(name.dislike))
 
     const rankfun = () => {
-        rankFunc(rank)
-        if (like)
-            setLikesCount(name.like+1)
-        else
-            setDislikesCount(name.dislike-1)
+        if (!filled){
+            rankFunc(rank)
+            if (like)
+                setLikesCount(likesCount + 1)
+            else
+                setDislikesCount(dilikesCount + 1)
+        }
+        else{
+            console.log("removerank")
+            removeFunc(rank)
+            if (like)
+                setLikesCount(likesCount - 1)
+            else
+                setDislikesCount(dilikesCount - 1)
+        }
+        setFilled(!filled)
+
     }
 
     return (
+        
         <>{show && (
-        <Button  variant="text"  className={Styles.rank_button} disabled={disables} onClick={() => { rankfun() }} style={{opacity:"1"}} >
-                 {like  && fill ?<> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{likesCount}</small></>:<></>}
-                 {like && !fill ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{likesCount}</small></>:<></>}
+        <Button  variant="text"  className={Styles.rank_button} disabled={disables} onClick={() => { rankfun() }}  >
+                 {like  && filled ?<> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{likesCount}</small></>:<></>}
+                 {like && !filled ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{likesCount}</small></>:<></>}
                 
-                 {!like  && fill ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{-dilikesCount}</small></>:<></>}
-                 {!like && !fill ?<> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{-dilikesCount}</small></>:<></>}
+                 {!like  && filled ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{dilikesCount}</small></>:<></>}
+                 {!like && !filled ?<> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{dilikesCount}</small></>:<></>}
 
         </Button>)}
         </>
