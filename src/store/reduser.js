@@ -2,6 +2,9 @@ import { LOGIN } from "./action";
 import { LOGOUT } from "./action";
 import { ADD_LIKES } from "./action";
 import { ADD_DISLIKES } from "./action";
+import { REMOVE_LIKES } from "./action";
+import { REMOVE_DISLIKES } from "./action";
+
 
 const INITIAL_STATE = {
     username: "",
@@ -72,6 +75,42 @@ const Reduser = (state = INITIAL_STATE, action) => {
         dislikes: {
           ...state.dislikes,
           [name]: prevDislikes? [...prevDislikes, candidate] : [candidate]
+        },
+      };
+    }
+
+    case REMOVE_LIKES: {
+      const name = action.payload?.name;
+      const candidate = action.payload?.candidate;
+      const prevLikes = state.likes[name] 
+      const newNameLikes = prevLikes.filter( (likeName) => likeName !== candidate )
+    //   if (prevLikes.length === 1){
+    //     newNameLikes = []
+    // }
+
+
+      return { 
+        ...state,
+        likesCount: state.likesCount - 1,
+        likes: {
+          ...state.likes,
+          [name]: newNameLikes
+        },
+      };
+  }
+
+    case REMOVE_DISLIKES: {
+      const name = action.payload?.name;
+      const candidate = action.payload?.candidate;
+      const prevDislikes = name in state.dislikes? state.dislikes[name] : null
+      const newNameDislikes = prevDislikes.filter( (likeName) => likeName !== candidate )
+
+      return {
+        ...state,
+        dislikesCount: state.dislikesCount - 1,
+        dislikes: {
+          ...state.dislikes,
+          [name]: newNameDislikes
         },
       };
     }

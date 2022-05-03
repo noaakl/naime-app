@@ -45,6 +45,7 @@ class FlaskApplication:
         candidate_dict['rank'] = name_suggestion.rank
         candidate_dict['language'] = name_suggestion.language
         candidate_dict['add_rank'] = 0
+        candidate_dict['remove_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_family_tree_result(self, name_suggestion):
@@ -58,6 +59,7 @@ class FlaskApplication:
         candidate_dict['language'] = name_suggestion.language
         candidate_dict['type_name'] = name_suggestion.type_name
         candidate_dict['add_rank'] = 0
+        candidate_dict['remove_rank'] = 0
         return candidate_dict
 
     def convert_name_suggestion_into_soundex_result(self, name_suggestion):

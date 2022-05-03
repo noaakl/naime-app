@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
-    console.log(algorithmsData)
+    // console.log(algorithmsData)
     // const suggestionsExist = typeof algorithmsData.soundex !== 'undefined'
     const algorithmsNames = Object.keys(algorithmsData)
     const [sortValue, setSortValue] = useState("Default A-Z")
@@ -199,7 +199,13 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
                                         else
                                             name.dislike += name.add_rank
                                         name.add_rank = 0
-                                        
+
+                                        if (name.remove_rank > 0)
+                                        name.like -= name.remove_rank
+                                        else
+                                            name.dislike -= name.remove_rank
+                                        name.remove_rank = 0
+
 
                                         // const showLikeRank = algorithm in algorithms && name?.add_rank !== -1
                                         // const showDislikeRank = algorithm in algorithms && name?.add_rank !== 1
