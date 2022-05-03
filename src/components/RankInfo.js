@@ -71,10 +71,10 @@ const RankInfo = ({ searchedName, name, algorithm }) => {
         name.remove_rank = rank
         console.log(likes)
         rank > 0 && username ? dispatch(removeLikes(searchedName, name.candidate)) : dispatch(removeDislikes(searchedName, name.candidate))
-        if (algorithem in algorithems) {
+        if (algorithm in algorithms) {
             const rankData = {
                 username: username,
-                type_name: algorithem,
+                type_name: algorithm,
                 selected_name: searchedName,
                 remove_rank: name.add_rank,
                 candidate: name.candidate,

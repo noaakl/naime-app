@@ -1,4 +1,4 @@
 algorithms = {
-    'spoken_name_2_vec': 'Sound',
-    'family_trees': 'Family_Tree'
+    'Spoken Name 2 Vec': 'Sound',
+    'Graft': 'Family_Tree'
 }

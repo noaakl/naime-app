@@ -54,7 +54,7 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
     }
 
     const handleFilterByRankShow = (likes, dislikes, algorithm) => {
-        if (algorithm!=="spoken_name_2_vec" && algorithm!=="family_trees")
+        if (algorithm!=="Spoken Name 2 Vec" && algorithm!=="Graft")
             return true
         else {
             const checkedRank = rankStatesChecked.slice()

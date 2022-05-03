@@ -180,7 +180,7 @@ def editResults():
     rankData = request.json
     username = rankData['username']
     selected_name = rankData['selected_name']
-    type_name = algorithems[rankData['type_name']]
+    type_name = algorithms[rankData['type_name']]
     language = rankData['language']
     candidate = rankData['candidate']
     name = {
