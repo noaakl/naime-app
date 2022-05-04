@@ -352,3 +352,13 @@ def googleSearch():
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])
+
+@api.route('/api/googleQuery', methods=["POST"])
+def googleQuery():
+    from googlesearch import search, get_random_user_agent
+    name = request.json.get("name", "")
+    suggestions = request.json.get("suggestions", {})
+    user_likes = request.json.get("userLikes", [])
+    # print(suggestions)
+    query = createQuery(name, suggestions, user_likes)
+    return json.dumps({"query": query})

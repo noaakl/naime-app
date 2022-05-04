@@ -4,6 +4,8 @@ import axios from "axios";
 import Styles from "../App.module.scss";
 import Results from './Results';
 import GoogleSearch from './GoogleSearch';
+import IFrame from './IFrame'
+import GoogleIFrame from './GoogleIFrame';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
 
@@ -108,7 +110,9 @@ const Home = () => {
                     </div>
                     <div>
                         <div className={Styles.container_fluid}>
-                            <GoogleSearch searchedName={searchedName} suggestions={suggestions} suggestionsExist={suggestionsExist} />
+                            <GoogleIFrame searchedName={searchedName} suggestions={suggestions} suggestionsExist={suggestionsExist} />
+                            {/* <GoogleSearch searchedName={searchedName} suggestions={suggestions} suggestionsExist={suggestionsExist} /> */}
+                            {/* <IFrame/> */}
                         </div>
                     </div>
                 </>
