@@ -9,7 +9,7 @@ from flask_application import FlaskApplication
 from sqlalchemy import func, desc
 from utils import createQuery, convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, \
     soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, \
-    match_rating_codex_suggest_names
+    match_rating_codex_suggest_names, create_results_dict
 from UserSearch import UserSearch
 from UsersLikes import UsersLikes
 from UsersDislikes import UsersDislikes
@@ -31,67 +31,32 @@ jwt = JWTManager(api)
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
+    suggestions = []
     # print(request)
-    result_dict = {}
-    targeted_name = ""
+    # result_dict = {}
+    # targeted_name = ""
     if request.method == 'GET':
-        selected_name = request.args.get('name')
-        username = request.args.get('username')
+        # print(request.args)
+        # selected_name = request.args.get('name')
+        selected_name = request.args.get('name', '')
+        # username = request.args.get('username')
+        username = request.args.get('username', '')
         key = request.args.get('key')
-        selected_name = selected_name.capitalize()
-        targeted_name = selected_name
-
-        result_dict['name'] = selected_name
-
-        name_suggestions = db.session.query(NameSuggestion).filter(
-            NameSuggestion.selected_name == selected_name).order_by(NameSuggestion.distance,
-                                                                    NameSuggestion.edit_distance,
-                                                                    NameSuggestion.rank).all()
-
-        if len(name_suggestions) > 0:
-
-            result_dict = spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict)
-            result_dict = family_trees_suggest_names(selected_name, name_suggestions, result_dict)
-            result_dict = soundex_suggest_names(selected_name, result_dict)
-            result_dict = metaphone_suggest_names(selected_name, result_dict)
-            result_dict = double_metaphone_suggest_names(selected_name, result_dict)
-            result_dict = nysiis_suggest_names(selected_name, result_dict)
-            result_dict = match_rating_codex_suggest_names(selected_name, result_dict)
-
-            spoken_name_2_vec_candidates = [d['candidate'] for d in result_dict["spoken_name_2_vec"]]
-            family_trees_candidates = [d['candidate'] for d in result_dict["family_trees"]]
-            soundex_candidates = [d['candidate'] for d in result_dict["soundex"]]
-            metaphone_candidates = [d['candidate'] for d in result_dict["metaphone"]]
-            double_metaphone_candidates = [d['candidate'] for d in result_dict["double_metaphone"]]
-            nysiis_candidates = [d['candidate'] for d in result_dict["nysiis"]]
-            match_rating_codex_candidates = [d['candidate'] for d in result_dict["match_rating_codex"]]
-
-            other_candidates = list(set(soundex_candidates + metaphone_candidates + double_metaphone_candidates +
-                                        nysiis_candidates + match_rating_codex_candidates))
-
-            spoken_name_2_vec_exclusive_names = list(set(spoken_name_2_vec_candidates) - set(other_candidates))
-
-            for exclusive_name in spoken_name_2_vec_exclusive_names:
-                spoken_name_suggestions = result_dict["spoken_name_2_vec"]
-                for spoken_name_suggestion in spoken_name_suggestions:
-                    if spoken_name_suggestion["candidate"] == exclusive_name:
-                        spoken_name_suggestion["exclusive"] = 1
-                        break
-
-            family_trees_exclusive_names = list(set(family_trees_candidates) - set(other_candidates))
-
-            for exclusive_name in family_trees_exclusive_names:
-                suggestions = result_dict["family_trees"]
-                for suggestion in suggestions:
-                    if suggestion["candidate"] == exclusive_name:
-                        suggestion["exclusive"] = 1
-                        break
-
-
-        else:
-            result_dict = {}
-            # result_dict = name_not_exists_suggest_names(selected_name, result_dict)
-        new_user_search = ""
+        # selected_name = selected_name.capitalize()
+        # targeted_name = selected_name
+        # print(selected_name)
+        # noaa = str(selected_name).split()
+        # print('names: '
+        # print(noaa)
+        # print([n for n in noaa])
+        for name in selected_name.split():
+            # print(name)
+            name = name.capitalize()
+            result_dict = create_results_dict(name, key)
+            suggestions.append(result_dict)
+            # print(name)
+        # print('suggestions:')
+        # print(suggestions)
         if username:
             new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
                                          user_name=username)
@@ -100,16 +65,11 @@ def dashboard():
         db.session.add(new_user_search)
         db.session.commit()
 
-        if key:
-            user_name_search = db.session.query(Users).filter(Users.api_key == key).all()
-            if len(user_name_search) == 0:
-                return {"401": "Not Found"}, 401
-            result_dict = convertSuggestionsToJson(result_dict)
-
     # if targeted_name != "":
     #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
     #         json.dump(result_dict, json_file)
-    return json.dumps(result_dict)
+    # print(json.dumps(suggestions))
+    return json.dumps(suggestions)
     # return render_template('dashboard.html', result=result_dict, targeted_name=targeted_name)
     # return render_template('index_naime.html', result=result_dict, targeted_name=targeted_name)
 
@@ -295,10 +255,11 @@ def googleSearch():
     try:
         from googlesearch import search, get_random_user_agent
         name = request.json.get("name", "")
-        suggestions = request.json.get("suggestions", {})
+        suggestions = request.json.get("suggestions", [])
         user_likes = request.json.get("userLikes", [])
         # print(suggestions)
         query = createQuery(name, suggestions, user_likes)
+        print('query')
         print(query)
         # query = "noaa"
         res = []
@@ -319,3 +280,4 @@ def googleSearch():
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])
+

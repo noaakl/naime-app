@@ -8,9 +8,10 @@ import { Card, Row, Col, Dropdown } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
-const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
-    console.log(algorithmsData)
-    // const suggestionsExist = typeof algorithmsData.soundex !== 'undefined'
+const Results = ({ searchedName, algorithmsData, showSuggestions }) => {
+    // console.log(algorithmsData)
+    // console.log(searchedName)
+    // const showSuggestions = typeof algorithmsData.soundex !== 'undefined'
     const algorithmsNames = Object.keys(algorithmsData)
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
@@ -19,6 +20,7 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
     const rankStates = ["likes","dislikes","no rank"]
     const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
     // const algorithmMapping = {}
+    // console.log(algorithms)
 
     useEffect(() => {
         setAlgorithms(algorithmsNames)
@@ -54,14 +56,14 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
     }
 
     const handleFilterByRankShow = (likes, dislikes, algorithm) => {
-        if (algorithm!=="spoken_name_2_vec" && algorithm!=="family_trees")
+        if (algorithm!=="Spoken Name 2 Vec" && algorithm!=="Graft")
             return true
         else {
             const checkedRank = rankStatesChecked.slice()
             if (checkedRank.includes("likes") && likes > 0){return true}
             if (checkedRank.includes("dislikes") && dislikes < 0) {return true}
             // if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
-            if (checkedRank.includes("no rank") && dislikes == 0 && likes == 0){return true}
+            if (checkedRank.includes("no rank") && dislikes === 0 && likes === 0){return true}
         }
 
         return false
@@ -77,12 +79,13 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
 
     Object.keys(algorithmsData).forEach(algorithm => { algorithmsData[algorithm].sort(sortFunc) });
 
-    return suggestionsExist ?
+    return showSuggestions ?
+        // <div className={Styles.container_fluid}>
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}>
-            <Row style={{marginTop:"50px"}}>
+            {/* <Row style={{marginTop:"50px"}}>
                     <Card><Card.Body style={{textAlign:"center"}}><b>Do you want to rank your results? keep track on your searchs? <br/><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
-                </Row>
+                </Row> */}
                 <Row>
                     <Col className={Styles.result_title}>
                     <h2>Suggested Synonyms for the name '{searchedName}'</h2>
@@ -193,7 +196,7 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
                             >
                                 <Card.Body key={`${algorithm}cardbody`} style={{ margin: 0, padding: 0 }}>
                                     <h3 style={{ textAlign: "center" }}>{algorithm}</h3>
-                                    {algorithmsData[algorithm].map((name) => {
+                                    {algorithmsData[algorithm] && algorithmsData[algorithm].map((name) => {
                                         if (name.add_rank > 0)
                                             name.like += name.add_rank
                                         else
@@ -222,9 +225,13 @@ const Results = ({ searchedName, algorithmsData, suggestionsExist }) => {
                 })}
             </Row>
         </div>
-        : <div className={Styles.no_result_wrapper}>
+        // </div>
+        : 
+        // <div className={Styles.container_fluid}>
+            <div className={Styles.no_result_wrapper}>
             <h2>No Synonyms Suggested</h2>
         </div>
+        // </div>
 };
 
 export default Results;

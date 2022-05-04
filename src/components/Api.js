@@ -25,9 +25,17 @@ const Api = ({ name }) => {
     }, [name]);
 
     const getSuggestions = () => {
+        const searchData = {
+            // "name": searchVal.split(' '),
+            "name": name,
+            "key": apiKey
+        }
+        // axios.get('/api/suggestions', {params: searchData})
+        // axios.get('/api/suggestions', searchData)
         axios({
             method: "GET",
-            url: `/api/suggestions?name=${name}&key=${apiKey}`
+            url: `/api/suggestions`, //TODO: split searchval,
+            params: searchData
         })
             .then((response) => {
                 setSuggestions(response.data)
