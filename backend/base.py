@@ -19,6 +19,7 @@ from Users import Users
 from passlib.hash import bcrypt
 import requests
 from lxml.html import fromstring
+import ssl
 
 app = FlaskApplication()
 api = app.get_app()
@@ -27,6 +28,8 @@ db = app.get_db()
 api.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
+context = ssl.SSLContext()
+context.load_cert_chain('fullchain.pem', 'privkey.pem')
 
 
 @api.route('/api/suggestions', methods=['GET'])
@@ -356,3 +359,6 @@ def googleSearch():
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])
+
+if __name__ == "__main__":
+    app.run(ssl_context=context)
