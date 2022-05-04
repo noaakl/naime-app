@@ -122,14 +122,51 @@ def rankResults():
     }
     name_suggestion = db.session.query(NameSuggestion).get(name)
     user_rank = {}
-    if rankData['add_rank'] > 0:
+    if rankData['add_rank'] == 1:
         name_suggestion.like += 1
         user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    else:
+        db.session.add(user_rank)
+        db.session.commit()
+    elif rankData['add_rank'] == -1:
         name_suggestion.dislike -= 1
         user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    db.session.add(user_rank)
-    db.session.commit()
+        db.session.add(user_rank)
+        db.session.commit()
+    return name
+
+
+@api.route('/api/editResults', methods=['PUT'])
+def editResults():
+    if not request.json:
+        abort(400)
+    rankData = request.json
+    username = rankData['username']
+    selected_name = rankData['selected_name']
+    type_name = algorithms[rankData['type_name']]
+    language = rankData['language']
+    candidate = rankData['candidate']
+    name = {
+        "selected_name": selected_name,
+        "type_name": type_name,
+        "language": language,
+        "candidate": candidate,
+    }
+
+    name_suggestion = db.session.query(NameSuggestion).get(name)
+    user_rank = {}
+    print(rankData['remove_rank'])
+    if rankData['remove_rank'] == 1:
+        name_suggestion.like -= 1
+        user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
+        db.session.commit()
+        # user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
+    elif rankData['remove_rank'] == -1:
+        name_suggestion.dislike += 1
+        user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
+        db.session.commit()
+        # user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
+    # db.session.delete(user_rank)
+    # db.session.commit()
     return name
 
 
@@ -259,8 +296,6 @@ def googleSearch():
         user_likes = request.json.get("userLikes", [])
         # print(suggestions)
         query = createQuery(name, suggestions, user_likes)
-        print('query')
-        print(query)
         # query = "noaa"
         res = []
         # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
@@ -272,7 +307,7 @@ def googleSearch():
         #     res.append(search_result)
         res_final = {}
         for url in res:
-            print(url)
+            # print(url)
             x = requests.get(url)
             tree = fromstring(x.content)
             res_final[url]=tree.findtext('.//title')

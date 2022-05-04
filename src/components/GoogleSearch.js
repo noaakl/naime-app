@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner'
 const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
     const likes = useSelector((state) => state.reduser.likes);
     const [googleResults, setGoogleResults] = useState([])
-    console.log(googleResults)
+    // console.log(googleResults)
     // console.log(searchedName)
 
     useEffect(() => {
