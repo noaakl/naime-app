@@ -76,7 +76,7 @@ const RankInfo = ({ searchedName, name, algorithm }) => {
                 username: username,
                 type_name: algorithm,
                 selected_name: searchedName,
-                remove_rank: name.add_rank,
+                remove_rank: name.remove_rank,
                 candidate: name.candidate,
                 distance: name.distance,
                 edit_distance: name.edit_distance,

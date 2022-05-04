@@ -162,14 +162,16 @@ def rankResults():
     }
     name_suggestion = db.session.query(NameSuggestion).get(name)
     user_rank = {}
-    if rankData['add_rank'] > 0:
+    if rankData['add_rank'] == 1:
         name_suggestion.like += 1
         user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    else:
+        db.session.add(user_rank)
+        db.session.commit()
+    elif rankData['add_rank'] == -1:
         name_suggestion.dislike -= 1
         user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    db.session.add(user_rank)
-    db.session.commit()
+        db.session.add(user_rank)
+        db.session.commit()
     return name
 
 
@@ -192,17 +194,19 @@ def editResults():
 
     name_suggestion = db.session.query(NameSuggestion).get(name)
     user_rank = {}
-    if rankData['remove_rank'] > 0:
+    print(rankData['remove_rank'])
+    if rankData['remove_rank'] == 1:
         name_suggestion.like -= 1
         user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
+        db.session.commit()
         # user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    else:
+    elif rankData['remove_rank'] == -1:
         name_suggestion.dislike += 1
         user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
+        db.session.commit()
         # user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    print(user_rank)
     # db.session.delete(user_rank)
-    db.session.commit()
+    # db.session.commit()
     return name
 
 
