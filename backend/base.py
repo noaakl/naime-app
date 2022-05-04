@@ -361,4 +361,4 @@ def googleSearch():
         return json.dumps([])
 
 if __name__ == "__main__":
-    app.run(ssl_context=context)
+    app.run(port=443, ssl_context=context)
