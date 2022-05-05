@@ -10,7 +10,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
     const likes = useSelector((state) => state.reduser.likes);
     const [googleResults, setGoogleResults] = useState([])
     // console.log(googleResults)
-    // console.log(searchedName)
+    console.log(searchedName)
 
     useEffect(() => {
         setGoogleResults([])
@@ -25,19 +25,22 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
         return googleResults[key]
     }
     const getGoogleResults = () => {
-        const searchData = {
-            "name": searchedName,
-            "suggestions": suggestions,
-            "userLikes": likes[searchedName] ? likes[searchedName] : []
+        if (suggestionsExist) {
+            const searchData = {
+                "name": searchedName,
+                "suggestions": suggestions,
+                "userLikes": likes[searchedName] ? likes[searchedName] : []
+            }
+            axios.post('/api/googleSearch', searchData)
+            .then((response) => {
+                if (response.data.length > 0)
+                    setGoogleResults(response.data[0])
+                    console.log('here')
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         }
-        axios.post('/api/googleSearch', searchData)
-        .then((response) => {
-            if (response.data.length > 0)
-                setGoogleResults(response.data[0])
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
     }
 
     return suggestionsExist ?

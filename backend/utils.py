@@ -196,6 +196,7 @@ def convertSuggestionsToJson(suggestions):
 
 
 def createQuery(name, suggestions, user_likes):
+
     def sort_by_likes_and_edit_distance(candidate, name=name, user_likes=user_likes):
         if not name or not candidate:
             return -math.inf
@@ -203,48 +204,46 @@ def createQuery(name, suggestions, user_likes):
             return math.inf
         if candidate["user_rank"] != 0:  # by all users likes and dislikes
             return candidate["user_rank"]
-        # name = name.lower()
-        # candidate = candidate.lower()
         edit_dist = editdistance.eval(name.lower(), candidate["name"].lower())  # by edit distance
         return -edit_dist
 
     top = 4
-    all_results = []
+    all_results = {}
 
     for name_suggestions in suggestions:
         name_results = []
-        # print(len(name_suggestions))
         for algorithm in name_suggestions:
-            if algorithm != "name":
+            if algorithm != "name" and algorithm != "index":
                 for suggestion in name_suggestions[algorithm]:
                     candidate_data = {
                         "name": suggestion["candidate"],
-                        "user_rank": suggestion.get("user_rank", 0)
+                        "user_rank": suggestion.get("user_rank", 0),
                     }
-                    # print(candidate)
-                    # all_results.append(candidate["candidate"])
                     name_results.append(candidate_data)
-                    # print('name_results')
-                    # print(name_results)
-        all_results.append(name_results)
-    for result in all_results: 
-        result.sort(key=sort_by_likes_and_edit_distance, reverse=True)
 
+        name_results.sort(key=sort_by_likes_and_edit_distance, reverse=True) #TODO: check if sorted
+        all_results[name_suggestions['index']] = name_results
+
+    splited_name = name.split()
     query = f""""{name}" OR """
     for i in range(top):
-        name =""
-        for result in all_results:
-            # print(len(all_results))
-            if i < len(result):
+        added_name =""
+        for index in range(len(splited_name)):
+            if index in all_results:
+                result = all_results[index]
                 candidate = result[i].get("name", '')
-                # print(candidate)
-                name += f" {candidate}"
+                print(candidate)
+            else:
+                candidate = splited_name[index]
+            if added_name == "":
+                added_name += f"{candidate}"
+            else:
+                added_name += f" {candidate}"
         if i < top - 1:
-            query += f""""{name}" OR """
+            query += f""""{added_name}" OR """
         else:
-            query += f""""{name}" """
-        # print(name)
-    # print(query)
+            query += f""""{added_name}" """
+    print(query)
     return query
 
 

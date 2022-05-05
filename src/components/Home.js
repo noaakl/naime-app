@@ -15,6 +15,7 @@ const Home = () => {
     // const [suggestions, setSuggestions] = useState({})
     const [suggestions, setSuggestions] = useState([])
     const [nameToSearch, setNameToSearch] = useState("")
+    const [nameValue, setNameValue] = useState("")
     // const [algorithmsData, setAlgorithmsData] = useState({})
     const [algorithmsData, setAlgorithmsData] = useState([])
     // const [searchedNames, setSearchedNames] = useState("")
@@ -22,16 +23,16 @@ const Home = () => {
     const [showResults, setShowResults] = useState(false)
     // const [results, setResults] = useState([])
 
-    console.log(nameToSearch)
+    console.log(nameValue)
     // console.log(searchedNames)
     // const suggestionsExist = typeof algorithmsData.Soundex !== 'undefined'
     const suggestionsExist = algorithmsData.length > 0
 
     useEffect(() => {
-        // setNameToSearch("")
+        // setNameValue("")
         // setAlgorithmsData({})
         // setSearchedNames("")
-        setNameToSearch("")
+        setNameValue("")
         setSuggestions([])
         setAlgorithmsData([])
         setSearchedNames([])
@@ -52,7 +53,7 @@ const Home = () => {
     }
 
     const validateSearchVal = () => {
-        const validSearchVal = isValidSearchVal(nameToSearch)
+        const validSearchVal = isValidSearchVal(nameValue)
         return (
             <div
                 className="errorValue"
@@ -66,12 +67,13 @@ const Home = () => {
     };
 
     const searchName = () => {
-        // setNameToSearch("")
+        // setNameValue("")
         let searchVal = ""
-        searchVal = nameToSearch
+        searchVal = nameValue
         const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
         setShowResults(doSearch)
         if (doSearch) {
+            setNameToSearch(nameValue)
             setAlgorithmsData({})
             const searchData = {
                 // "name": searchVal.split(' '),
@@ -92,6 +94,7 @@ const Home = () => {
                 // })
                 .then((response) => {
                     // console.log(response.data)
+                    // let index = 0
                     let addedSuggestions = []
                     let addedSearchedNames = []
                     let addedAlgorithmsData = []
@@ -99,6 +102,7 @@ const Home = () => {
                         if (typeof suggestionsData.soundex !== 'undefined') {
                             // console.log(suggestionsData)
                             // setSuggestions([...addedSuggestions, suggestionsData])
+                            // suggestionsData['index'] = index
                             addedSuggestions = [...addedSuggestions, suggestionsData];
                             const spoken_name_2_vec = suggestionsData.spoken_name_2_vec;
                             const double_metaphone = suggestionsData.double_metaphone;
@@ -137,8 +141,8 @@ const Home = () => {
                     <div style={{ textAlign: "center" }}>Similar Name Suggestor</div>
                     <div className={Styles.search_wraper} >
                         <div className={Styles.search_inner}>
-                            <input className={Styles.form_control} value={nameToSearch} onKeyPress={(e) => e.key === "Enter" ? searchName() : ""}
-                                onChange={(e) => setNameToSearch(e.target.value)} placeholder="Write name here (i.e Mike, Christina)" />
+                            <input className={Styles.form_control} value={nameValue} onKeyPress={(e) => e.key === "Enter" ? searchName() : ""}
+                                onChange={(e) => setNameValue(e.target.value)} placeholder="Write name here (i.e Mike, Christina)" />
                             <span className={Styles.search_btn}>
                                 <button className={Styles.search_btn} id="searchName" onClick={() => { searchName() }} method="POST" >
                                     <Search size={20} />
@@ -165,7 +169,7 @@ const Home = () => {
                         Array.from({ length: searchedNames.length })
                             .map((_, index) => {
                                 const name = searchedNames[index]
-                                const showSuggestions = suggestionsExist && name!=="" && typeof algorithmsData[index].Soundex !== 'undefined'
+                                const showSuggestions = showResults && suggestionsExist && name!=="" && typeof algorithmsData[index].Soundex !== 'undefined'
                                 // console.log(searchedNames[index])
                                 return (
                                     <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} />
@@ -177,7 +181,7 @@ const Home = () => {
 
                 <div>
                     <div className={Styles.container_fluid}>
-                        <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />
+                        {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />}
                     </div>
                 </div>
             </div>
