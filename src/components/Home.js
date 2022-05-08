@@ -11,6 +11,7 @@ import { Search, XCircle } from 'react-bootstrap-icons';
 const Home = () => {
     const username = useSelector((state) => state.reduser.username);
     const [suggestions, setSuggestions] = useState({})
+    const [ranks, setRanks] = useState({})
     const [nameToSearch, setNameToSearch] = useState("")
     const [algorithmsData, setAlgorithmsData] = useState({})
     const [searchedName, setSearchedName] = useState("")
@@ -20,6 +21,7 @@ const Home = () => {
     useEffect(() => {
         setNameToSearch("")
         setAlgorithmsData({})
+        setRanks({})
         setSearchedName("")
         setShowResults(false)
     }, [username]);
@@ -48,13 +50,13 @@ const Home = () => {
         setShowResults(doSearch)
         if (doSearch) {
             setAlgorithmsData({})
-            axios({
+            setRanks({})
+             axios({
                 method: "GET",
                 url: `/api/suggestions?name=${searchVal}&username=${username}`
             })
                 .then((response) => {
                     if (typeof response.data.soundex !== 'undefined') {
-                        // console.log(response.data)
                         setSuggestions(response.data)
                         const spoken_name_2_vec = response.data.spoken_name_2_vec;
                         const double_metaphone = response.data.double_metaphone;
@@ -63,6 +65,7 @@ const Home = () => {
                         const metaphone = response.data.metaphone;
                         const nysiis = response.data.nysiis;
                         const soundex = response.data.soundex;
+
     
                         setSearchedName(response.data.name);
                         setAlgorithmsData({
@@ -72,12 +75,25 @@ const Home = () => {
                             'Match Rating Codex': match_rating_codex,
                             'Metaphone': metaphone,
                             'Nysiis': nysiis,
-                            'Soundex': soundex
+                            'Soundex': soundex,
                         }
                         );
                     }
+                    axios({
+                        method: "GET",
+                        url: `/api/rankCount?name=${searchVal}`
+                    })
+                        .then((response) => {
+                            if (typeof response.data.likes !== 'undefined') {
+                                const likes = response.data.likes
+                                const dislikes = response.data.dislikes
+                                setRanks({'likes': likes,
+                                        'dislikes': dislikes})
+                            }
+                        })
     
                 })
+
         }
     }
 
@@ -104,7 +120,7 @@ const Home = () => {
             {showResults && (
                 <>
                     <div className={Styles.container_fluid}>
-                        <Results searchedName={searchedName} algorithmsData={algorithmsData} suggestionsExist={suggestionsExist} />
+                        <Results searchedName={searchedName} algorithmsData={algorithmsData} suggestionsExist={suggestionsExist} ranks={ranks}/>
                     </div>
                     <div>
                         <div className={Styles.container_fluid}>
