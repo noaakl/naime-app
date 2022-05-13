@@ -23,7 +23,7 @@ const Home = () => {
     const [showResults, setShowResults] = useState(false)
     // const [results, setResults] = useState([])
 
-    console.log(nameValue)
+    // console.log(nameValue)
     // console.log(searchedNames)
     // const suggestionsExist = typeof algorithmsData.Soundex !== 'undefined'
     const suggestionsExist = algorithmsData.length > 0
@@ -170,6 +170,7 @@ const Home = () => {
                             .map((_, index) => {
                                 const name = searchedNames[index]
                                 const showSuggestions = showResults && suggestionsExist && name!=="" && typeof algorithmsData[index].Soundex !== 'undefined'
+                                console.log(showSuggestions)
                                 // console.log(searchedNames[index])
                                 return (
                                     <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} />

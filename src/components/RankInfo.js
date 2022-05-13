@@ -37,7 +37,7 @@ const RankInfo = ({ searchedName, name, algorithm }) => {
 
 
     const rankResults = (rank) => {
-        console.log(likes)
+        // console.log(likes)
         name.add_rank = rank
         rank > 0 && username ? dispatch(addLikes(searchedName, name.candidate)) : dispatch(addDislikes(searchedName, name.candidate))
         if (algorithm in algorithms) {
@@ -69,7 +69,7 @@ const RankInfo = ({ searchedName, name, algorithm }) => {
     const removeRankResult = (rank) => {
         // name.add_rank = rank
         name.remove_rank = rank
-        console.log(likes)
+        // console.log(likes)
         rank > 0 && username ? dispatch(removeLikes(searchedName, name.candidate)) : dispatch(removeDislikes(searchedName, name.candidate))
         if (algorithm in algorithms) {
             const rankData = {

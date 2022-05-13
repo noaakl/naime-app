@@ -315,9 +315,8 @@ def googleSearch():
             x = requests.get(url)
             tree = fromstring(x.content)
             res_final[url]=tree.findtext('.//title')
-            res_final[url]=tree.findtext('.//title')
         return json.dumps([res_final])
-        return json.dumps([])
+        # return json.dumps([])
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])

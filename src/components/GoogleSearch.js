@@ -10,7 +10,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
     const likes = useSelector((state) => state.reduser.likes);
     const [googleResults, setGoogleResults] = useState([])
     // console.log(googleResults)
-    console.log(searchedName)
+    // console.log(searchedName)
 
     useEffect(() => {
         setGoogleResults([])
@@ -35,7 +35,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
             .then((response) => {
                 if (response.data.length > 0)
                     setGoogleResults(response.data[0])
-                    console.log('here')
+                    // console.log('here')
             })
             .catch(function (error) {
               console.log(error);

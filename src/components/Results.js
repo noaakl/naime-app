@@ -9,7 +9,6 @@ import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithmsData, showSuggestions }) => {
-    // console.log(algorithmsData)
     // console.log(searchedName)
     // const showSuggestions = typeof algorithmsData.soundex !== 'undefined'
     const algorithmsNames = Object.keys(algorithmsData)

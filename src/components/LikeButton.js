@@ -26,7 +26,7 @@ const LikeButton = ({ show, name, rankFunc,removeFunc, fill, rank, disable }) =>
                 setDislikesCount(dilikesCount + 1)
         }
         else{
-            console.log("removerank")
+            // console.log("removerank")
             removeFunc(rank)
             if (like)
                 setLikesCount(likesCount - 1)
