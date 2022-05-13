@@ -13,7 +13,7 @@ const GoogleIFrame = ({ searchedName, suggestions, suggestionsExist }) => {
 
     useEffect(() => {
         setQuery("")
-        // console.log(searchedName)
+        console.log(searchedName)
         if (searchedName)
             getQuery()
     }, [searchedName, suggestions]);
@@ -49,7 +49,7 @@ const GoogleIFrame = ({ searchedName, suggestions, suggestionsExist }) => {
         axios.post('/api/googleQuery', searchData)
         .then((response) => {
             const query = response.data['query']
-            // console.log(query)
+            console.log(query)
             setQuery(query)
         })
         .catch(function (error) {

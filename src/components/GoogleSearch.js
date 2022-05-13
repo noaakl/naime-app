@@ -4,6 +4,7 @@ import Styles from '../App.module.scss'
 import axios from "axios";
 import { Card, Row, Col } from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner'
+import IFrame from "./IFrame";
 
 
 const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
@@ -62,8 +63,10 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
                     role="status"
                     aria-hidden="true"
                   /> Loading...</span>}
+
                 <Row lg={5} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
-                {Object.keys(googleResults).map((key, _) => {
+                <IFrame query={"noaaa"}/>
+                {false && Object.keys(googleResults).map((key, _) => {
                     return (
                         <>
                         <a className={Styles.googleResults} href={key} target="_blank">

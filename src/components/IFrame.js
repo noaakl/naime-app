@@ -3,7 +3,7 @@ import Iframe from 'react-iframe'
 
 
 const IFrame = ({query}) => {
-    // console.log(query)
+    console.log(query)
     return (
         // <Iframe url="http://www.youtube.com/embed/xDMP3i36naA"
         <Iframe url={`https://www.google.com/search?igu=1&ei=&q=${query}`}
