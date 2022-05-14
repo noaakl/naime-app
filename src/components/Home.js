@@ -6,6 +6,7 @@ import Styles from "../App.module.scss";
 import Results from './Results';
 import GoogleSearch from './GoogleSearch';
 import GoogleIFrame from './GoogleIFrame';
+import SocialMedia from './SocialMedia';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
 import { Card, Row, Col, Container } from 'react-bootstrap'
@@ -163,7 +164,7 @@ const Home = () => {
                             <Container>
                             <Row  className="justify-content-center" style={{ marginTop: "50px", marginBottom:"4px" }}>
                             {/* <Col className="justify-content-center"> */}
-                                <Card className="flex-fill mx-auto" style={{width:"90%"}}><Card.Body style={{ textAlign: "center" }}><b>Do you want to rank your results? keep track on your searchs? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                                <Card className="flex-fill mx-auto" style={{width:"90%"}}><Card.Body style={{ textAlign: "center" }}><b>Do you want to rank your results? keep track of your searchs? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
                             {/* </Col> */}
                             </Row>
                             </Container>
@@ -199,17 +200,21 @@ const Home = () => {
                             }
                             )
                     }
-                </div>
+                {/* </div> */}
 
-                <div>
+                {/* <div> */}
                     <div className={Styles.container_fluid}>
-                        {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />}
+                        <div style={{marginTop: "100px"}}>
+
+                    <SocialMedia searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist}/>
+                        {/* {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />} */}
                     </div>
-                    <div className={Styles.container_fluid}>
+                        </div>
+                    {/* <div className={Styles.container_fluid}>
                         {suggestionsExist && <GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
 
 
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

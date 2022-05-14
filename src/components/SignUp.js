@@ -80,7 +80,7 @@ const SingUp = () => {
         <Card className="text-center h-100" style={{ width: '40rem', marginTop: '40px', marginBottom:'20px', padding: '15px', position: "center", alignItems: "center", justifyContent: "center" }}>
           <Card.Body>
             <h3>Sign Up</h3>
-            <h5>sign up to keep track on your searches and ranks</h5>
+            <h5>sign up to keep track of your searches and ranks</h5>
             <br></br>
             <div className="messages">
 

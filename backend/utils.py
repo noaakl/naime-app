@@ -225,7 +225,7 @@ def createQuery(name, suggestions, user_likes):
         all_results[name_suggestions['index']] = name_results
 
     splited_name = name.split()
-    query = f""""{name}" OR """
+    query = f""""{name.title()}" OR """
     for i in range(top):
         added_name =""
         for index in range(len(splited_name)):
