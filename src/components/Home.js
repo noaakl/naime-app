@@ -8,7 +8,7 @@ import GoogleSearch from './GoogleSearch';
 import GoogleIFrame from './GoogleIFrame';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
-import { Card, Row } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 
 
 const Home = () => {
@@ -78,7 +78,6 @@ const Home = () => {
                     let addedSuggestions = []
                     let addedSearchedNames = []
                     let addedAlgorithmsData = []
-                    let addedRanks = []
                     response.data.forEach(suggestionsData => {
                         if (typeof suggestionsData.soundex !== 'undefined') {
                             // console.log(suggestionsData)
@@ -105,28 +104,34 @@ const Home = () => {
                                 'Soundex': soundex
                             }];
                         }
-                        axios({
-                        method: "GET",
-                        url: `/api/rankCount?name=${searchVal}`
-                    })
-                        .then((response) => {
-                            if (typeof response.data.likes !== 'undefined') {
-                                const likes = response.data.likes
-                                const dislikes = response.data.dislikes
-                                addedRanks = [...addedRanks, {
-                                    'likes': likes,
-                                    'dislikes': dislikes
-                                }];
-                                // setRanks({'likes': likes,
-                                //         'dislikes': dislikes})
-                            }
-                        })
 
                     });
                     setSuggestions(addedSuggestions);
                     setSearchedNames(addedSearchedNames);
                     setAlgorithmsData(addedAlgorithmsData);
-                    setRanks(addedRanks);
+
+                    axios({
+                        method: "GET",
+                        url: `/api/rankCount`, //TODO: split searchval,
+                        params: { "name": searchVal }
+                    })
+                        .then((response) => {
+                            let addedRanks = []
+                            response.data.forEach(ranksData => {
+                                if (typeof ranksData.likes !== 'undefined') {
+                                    const likes = ranksData.likes
+                                    const dislikes = ranksData.dislikes
+                                    addedRanks = [...addedRanks, {
+                                        'likes': likes,
+                                        'dislikes': dislikes
+                                    }];
+                                    // setRanks({'likes': likes,
+                                    //         'dislikes': dislikes})
+                                }
+                            })
+                            setRanks(addedRanks);
+                            console.log(ranks)
+                        })
                 })
 
         }
@@ -152,7 +157,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div style={{ display: suggestionsExist ? 'inline' : 'none', }} className={Styles.container_fluid}>
+                <div style={{ display: suggestionsExist && !username ? 'inline' : 'none', }} className={Styles.container_fluid}>
                     <div className={Styles.result_wrapper}>
                         <div className={Styles.result_wrapper}>
                             <Row style={{ marginTop: "50px" }}>
@@ -162,17 +167,30 @@ const Home = () => {
                     </div>
                 </div>
 
+                <div style={{ display: nameValue !== "" ? 'inline' : 'none', }} >
+
+                    {searchedNames.length === 0 ? (<div className={Styles.no_result_wrapper}>
+                        <h2>No Synonyms Suggested</h2>
+                    </div>)
+                        : (<Row className={Styles.result_wrapper}>
+                            <Col className={Styles.result_title}>
+                                <h2>Results for the name '{nameToSearch}'</h2>
+                            </Col>
+                        </Row>)}</div>
+
+
+
                 <div className={Styles.container_fluid}>
 
                     {
                         Array.from({ length: searchedNames.length })
                             .map((_, index) => {
                                 const name = searchedNames[index]
-                                const showSuggestions = showResults && suggestionsExist && name!=="" && typeof algorithmsData[index].Soundex !== 'undefined'
-                                console.log(showSuggestions)
+                                const showSuggestions = showResults && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
+                                // const showSuggestions = false
                                 // console.log(searchedNames[index])
                                 return (
-                                    <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks} />
+                                    <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks[index] ? ranks[index] : []} />
                                 )
                             }
                             )
@@ -184,7 +202,7 @@ const Home = () => {
                         {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />}
                     </div>
                     <div className={Styles.container_fluid}>
-                        {suggestionsExist &&<GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
+                        {suggestionsExist && <GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
 
 
 

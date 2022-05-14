@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
-    // console.log(searchedName)
+    console.log(showSuggestions)
     // const showSuggestions = typeof algorithmsData.soundex !== 'undefined'
     const algorithmsNames = Object.keys(algorithmsData)
     const [rank, setRank] = useState(ranks)
@@ -33,6 +33,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     }
 
     const handleLikeCount = (name) => {
+        // console.log(rank)
         if ("likes" in rank && name in rank["likes"])
             return rank["likes"][name]
         return 0
@@ -40,7 +41,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
 
     const handledisLikeCount = (name) => {
         if ("dislikes" in rank && name in rank["dislikes"]){
-            console.log(rank["dislikes"][name])
             return rank["dislikes"][name]}
         return 0
     }
@@ -71,7 +71,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     }
 
     const handleAddLike = (rankType, candidate) => {
-        var copyOfObject = { ...rank }
+        let copyOfObject = { ...rank }
         if (rankType === 1){
             if ("likes" in rank && candidate in rank["likes"]){
                 copyOfObject["likes"][candidate] +=1
@@ -99,8 +99,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     }
 
     const handleremoveLike = (rankType, candidate) => {
-        console.log("90")
-        var copyOfObject = { ...rank }
+        let copyOfObject = { ...rank }
         if (rankType === 1){
             if ("likes" in rank && rank['likes'][candidate] > 0){
                 copyOfObject["likes"][candidate] -=1
@@ -135,7 +134,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
         // else {
         const checkedRank = rankStatesChecked.slice()
         if (checkedRank.includes("likes") && likes > 0) {return true}
-        if (checkedRank.includes("dislikes") && dislikes < 0) {return true}
+        if (checkedRank.includes("dislikes") && dislikes > 0) {return true}
         // if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
         if (checkedRank.includes("no rank") && dislikes === 0 && likes === 0){ return true}
         // }
@@ -154,7 +153,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     Object.keys(algorithmsData).forEach(algorithm => { algorithmsData[algorithm].sort(sortFunc) });
     Object.keys(ranks).forEach(rank => { });
 
-    return showSuggestions ?
+    return (
         // <div className={Styles.container_fluid}>
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}>
@@ -306,14 +305,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                             </Card></Col>)
                 })}
             </Row>
-        </div>
-        // </div>
-        :
-        // <div className={Styles.container_fluid}>
-            <div className={Styles.no_result_wrapper}>
-            <h2>No Synonyms Suggested</h2>
-        </div>
-        // </div>
+        </div>)
 };
 
 export default Results;

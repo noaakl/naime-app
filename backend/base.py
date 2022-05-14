@@ -95,27 +95,36 @@ def rankCount():
     result_dict = {}
     targeted_name = ""
     if request.method == 'GET':
-        selected_name = request.args.get('name').capitalize()
+        selected_name = request.args.get('name')
         print(selected_name)
-        likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == selected_name).group_by(UsersLikes.candidate).all()
-        dislikes = db.session.query(UsersDislikes.candidate, count_).filter(UsersDislikes.selected_name == selected_name).group_by(UsersDislikes.candidate).all()
-        # return{
-        #     "likes" : {like[0]: like[1] for like in likes},
-        #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        # }
-        # likes_array = []
-        # for like in likes:
-        #     likes_array.append({'candidate': like[0], 'count':like[1]})
-        # print(likes_array)
-        print(likes)
-        print({
+        res = []
+        for name in selected_name.split():
+            name = name.capitalize()
+            print(name)
+            likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == name).group_by(UsersLikes.candidate).all()
+            dislikes = db.session.query(UsersDislikes.candidate, count_).filter(UsersDislikes.selected_name == name).group_by(UsersDislikes.candidate).all()
+            # return{
+            #     "likes" : {like[0]: like[1] for like in likes},
+            #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
+            # }
+            # likes_array = []
+            # for like in likes:
+            #     likes_array.append({'candidate': like[0], 'count':like[1]})
+            # print(likes_array)
+            print(likes)
+            print({
+                "likes" : {like[0]: like[1] for like in likes},
+                "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
+            })
+            res.append({
              "likes" : {like[0]: like[1] for like in likes},
             "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
         })
-        return{
-             "likes" : {like[0]: like[1] for like in likes},
-            "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        }
+        return json.dumps(res)
+        # return{
+        #      "likes" : {like[0]: like[1] for like in likes},
+        #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
+        # }
 
 
 @api.route('/api/popularSearches', methods=['GET'])

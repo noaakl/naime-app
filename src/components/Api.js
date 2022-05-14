@@ -63,11 +63,11 @@ const Api = ({ name }) => {
     }
 
     const download = (data, type) => {
-        var file = new Blob([data], { type: type });
+        let file = new Blob([data], { type: type });
         if (window.navigator.msSaveOrOpenBlob) // IE10+
             window.navigator.msSaveOrOpenBlob(file, fileName);
         else { // Others
-            var a = document.createElement("a"),
+            let a = document.createElement("a"),
                 url = URL.createObjectURL(file);
             a.href = url;
             a.download = fileName;
