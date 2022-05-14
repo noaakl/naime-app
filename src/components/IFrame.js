@@ -6,8 +6,8 @@ const IFrame = ({query}) => {
     return (
         // <Iframe url="http://www.youtube.com/embed/xDMP3i36naA"
         <Iframe url={`https://www.google.com/search?igu=1&ei=&q=${query}`}
-        width="1200px"
-        height="700px"
+        // width="20%"
+        height="500px"
         id="myId"
         className="myClassname"
         display="initial"

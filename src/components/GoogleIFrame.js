@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Styles from '../App.module.scss'
 import axios from "axios";
-import { Card, Row, Col } from 'react-bootstrap'
+import { Card, Row, Col, Container } from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner'
 import IFrame from "./IFrame";
 
@@ -60,18 +60,22 @@ const GoogleIFrame = ({ searchedName, suggestions, suggestionsExist }) => {
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}></div>
                 {/* <Row> */}
-                <Row >
-                        <h2 className={Styles.google_result_title}>Google search results for the name '{searchedName}'</h2>
-                </Row>
-                <Row>
-                <p>Google results using the algorithms suggestions within the query</p>
-                </Row>
-                <Row>
-                    <Col>
-                    <IFrame Styles={{}} query={query}/>
-
+                <Row className={Styles.result_wrapper} style={{margin:"0px"}}>
+                    <Col className={Styles.result_title} style={{marginTop:"30px", marginBottom:"0px"}}>
+                        <h3>Google Results for the Name <b><i>{searchedName.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
                     </Col>
                 </Row>
+                <Row className={Styles.result_wrapper} style={{textAlign:"center", marginBottom:"30px", marginTop:"0px"}}>
+                <p>Google search results using the algorithms suggestions within the query</p>
+                </Row>
+                <Container style={{width:"80%"}}>
+                <Row className="justify-content-center">
+                    {/* <Col> */}
+                    <IFrame Styles={{}} query={query}/>
+
+                    {/* </Col> */}
+                </Row>
+                </Container>
 
         </div>
         : <div></div>

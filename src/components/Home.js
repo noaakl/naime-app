@@ -8,7 +8,7 @@ import GoogleSearch from './GoogleSearch';
 import GoogleIFrame from './GoogleIFrame';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
-import { Card, Row, Col } from 'react-bootstrap'
+import { Card, Row, Col, Container } from 'react-bootstrap'
 
 
 const Home = () => {
@@ -51,7 +51,7 @@ const Home = () => {
     };
 
     const searchName = () => {
-        // setNameValue("")
+        setNameValue("")
         let searchVal = ""
         searchVal = nameValue
         const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
@@ -160,23 +160,27 @@ const Home = () => {
                 <div style={{ display: suggestionsExist && !username ? 'inline' : 'none', }} className={Styles.container_fluid}>
                     <div className={Styles.result_wrapper}>
                         <div className={Styles.result_wrapper}>
-                            <Row style={{ marginTop: "50px" }}>
-                                <Card><Card.Body style={{ textAlign: "center" }}><b>Do you want to rank your results? keep track on your searchs? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                            <Container>
+                            <Row  className="justify-content-center" style={{ marginTop: "50px", marginBottom:"4px" }}>
+                            {/* <Col className="justify-content-center"> */}
+                                <Card className="flex-fill mx-auto" style={{width:"90%"}}><Card.Body style={{ textAlign: "center" }}><b>Do you want to rank your results? keep track on your searchs? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                            {/* </Col> */}
                             </Row>
+                            </Container>
                         </div>
                     </div>
                 </div>
 
-                <div style={{ display: nameValue !== "" ? 'inline' : 'none', }} >
+                <div style={{ display: nameToSearch !== "" ? 'inline' : 'none', }} >
 
                     {searchedNames.length === 0 ? (<div className={Styles.no_result_wrapper}>
                         <h2>No Synonyms Suggested</h2>
                     </div>)
-                        : (<Row className={Styles.result_wrapper}>
-                            <Col className={Styles.result_title}>
-                                <h2>Results for the name '{nameToSearch}'</h2>
-                            </Col>
-                        </Row>)}</div>
+                         : (<Row className={Styles.result_wrapper}>
+                             <Col className={Styles.result_title} style={{margin:"30px 0 0 0 "}}>
+                                <h3>Suggested Synonyms for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
+                             </Col>
+                         </Row>)}
 
 
 
@@ -205,7 +209,7 @@ const Home = () => {
                         {suggestionsExist && <GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
 
 
-
+                        </div>
                     </div>
                 </div>
             </div>

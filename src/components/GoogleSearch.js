@@ -45,7 +45,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
             <div className={Styles.result_wrapper}></div>
                 <Row>
                     <Col className={Styles.result_title}>
-                        <h2>Google search results for the name '{searchedName}'</h2>
+                        <h2>Google search results for the name '{searchedName.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}'</h2>
                         </Col>
                 </Row>
                 <Row>

@@ -401,7 +401,7 @@ body:before {
 	}
 
     .result_title{
-        margin: 40px 15px;
+        margin: 40px 12px 4px;
         float: left;
         // color: white;
 		font-size: 22px;
@@ -412,7 +412,31 @@ body:before {
             float: left;
 			margin-top: 3px;
         }
+
+		h3 {
+			font-size: 22px;
+            list-style: none;
+            position: relative;
+            float: center;
+			font-size: 22px;
+			text-align: center;
+			margin-top: 3px;
+		}
     }
+
+	.result_main_title {
+		margin: 20px 15px;
+        float: left;
+        // color: white;
+		font-size: 22px;
+            list-style: none;
+            position: relative;
+            float: center;
+			font-size: 22px;
+			text-align: center;
+			margin-top: 3px;
+			// color:rgb(80, 128, 102);
+	}
 
     .google_result_title{
         margin: 20px 15px;

@@ -162,7 +162,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 </Row> */}
                 <Row>
                     <Col className={Styles.result_title}>
-                    <h2>Suggested Synonyms for the name '{searchedName}'</h2>
+                    <h2>Synonyms for <b><i>{searchedName}</i></b></h2>
 
                     {/* <Col > */}
                     <Api name={searchedName}/>
