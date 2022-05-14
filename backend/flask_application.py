@@ -1,5 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import ssl
+import os
+from flask_cors import CORS
 # from feature_extraction.feature_extractor import FeatureExtractor
 
 # from text2speech_converter import Text2SpeechConverter
@@ -12,10 +15,18 @@ __author__ = "Aviad Elyashar"
 class FlaskApplication:
     def __init__(self):
         # app = Flask(__name__, template_folder='../templates', static_folder='../static')
-        app = Flask(__name__)
+        # app = Flask(__name__)
+        os.chdir("/var/www/naime/backend")
+        context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+        certfile = "/var/www/naime/backend/fullchain.pem"
+        keyfile = "/var/www/naime/backend/privkey.pem"
+        context.load_cert_chain(certfile, keyfile)
+        
+        app = Flask(__name__, static_url_path='/', static_folder='build')
         self._app = app
-
-        self._app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spoken_names_app.db?check_same_thread=False'
+        cors = CORS(app, resources={r"/*": {"origins": "*"}})
+        self._app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spoken_names_app.db'
+        self._app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         db = SQLAlchemy(app)
         self._db = db
 

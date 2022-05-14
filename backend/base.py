@@ -1,10 +1,8 @@
 import json
-
 import secrets
-from flask import Flask, request, jsonify
-from datetime import datetime, timedelta, timezone
-from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, \
-    unset_jwt_cookies, jwt_required, JWTManager
+from flask import Flask, request, jsonify, send_from_directory
+from datetime import datetime, timedelta
+from flask_jwt_extended import create_access_token, JWTManager
 from flask_application import FlaskApplication
 from sqlalchemy import func, desc
 from utils import createQuery, convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, \
@@ -18,7 +16,7 @@ from AlgorithmsConstants import algorithms
 from Users import Users
 from passlib.hash import bcrypt
 import requests
-from lxml.html import fromstring
+# from lxml.html import fromstring
 
 app = FlaskApplication()
 api = app.get_app()
@@ -28,6 +26,14 @@ api.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
 
+@api.route('/')
+def index():
+    return send_from_directory(api.static_folder,'index.html')
+    # return api.send_static_file('index.html')
+
+# @api.route('/', defaults={'path': ''})
+# def index():
+#     
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
@@ -360,12 +366,13 @@ def googleSearch():
         # for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '0'}):
         #     res.append(search_result)
         res_final = {}
-        for url in res:
-            # print(url)
-            x = requests.get(url)
-            tree = fromstring(x.content)
-            res_final[url]=tree.findtext('.//title')
-        return json.dumps([res_final])
+        # for url in res:
+        #     # print(url)
+        #     # x = requests.get(url)
+        #     # tree = fromstring(x.content)
+        #     # res_final[url]=tree.findtext('.//title')
+        #     res_final[url]= ""
+        return json.dumps([])
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])
