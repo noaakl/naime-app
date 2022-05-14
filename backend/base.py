@@ -89,6 +89,35 @@ def searchCountInfo():
         return result_dict
 
 
+@api.route('/api/rankCount', methods=['GET'])
+def rankCount():
+    count_ = func.count('*')
+    result_dict = {}
+    targeted_name = ""
+    if request.method == 'GET':
+        selected_name = request.args.get('name').capitalize()
+        print(selected_name)
+        likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == selected_name).group_by(UsersLikes.candidate).all()
+        dislikes = db.session.query(UsersDislikes.candidate, count_).filter(UsersDislikes.selected_name == selected_name).group_by(UsersDislikes.candidate).all()
+        # return{
+        #     "likes" : {like[0]: like[1] for like in likes},
+        #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
+        # }
+        # likes_array = []
+        # for like in likes:
+        #     likes_array.append({'candidate': like[0], 'count':like[1]})
+        # print(likes_array)
+        print(likes)
+        print({
+             "likes" : {like[0]: like[1] for like in likes},
+            "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
+        })
+        return{
+             "likes" : {like[0]: like[1] for like in likes},
+            "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
+        }
+
+
 @api.route('/api/popularSearches', methods=['GET'])
 def popularSearchesInfo():
     count_ = func.count('*')
@@ -114,28 +143,19 @@ def rankResults():
     rankData = request.json
     username = rankData['username']
     selected_name = rankData['selected_name']
-    type_name = algorithms[rankData['type_name']]
-    language = rankData['language']
     candidate = rankData['candidate']
-    name = {
-        "selected_name": selected_name,
-        "type_name": type_name,
-        "language": language,
-        "candidate": candidate,
-    }
-    name_suggestion = db.session.query(NameSuggestion).get(name)
-    user_rank = {}
+    print(rankData['add_rank'])
     if rankData['add_rank'] == 1:
-        name_suggestion.like += 1
         user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
+        print(user_rank)
         db.session.add(user_rank)
         db.session.commit()
     elif rankData['add_rank'] == -1:
-        name_suggestion.dislike -= 1
+        # name_suggestion.dislike -= 1
         user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
         db.session.add(user_rank)
         db.session.commit()
-    return name
+    return {}
 
 
 @api.route('/api/editResults', methods=['PUT'])
@@ -145,32 +165,22 @@ def editResults():
     rankData = request.json
     username = rankData['username']
     selected_name = rankData['selected_name']
-    type_name = algorithms[rankData['type_name']]
-    language = rankData['language']
     candidate = rankData['candidate']
-    name = {
-        "selected_name": selected_name,
-        "type_name": type_name,
-        "language": language,
-        "candidate": candidate,
-    }
-
-    name_suggestion = db.session.query(NameSuggestion).get(name)
     user_rank = {}
     # print(rankData['remove_rank'])
     if rankData['remove_rank'] == 1:
-        name_suggestion.like -= 1
+        # name_suggestion.like -= 1
         user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
         db.session.commit()
         # user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
     elif rankData['remove_rank'] == -1:
-        name_suggestion.dislike += 1
+        # name_suggestion.dislike += 1
         user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
         db.session.commit()
         # user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
     # db.session.delete(user_rank)
     # db.session.commit()
-    return name
+    return {}
 
 
 @api.route('/api/signUp', methods=['POST'])
@@ -299,7 +309,7 @@ def googleSearch():
         user_likes = request.json.get("userLikes", [])
         # print(suggestions)
         query = createQuery(name, suggestions, user_likes)
-        print(query)
+        # print(query)
         # query = "noaa"
         res = []
         # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
@@ -311,7 +321,7 @@ def googleSearch():
         #     res.append(search_result)
         res_final = {}
         for url in res:
-            print(url)
+            # print(url)
             x = requests.get(url)
             tree = fromstring(x.content)
             res_final[url]=tree.findtext('.//title')
@@ -323,7 +333,7 @@ def googleSearch():
 
 @api.route('/api/googleQuery', methods=["POST"])
 def googleQuery():
-    from googlesearch import search, get_random_user_agent
+    # from googlesearch import search, get_random_user_agent
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
     user_likes = request.json.get("userLikes", [])

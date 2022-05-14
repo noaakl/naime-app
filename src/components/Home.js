@@ -13,41 +13,24 @@ import { Card, Row } from 'react-bootstrap'
 
 const Home = () => {
     const username = useSelector((state) => state.reduser.username);
-    // const [suggestions, setSuggestions] = useState({})
     const [suggestions, setSuggestions] = useState([])
+    const [ranks, setRanks] = useState([])
     const [nameToSearch, setNameToSearch] = useState("")
     const [nameValue, setNameValue] = useState("")
-    // const [algorithmsData, setAlgorithmsData] = useState({})
     const [algorithmsData, setAlgorithmsData] = useState([])
-    // const [searchedNames, setSearchedNames] = useState("")
     const [searchedNames, setSearchedNames] = useState([])
     const [showResults, setShowResults] = useState(false)
-    // const [results, setResults] = useState([])
-
-    // console.log(nameValue)
-    // console.log(searchedNames)
-    // const suggestionsExist = typeof algorithmsData.Soundex !== 'undefined'
     const suggestionsExist = algorithmsData.length > 0
 
     useEffect(() => {
-        // setNameValue("")
-        // setAlgorithmsData({})
-        // setSearchedNames("")
+        // setNameToSearch("")
+        setRanks([])
         setNameValue("")
         setSuggestions([])
         setAlgorithmsData([])
         setSearchedNames([])
-        // setResults([])
         setShowResults(false)
     }, [username]);
-
-    // useEffect(() => {
-    //     let res = []
-    //     for (let i = 0; i < searchedNames.length; i++) {
-    //         res.push(i)
-    //     }
-    //     setResults(res)
-    // }, [searchedNames]);
 
     const isValidSearchVal = (searchVal) => {
         return !/[^a-zA-Z\s]/.test(searchVal)
@@ -76,6 +59,7 @@ const Home = () => {
         if (doSearch) {
             setNameToSearch(nameValue)
             setAlgorithmsData({})
+            setRanks({})
             const searchData = {
                 // "name": searchVal.split(' '),
                 "name": searchVal,
@@ -88,17 +72,13 @@ const Home = () => {
                 url: `/api/suggestions`, //TODO: split searchval,
                 params: searchData
             })
-
-                // axios({
-                //     method: "GET",
-                //     url: `/api/suggestions?name=${searchVal}&username=${username}` //TODO: split searchval
-                // })
                 .then((response) => {
                     // console.log(response.data)
                     // let index = 0
                     let addedSuggestions = []
                     let addedSearchedNames = []
                     let addedAlgorithmsData = []
+                    let addedRanks = []
                     response.data.forEach(suggestionsData => {
                         if (typeof suggestionsData.soundex !== 'undefined') {
                             // console.log(suggestionsData)
@@ -125,12 +105,30 @@ const Home = () => {
                                 'Soundex': soundex
                             }];
                         }
+                        axios({
+                        method: "GET",
+                        url: `/api/rankCount?name=${searchVal}`
+                    })
+                        .then((response) => {
+                            if (typeof response.data.likes !== 'undefined') {
+                                const likes = response.data.likes
+                                const dislikes = response.data.dislikes
+                                addedRanks = [...addedRanks, {
+                                    'likes': likes,
+                                    'dislikes': dislikes
+                                }];
+                                // setRanks({'likes': likes,
+                                //         'dislikes': dislikes})
+                            }
+                        })
 
                     });
                     setSuggestions(addedSuggestions);
                     setSearchedNames(addedSearchedNames);
                     setAlgorithmsData(addedAlgorithmsData);
+                    setRanks(addedRanks);
                 })
+
         }
     }
 
@@ -174,7 +172,7 @@ const Home = () => {
                                 console.log(showSuggestions)
                                 // console.log(searchedNames[index])
                                 return (
-                                    <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} />
+                                    <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks} />
                                 )
                             }
                             )
