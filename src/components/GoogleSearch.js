@@ -4,7 +4,6 @@ import Styles from '../App.module.scss'
 import axios from "axios";
 import { Card, Row, Col } from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner'
-import IFrame from "./IFrame";
 
 
 const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
@@ -26,22 +25,19 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
         return googleResults[key]
     }
     const getGoogleResults = () => {
-        if (suggestionsExist) {
-            const searchData = {
-                "name": searchedName,
-                "suggestions": suggestions,
-                "userLikes": likes[searchedName] ? likes[searchedName] : []
-            }
-            axios.post('/api/googleSearch', searchData)
-            .then((response) => {
-                if (response.data.length > 0)
-                    setGoogleResults(response.data[0])
-                    // console.log('here')
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+        const searchData = {
+            "name": searchedName,
+            "suggestions": suggestions,
+            "userLikes": likes[searchedName] ? likes[searchedName] : []
         }
+        axios.post('/api/googleSearch', searchData)
+        .then((response) => {
+            if (response.data.length > 0)
+                setGoogleResults(response.data[0])
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
 
     return suggestionsExist ?
@@ -63,10 +59,8 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
                     role="status"
                     aria-hidden="true"
                   /> Loading...</span>}
-
                 <Row lg={5} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
-                <IFrame query={"noaaa"}/>
-                {false && Object.keys(googleResults).map((key, _) => {
+                {Object.keys(googleResults).map((key, _) => {
                     return (
                         <>
                         <a className={Styles.googleResults} href={key} target="_blank">
