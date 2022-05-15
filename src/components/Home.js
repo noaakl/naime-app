@@ -162,11 +162,11 @@ const Home = () => {
                     <div className={Styles.result_wrapper}>
                         <div className={Styles.result_wrapper}>
                             <Container>
-                            <Row  className="justify-content-center" style={{ marginTop: "50px", marginBottom:"4px" }}>
-                            {/* <Col className="justify-content-center"> */}
-                                <Card className="flex-fill mx-auto" style={{width:"90%"}}><Card.Body style={{ textAlign: "center" }}><b>Do you want to rank your results? keep track of your searchs? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
-                            {/* </Col> */}
-                            </Row>
+                                <Row className="justify-content-center" style={{ marginTop: "50px", marginBottom: "4px" }}>
+                                    {/* <Col className="justify-content-center"> */}
+                                    <Card className="flex-fill mx-auto" style={{ width: "90%" }}><Card.Body style={{ textAlign: "center" }}><b>Do you want to rank your results? keep track of your searchs? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                                    {/* </Col> */}
+                                </Row>
                             </Container>
                         </div>
                     </div>
@@ -177,44 +177,45 @@ const Home = () => {
                     {searchedNames.length === 0 ? (<div className={Styles.no_result_wrapper}>
                         <h2>No Synonyms Suggested</h2>
                     </div>)
-                         : (<Row className={Styles.result_wrapper}>
-                             <Col className={Styles.result_title} style={{margin:"30px 0 0 0 "}}>
+                        : (<Row className={Styles.result_wrapper}>
+                            <Col className={Styles.result_title} style={{ margin: "30px 0 0 0 " }}>
                                 <h3>Suggested Synonyms for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
-                             </Col>
-                         </Row>)}
+                            </Col>
+                        </Row>)}
 
 
 
-                <div className={Styles.container_fluid}>
-
-                    {
-                        Array.from({ length: searchedNames.length })
-                            .map((_, index) => {
-                                const name = searchedNames[index]
-                                const showSuggestions = showResults && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
-                                // const showSuggestions = false
-                                // console.log(searchedNames[index])
-                                return (
-                                    <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks[index] ? ranks[index] : []} />
-                                )
-                            }
-                            )
-                    }
-                {/* </div> */}
-
-                {/* <div> */}
                     <div className={Styles.container_fluid}>
-                        <div style={{marginTop: "100px"}}>
 
-                    <SocialMedia searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist}/>
-                        {/* {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />} */}
-                    </div>
-                        </div>
-                    {/* <div className={Styles.container_fluid}>
-                        {suggestionsExist && <GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
+                        {
+                            Array.from({ length: searchedNames.length })
+                                .map((_, index) => {
+                                    const name = searchedNames[index]
+                                    const showSuggestions = showResults && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
+                                    // const showSuggestions = false
+                                    // console.log(searchedNames[index])
+                                    return (
+                                        <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks[index] ? ranks[index] : []} />
+                                    )
+                                }
+                                )
+                        }
+                        {/* </div> */}
 
+                        {/* <div> */}
+                        <div className={Styles.container_fluid}>
+                            <div style={{ marginTop: "100px" }}>
+                                <SocialMedia searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />
+                            </div>
 
+                            {/* <div style={{ marginTop: "100px" }}>
+                                {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />}
+                            </div> */}
+
+                        {/* <div >
+                            {suggestionsExist && <GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
                         </div> */}
+                        </div>
                     </div>
                 </div>
             </div>

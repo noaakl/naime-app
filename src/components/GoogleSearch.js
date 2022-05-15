@@ -43,13 +43,13 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}></div>
-                <Row>
-                    <Col className={Styles.result_title}>
-                        <h2>Google search results for the name '{searchedName.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}'</h2>
-                        </Col>
+            <Row className={Styles.result_wrapper} style={{margin:"0px"}}>
+                    <Col className={Styles.result_title} style={{marginTop:"30px", marginBottom:"0px"}}>
+                        <h3>Google Results for the Name <b><i>{searchedName.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
+                    </Col>
                 </Row>
-                <Row>
-                <p>Google results using the algorithms suggestions within the query</p>
+                <Row className={Styles.result_wrapper} style={{textAlign:"center", marginBottom:"30px", marginTop:"0px"}}>
+                <p>Google search results using the algorithms suggestions within the query</p>
                 </Row>
                 {googleResults.length === 0 &&
                     <span className={Styles.spinner}><Spinner
