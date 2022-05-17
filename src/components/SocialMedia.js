@@ -44,7 +44,7 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist }) => {
                 </Col>
             </Row>
             <Row className={Styles.result_wrapper} style={{ textAlign: "center", marginBottom: "30px", marginTop: "0px" }}>
-                <p>Search Engines search results using the algorithms suggestions within the query</p>
+                <p>Click a Search Engine to search for results using the algorithms top suggestions!</p>
             </Row>
             {/* <Container style={{width:"80%"}}> */}
             <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
@@ -61,7 +61,7 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist }) => {
                 <Col className="align-items-center justify-content-center">
                     <Card className="align-items-center justify-content-center" style={{backgroundColor: "rgb(85, 172, 238)"}} role='button' >
                         <Card.Body>
-                            <Twitter color='white' size={25}/> <small className={Styles.social_media_text}> TWEETER</small>
+                            <Twitter color='white' size={25}/> <small className={Styles.social_media_text}> TWITTER</small>
                     </Card.Body></Card>
                 </Col>
                 </a>
