@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import UserInfo from "./components/UserInfo";
 import SingUp from "./components/SignUp";
 import Login from "./components/Login";
+import UserFeedback from "./components/Feedback";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -18,12 +19,13 @@ export default function App() {
     <PersistGate loading={null} persistor={persistor}>
     <BrowserRouter>
     <NavBar/>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/userInfo" element={<UserInfo />}></Route>
-        <Route path="/signUp" element={<SingUp />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-      </Routes>
+    <UserFeedback/>
+    <Routes>
+      <Route path="/" element={<Home />}></Route>
+      <Route path="/userInfo" element={<UserInfo />}></Route>
+      <Route path="/signUp" element={<SingUp />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+    </Routes>
     </BrowserRouter>
     <Footer/>
     </PersistGate>
