@@ -1,4 +1,4 @@
 export const algorithms = {
-    'Spoken Name 2 Vec': 'Sound',
-    'Graft': 'Family_Tree'
+    'SpokenName2Vec': 'Sound',
+    'GRAFT': 'Family_Tree'
 }

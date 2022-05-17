@@ -129,7 +129,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
 
 
     const handleFilterByRankShow = (likes, dislikes) => {
-        // if (algorithm!=="Spoken Name 2 Vec" && algorithm!=="Graft")
+        // if (algorithm!=="SpokenName2Vec" && algorithm!=="GRAFT")
         //     return true
         // else {
         const checkedRank = rankStatesChecked.slice()
