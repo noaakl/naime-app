@@ -31,8 +31,7 @@ const Footer = () => {
                                 <i className='fas fa-gem me-3'></i>nAIme
                             </h6>
                             <p>
-                                Part of our Name Search Final Project of the Software and Information Systems Engeneering in BGU university in Israel
-
+                                Name Search final project in the department of Software and Information Systems Engineering in Ben Gurion University of the Negev, Israel
                             </p>
                         </div>
 

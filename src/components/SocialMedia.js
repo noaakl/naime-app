@@ -45,7 +45,7 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist }) => {
                 </Col>
             </Row>
             <Row className={Styles.result_wrapper} style={{ textAlign: "center", marginBottom: "30px", marginTop: "0px" }}>
-                <p>Search Engines results using the algorithms suggestions within the query</p>
+                <p>Click a Search Engine to search for results using the algorithms top suggestions!</p>
             </Row>
             {/* <Container style={{width:"80%"}}> */}
             <Row lg={4} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
