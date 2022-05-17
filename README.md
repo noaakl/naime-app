@@ -49,7 +49,7 @@ nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](
 
 ### Articles
 
-&copy; Algorithms by: Mr. Aviad Elyashar, Dr. Rami Puzis, Dr. Michael Fire
+&copy; Algorithms by: Dr. Aviad Elyashar, Dr. Rami Puzis, Dr. Michael Fire
 
 - [SpokenName2Vec](https://scholar.google.co.il/citations?view_op=view_citation&hl=en&user=CPE9YOkAAAAJ&citation_for_view=CPE9YOkAAAAJ:3fE2CSJIrl8C)
 - [Graft](https://scholar.google.co.il/citations?view_op=view_citation&hl=en&user=CPE9YOkAAAAJ&citation_for_view=CPE9YOkAAAAJ:kNdYIx-mwKoC)
