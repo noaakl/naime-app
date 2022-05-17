@@ -24,9 +24,9 @@ const Home = () => {
     const suggestionsExist = algorithmsData.length > 0
 
     useEffect(() => {
-        setNameToSearch("")
+        // setNameToSearch("")
         setRanks([])
-        setNameValue("")
+        // setNameValue("")
         setSuggestions([])
         setAlgorithmsData([])
         setSearchedNames([])
@@ -96,9 +96,9 @@ const Home = () => {
                             // setSearchedNames([...oldSearchedNames, suggestionsData.name]);
                             addedSearchedNames = [...addedSearchedNames, suggestionsData.name];
                             addedAlgorithmsData = [...addedAlgorithmsData, {
-                                'Spoken Name 2 Vec': spoken_name_2_vec,
+                                'SpokenName2Vec': spoken_name_2_vec,
                                 'Double Metaphone': double_metaphone,
-                                'Graft': family_trees,
+                                'GRAFT': family_trees,
                                 'Match Rating Codex': match_rating_codex,
                                 'Metaphone': metaphone,
                                 'Nysiis': nysiis,
@@ -175,7 +175,7 @@ const Home = () => {
                 <div style={{ display: nameToSearch !== "" ? 'inline' : 'none', }} >
 
                     {searchedNames.length === 0 ? (<div className={Styles.no_result_wrapper}>
-                        <h2>No Synonyms Suggested</h2>
+                        <h2>No Synonyms Suggested for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h2>
                     </div>)
                         : (<Row className={Styles.result_wrapper}>
                             <Col className={Styles.result_title} style={{ margin: "30px 0 0 0 " }}>

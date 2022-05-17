@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import Styles from '../App.module.scss'
 import axios from "axios";
 import { Card, Row, Col } from 'react-bootstrap'
-import { Google, Twitter, Linkedin, Youtube } from 'react-bootstrap-icons';
+// import { Google, Twitter, Linkedin, Youtube, Yahoo } from 'react-bootstrap-icons';
+import { Google, Twitter, Linkedin, Youtube, Microsoft, ExclamationLg } from 'react-bootstrap-icons';
 // import { Button } from "bootstrap";
 
 
@@ -57,7 +58,7 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist }) => {
                     </Card.Body></Card>
                 </Col>
                 </a>
-                <a className={Styles.googleResults} href={`https://twitter.com/search?q=${query}`} target="_blank">
+                <a className={Styles.googleResults} href={`https://twitter.com/search?q=${query}&f=user`} target="_blank">
                 <Col className="align-items-center justify-content-center">
                     <Card className="align-items-center justify-content-center" style={{backgroundColor: "rgb(85, 172, 238)"}} role='button' >
                         <Card.Body>
@@ -78,6 +79,23 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist }) => {
                     <Card className="align-items-center justify-content-center" style={{backgroundColor: "rgb(237, 48, 47)"}} role='button' >
                         <Card.Body>
                             <Youtube color='white' size={25}/> <small className={Styles.social_media_text}> YOUTUBE</small>
+                    </Card.Body></Card>
+                </Col>
+                </a>
+                <Row lg={2} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}></Row>
+                <a className={Styles.googleResults} href={`https://www.bing.com/search?q=${query}`} target="_blank">
+                <Col className="align-items-center justify-content-center">
+                    <Card className="align-items-center justify-content-center" style={{backgroundColor: "rgb(255, 185, 1)"}} role='button' >
+                        <Card.Body>
+                            <Microsoft color='white' size={25}/> <small className={Styles.social_media_text}> BING</small>
+                    </Card.Body></Card>
+                </Col>
+                </a>
+                <a className={Styles.googleResults} href={`https://search.yahoo.com/search?p=${query}`} target="_blank">
+                <Col className="align-items-center justify-content-center">
+                    <Card className="align-items-center justify-content-center" style={{backgroundColor: "rgb(93, 1, 203)"}} role='button' >
+                        <Card.Body>
+                            <ExclamationLg color='white' size={25}/> <small className={Styles.social_media_text}>YAHOO</small>
                     </Card.Body></Card>
                 </Col>
                 </a>
