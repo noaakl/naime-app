@@ -272,21 +272,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                                 <Card.Body key={`${algorithm}cardbody`} style={{ margin: 0, padding: 0 }}>
                                     <h3 style={{ textAlign: "center" }}>{algorithm}</h3>
                                     {algorithmsData[algorithm] && algorithmsData[algorithm].map((name) => {
-                                        // if (name.add_rank > 0)
-                                        //     name.like += name.add_rank
-                                        // else
-                                        //     name.dislike += name.add_rank
-                                        // name.add_rank = 0
-
-                                        // if (name.remove_rank > 0)
-                                        // name.like -= name.remove_rank
-                                        // else
-                                        //     name.dislike -= name.remove_rank
-                                        // name.remove_rank = 0
-
-
-                                        // const showLikeRank = algorithm in algorithms && name?.add_rank !== -1
-                                        // const showDislikeRank = algorithm in algorithms && name?.add_rank !== 1
                                         return (
                                             <>
                                                 {handleFilterByRankShow(handleLikeCount(name.candidate), handledisLikeCount(name.candidate), algorithm) && <Row key={name} >

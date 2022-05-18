@@ -195,7 +195,7 @@ def convertSuggestionsToJson(suggestions):
     return res
 
 
-def createQuery(name, suggestions, user_likes):
+def createQuery(name, suggestions, user_likes, numOfQueryNames):
 
     def sort_by_likes_and_edit_distance(candidate, name=name, user_likes=user_likes):
         if not name or not candidate:
@@ -207,7 +207,8 @@ def createQuery(name, suggestions, user_likes):
         edit_dist = editdistance.eval(name.lower(), candidate["name"].lower())  # by edit distance
         return -edit_dist
 
-    top = 4
+    # top = 4
+    top = int(numOfQueryNames) - 1
     all_results = {}
 
     for name_suggestions in suggestions:
@@ -225,7 +226,8 @@ def createQuery(name, suggestions, user_likes):
         all_results[name_suggestions['index']] = name_results
 
     splited_name = name.split()
-    query = f""""{name.title()}" OR """
+    query = '"{}" OR '.format(name.title())
+    # query = f""""{name.title()}" OR """
     for i in range(top):
         added_name =""
         for index in range(len(splited_name)):
@@ -236,13 +238,17 @@ def createQuery(name, suggestions, user_likes):
             else:
                 candidate = splited_name[index]
             if added_name == "":
-                added_name += f"{candidate}"
+                added_name += "{}".format(candidate)
+                # added_name += f"{candidate}"
             else:
-                added_name += f" {candidate}"
+                added_name += " {}".format(candidate)
+                # added_name += f" {candidate}"
         if i < top - 1:
-            query += f""""{added_name}" OR """
+            query += '"{}" OR '.format(added_name)
+            # query += f""""{added_name}" OR """
         else:
-            query += f""""{added_name}" """
+            query += '"{}"'.format(added_name)
+            # query += f""""{added_name}" """
     print(query)
     return query
 

@@ -205,7 +205,7 @@ const Home = () => {
                         {/* <div> */}
                         <div className={Styles.container_fluid}>
                             <div style={{ marginTop: "100px" }}>
-                                <SocialMedia searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />
+                                <SocialMedia searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} algorithmsData={algorithmsData}/>
                             </div>
 
                             {/* <div style={{ marginTop: "100px" }}>

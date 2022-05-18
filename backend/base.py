@@ -346,6 +346,7 @@ def googleQuery():
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
     user_likes = request.json.get("userLikes", [])
+    numOfQueryNames = request.json.get("numOfQueryNames", 5)
     # print(suggestions)
-    query = createQuery(name, suggestions, user_likes)
+    query = createQuery(name, suggestions, user_likes, numOfQueryNames)
     return json.dumps({"query": query})
