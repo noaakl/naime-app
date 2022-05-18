@@ -6,7 +6,7 @@ import Styles from "../App.module.scss";
 import Results from './Results';
 import GoogleSearch from './GoogleSearch';
 import GoogleIFrame from './GoogleIFrame';
-import SocialMedia from './SocialMedia';
+import SearchEngines from './SearchEngines';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
 import { Card, Row, Col, Container } from 'react-bootstrap'
@@ -205,7 +205,7 @@ const Home = () => {
                         {/* <div> */}
                         <div className={Styles.container_fluid}>
                             <div style={{ marginTop: "100px" }}>
-                                <SocialMedia searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} algorithmsData={algorithmsData}/>
+                                <SearchEngines searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} algorithmsData={algorithmsData}/>
                             </div>
 
                             {/* <div style={{ marginTop: "100px" }}>

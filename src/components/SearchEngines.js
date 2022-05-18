@@ -9,7 +9,7 @@ import { queryAllByAltText } from "@testing-library/react";
 // import { Button } from "bootstrap";
 
 
-const SocialMedia = ({ searchedName, suggestions, suggestionsExist, algorithmsData }) => {
+const SearchEngines = ({ searchedName, suggestions, suggestionsExist, algorithmsData }) => {
     const likes = useSelector((state) => state.reduser.likes);
     const defultNumOfNames = 5
     const [query, setQuery] = useState("")
@@ -183,19 +183,19 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist, algorithmsDa
                             </Card.Body></Card>
                     </Col>
                 </a>
-                <a className={Styles.googleResults} href={`https://www.linkedin.com/search/results/all/?keywords=${query}`} target="_blank">
-                    <Col className="align-items-center justify-content-center">
-                        <Card className="align-items-center justify-content-center" style={{ backgroundColor: "rgb(0, 130, 202)" }} role='button' >
-                            <Card.Body>
-                                <Linkedin color='white' size={25} /> <small className={Styles.social_media_text}> LINKEDIN</small>
-                            </Card.Body></Card>
-                    </Col>
-                </a>
                 <a className={Styles.googleResults} href={`https://www.youtube.com/results?search_query=${query}`} target="_blank">
                     <Col className="align-items-center justify-content-center">
                         <Card className="align-items-center justify-content-center" style={{ backgroundColor: "rgb(237, 48, 47)" }} role='button' >
                             <Card.Body>
                                 <Youtube color='white' size={25} /> <small className={Styles.social_media_text}> YOUTUBE</small>
+                            </Card.Body></Card>
+                    </Col>
+                </a>
+                <a className={Styles.googleResults} href={`https://www.linkedin.com/search/results/all/?keywords=${query}`} target="_blank">
+                    <Col className="align-items-center justify-content-center">
+                        <Card className="align-items-center justify-content-center" style={{ backgroundColor: "rgb(0, 130, 202)" }} role='button' >
+                            <Card.Body>
+                                <Linkedin color='white' size={25} /> <small className={Styles.social_media_text}> LINKEDIN</small>
                             </Card.Body></Card>
                     </Col>
                 </a>
@@ -222,4 +222,4 @@ const SocialMedia = ({ searchedName, suggestions, suggestionsExist, algorithmsDa
         : <div></div>
 };
 
-export default SocialMedia;
+export default SearchEngines;
