@@ -14,9 +14,25 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
     // const queryModal = useSelector((state) => state.reduser.showQueryModal);
     const [showQueryModal, setShowQueryModal] = useState(false)
     const [queryNameValue, setQueryNameValue] = useState(name)
-    const algorithmsNames = Object.keys(algorithmsData[nameIndex])
+    console.log(algorithmsData)
+    console.log(nameIndex)
+    console.log(algorithmsData[nameIndex])
+    console.log(typeof algorithmsData[nameIndex].Soundex)
+    console.log(typeof algorithmsData[nameIndex].Soundex !== 'undefined')
+    // console.log(nameIndex)
+    const algorithmsNames = [
+        "SpokenName2Vec",
+        "Double Metaphone",
+        "GRAFT",
+        "Match Rating Codex",
+        "Metaphone",
+        "Nysiis",
+        "Soundex"
+]
+    // const algorithmsNames = Object.keys(algorithmsData[nameIndex])
+    console.log(algorithmsNames)
     const query = useSelector((state) => state.reduser.query);
-    console.log(query)
+    // console.log(query)
     const queryNames = useSelector((state) => state.reduser.queryNames);
 
     const handleSelectName = (selectedName) => {
@@ -25,7 +41,7 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
         dispatch(editQueryNames(selectedName, numberIndex, nameIndex))
         /////
         const userQuery = getUserQuery()
-        console.log(userQuery)
+        // console.log(userQuery)
         dispatch(setQuery(userQuery))
         setShowQueryModal(false)
     }
@@ -52,7 +68,7 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                 <Col className="g-1" style={{margin:"0px"}}>
                     <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "center", display: "inline", boxSizing: "border-box" }} />
                 </Col>
-                <Col className="g-1" style={{margin:"0px", textAlign:"left"}}>
+                {typeof algorithmsData[nameIndex].Soundex !== 'undefined' && <Col className="g-1" style={{margin:"0px", textAlign:"left"}}>
                     {/* <Dropdown style={{ display: "inline" }}> */}
                     {/* <Dropdown.Toggle className={Styles.sort} variant="icon" bsPrefix="Button" size="xs" id="dropdown-basic"> */}
                     <ListUl as="button" style={{ marginBottom: "0px" }} onClick={() => setShowQueryModal(true)} />
@@ -103,7 +119,7 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
        </Button>
    </Modal.Footer> */}
                     </Modal>
-                </Col>
+                </Col>}
             </Row>
         {/* </Col> */}
         </Form.Group>
