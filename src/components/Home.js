@@ -105,6 +105,9 @@ const Home = () => {
                                 'Soundex': soundex
                             }];
                         }
+                        else {
+                            addedAlgorithmsData = [...addedAlgorithmsData, {}]
+                        }
 
                     });
                     setSuggestions(addedSuggestions);
