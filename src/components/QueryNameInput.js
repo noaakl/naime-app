@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setQuery, editQueryNames } from '../store/action';
 import Styles from '../App.module.scss'
 import axios from "axios";
-import { Row, Col, Button, Modal, Dropdown, Accordion } from 'react-bootstrap'
+import { Row, Col, Button, Modal, Dropdown, Accordion, Form } from 'react-bootstrap'
 import { ListUl } from 'react-bootstrap-icons';
 import AlgorithmsAccordion from "./AlgorithmsAccordion";
 // import QueryModal from "./QueryModal";
@@ -45,15 +45,17 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
     }
 
     return (
-        <Col style={{ display: "inline" }} key={`${name}_${nameIndex}`}>
-            <Row lg={2} md={2} sm={2} xs={2} className="g-4">
-                <Col className="g-1">
-                    <input id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "center", display: "inline", boxSizing: "border-box" }} />
+        <Form>
+        <Form.Group as={Row} controlId="formPlaintextEmail" style={{margin:"0px"}}>
+        {/* <Col key={`${name}_${nameIndex}`}> */}
+            <Row lg={2} md={2} sm={2} xs={2} className="g-4" >
+                <Col className="g-1" style={{margin:"0px"}}>
+                    <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "center", display: "inline", boxSizing: "border-box" }} />
                 </Col>
-                <Col className="g-1">
+                <Col className="g-1" style={{margin:"0px", textAlign:"left"}}>
                     {/* <Dropdown style={{ display: "inline" }}> */}
                     {/* <Dropdown.Toggle className={Styles.sort} variant="icon" bsPrefix="Button" size="xs" id="dropdown-basic"> */}
-                    <ListUl as="button" style={{ marginBottom: "20px" }} onClick={() => setShowQueryModal(true)} />
+                    <ListUl as="button" style={{ marginBottom: "0px" }} onClick={() => setShowQueryModal(true)} />
                     {/* </Dropdown.Toggle> */}
 
                     <Modal show={showQueryModal} onHide={()=>setShowQueryModal(false)}>
@@ -103,7 +105,9 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                     </Modal>
                 </Col>
             </Row>
-        </Col>);
+        {/* </Col> */}
+        </Form.Group>
+        </Form>);
 }
 
 export default QueryNameInput;
