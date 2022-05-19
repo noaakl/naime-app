@@ -1,7 +1,6 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { MDBFooter } from "mdbreact";
-import Styles from "../App.module.scss";
 import naimeLogo from '../images/logon.png';
 import googleScholarLogo from '../images/google-scholar.png';
 import { Github } from 'react-bootstrap-icons';
@@ -15,7 +14,7 @@ const Footer = () => {
             <br/> */}
             <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.06)' }}>
             <section className='d-flex justify-content-center justify-content-lg-between p-3 border-bottom'>
-                <div className='me-5 d-none d-lg-block'>
+                <div className='me-5 d-none'>
                     <span>
                         <img src={naimeLogo} alt="Logo" width="21" height="20" style={{ margin: "0", display: 'inline-block', color: 'black', marginRight: '10px' }} />
                         <strong>nAIme</strong> - Similar Name Suggestor

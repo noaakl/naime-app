@@ -340,8 +340,8 @@ def googleSearch():
         print("No module named 'google' found")
         return json.dumps([])
 
-@api.route('/api/googleQuery', methods=["POST"])
-def googleQuery():
+@api.route('/api/query', methods=["POST"])
+def query():
     # from googlesearch import search, get_random_user_agent
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
@@ -349,4 +349,25 @@ def googleQuery():
     numOfQueryNames = request.json.get("numOfQueryNames", 5)
     # print(suggestions)
     query = createQuery(name, suggestions, user_likes, numOfQueryNames)
+    return json.dumps({"query": query})
+
+@api.route('/api/userQuery', methods=["POST"])
+def userQuery():
+    # from googlesearch import search, get_random_user_agent
+    query_names = request.json.get("queryNames", [])
+    query = ''
+    print(query_names)
+    if query_names:
+        for number_index in range(len(query_names)):
+            name = query_names[number_index]
+            full_name = ""
+            for name_index in range(len(name)):
+                name_part = name[name_index]
+                full_name += name_part.title()
+                if name_index < len(name) - 1:
+                    full_name += ' '
+            query += '"{}"'.format(full_name)
+            if number_index < len(query_names) - 1:
+                query += ' OR '
+    print(query)
     return json.dumps({"query": query})

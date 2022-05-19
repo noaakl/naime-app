@@ -16,7 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 export default function App() {
   return (
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
     <BrowserRouter>
     <NavBar/>
     <UserFeedback/>
@@ -28,7 +28,7 @@ export default function App() {
     </Routes>
     </BrowserRouter>
     <Footer/>
-    </PersistGate>
+    {/* </PersistGate> */}
     </Provider>
   );
 }

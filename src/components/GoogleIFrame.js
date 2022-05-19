@@ -46,7 +46,7 @@ const GoogleIFrame = ({ searchedName, suggestions, suggestionsExist }) => {
             "suggestions": suggestions,
             "userLikes": likes[searchedName] ? likes[searchedName] : []
         }
-        axios.post('/api/googleQuery', searchData)
+        axios.post('/api/query', searchData)
         .then((response) => {
             const query = response.data['query']
             setQuery(query)

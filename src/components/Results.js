@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
-    console.log(showSuggestions)
+    // console.log(showSuggestions)
     // const showSuggestions = typeof algorithmsData.soundex !== 'undefined'
     const algorithmsNames = Object.keys(algorithmsData)
     const [rank, setRank] = useState(ranks)
@@ -82,7 +82,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            console.log(rank)
+            // console.log(rank)
         }
         else if (rankType === -1 ){
             if ("dislikes" in rank && candidate in rank["dislikes"]){
@@ -94,7 +94,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            console.log(rank)
+            // console.log(rank)
         }
     }
 
@@ -110,7 +110,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            console.log(rank)
+            // console.log(rank)
         }
         else if (rankType === -1 ){
             if ("dislikes" in rank && rank['dislikes'][candidate] > 0){
@@ -122,7 +122,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            console.log(rank)
+            // console.log(rank)
         }
     }
 
