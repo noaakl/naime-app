@@ -66,7 +66,7 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
         {/* <Col key={`${name}_${nameIndex}`}> */}
             <Row lg={2} md={2} sm={2} xs={2} className="g-4" >
                 <Col className="g-1" style={{margin:"0px"}}>
-                    <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "center", display: "inline", boxSizing: "border-box" }} />
+                    <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "center", display: "inline", boxSizing: "border-box" }} onChange={(e) => setTimeout(() => {return handleSelectName(e.target.value)}, 1000)} />
                 </Col>
                 {typeof algorithmsData[nameIndex].Soundex !== 'undefined' && <Col className="g-1" style={{margin:"0px", textAlign:"left"}}>
                     {/* <Dropdown style={{ display: "inline" }}> */}
