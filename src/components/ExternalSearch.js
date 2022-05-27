@@ -14,19 +14,13 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
     const dispatch = useDispatch()
     const likes = useSelector((state) => state.reduser.likes);
     const query = useSelector((state) => state.reduser.query);
-    const queryNames = useSelector((state) => state.reduser.queryNames);
-    // const queryNames = useSelector((state) => state.reduser.queryNames) || [];
     console.log(query)
-    // console.log(queryNames)
+    const queryNames = useSelector((state) => state.reduser.queryNames);
     const defultNumOfNames = 5
-    // const [query, setQuery] = useState("")
     const [numOfQueryNames, setNumOfQueryNames] = useState(defultNumOfNames);
     const [tempNumOfQueryNames, setTempNumOfQueryNames] = useState(defultNumOfNames);
     const [show, setShow] = useState(false);
     const searchedNameSplit = searchedName.split(" ")
-    // const querySplit = query.replaceAll('"', "").split(" OR ")
-    // console.log(querySplit.length)
-    // console.log(query)
 
 
     // const handleSave = () => {
@@ -81,7 +75,6 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
 
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
-            <div className={Styles.result_wrapper}></div>
             {/* <Row> */}
             <Row className={Styles.result_wrapper} style={{ margin: "0px" }}>
                 <Col className={Styles.result_title} style={{ marginTop: "30px", marginBottom: "0px" }}>
@@ -89,67 +82,74 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                 </Col>
             </Row>
             <Row className={Styles.result_wrapper} style={{ textAlign: "center", marginBottom: "0px", marginTop: "0px" }}>
-                <p>Click a Search Engine to search for results using the algorithms top suggestions!</p>
-                {/* <p>Search Query: {query.replaceAll('OR ', '').replaceAll('"', '')}</p> */}
-                <p></p>
+                <p><b>Click the Search Engines to search for results using the algorithms' top suggestions!</b></p>
+                {/* <p><b><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></b></p> */}
             </Row>
-<Row className="align-items-center justify-content-center">
-            <Accordion alwaysOpen style={{ textAlign:"center",justifyContent:"center"}}>
-                <Accordion.Item eventKey={0}>
-                    <Accordion.Header style={{textAlign:"center"}}>
-                    <Row className="align-items-center justify-content-center" >
-                <div color="green" onClick={handleShow} style={{ width: "250px", margin: "10px", textAlign:"center"}}>
-                    Click Here to Change the Query </div>
-            </Row>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                    <Row style={{ marginBottom: "5px"}}>
-                            <Col>
-                                choose number of names to includes in the query <input type="number" min="1" max="10" value={tempNumOfQueryNames} style={{ textAlign: "center" }} onChange={(e) => { handleChangeNum(e.target.value) }}></input>
-                            </Col>
-                        </Row>
-                        <Form>
+            {/* <Row className="align-items-center justify-content-center" > */}
+            <Row>
+                <Accordion alwaysOpen style={{ textAlign: "center", justifyContent: "center" }}>
+                    <Accordion.Item eventKey={0}>
+                        {/* <Accordion.Header style={{ textAlign: "center" }} className={Styles.accordion_header}> */}
+                        <Accordion.Header style={{ textAlign: "center" }} className={Styles.edit_query_accordion}>
+                        <Row className={Styles.edit_query_accordion} style={{ textAlign: "center", marginBottom: "0px", marginTop: "0px" }}>
+                <p><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></p>
+            {/* </Row> */}
+                            {/* <Row className={Styles.edit_query_accordion} style={{ textAlign: "center", marginBottom: "0px", marginTop: "0px" }}> */}
+                                <div onClick={handleShow} style={{ margin: "10px", textAlign: "center" }}>
+                                <b>Click Here to Change the Query </b></div>
+                            </Row>
+                        </Accordion.Header>
+                        <Accordion.Body className={Styles.accordion_body}>
+                            <div className={Styles.query_name_count}>
+                                {/* <Col> */}
+                                <span className={Styles.query_name_count_text}>
+                                    Choose number of names to include in the query 
+                                </span>
+                                {/* </Col> */}
+                                {/* <Col> */}
+                                    <Form.Control type="number" min="1" max="10" size="sm" value={tempNumOfQueryNames} style={{width: "50px", textAlign: "center" }} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
+                                {/* </Col> */}
+                            </div>
+                            <Form>
 
-                        {   
-                                                    
-                            Array.from({ length: queryNames.length })
-                                .map((_, numberIndex) => {
-                            //         console.log(queryNames);
-                            // console.log(numberIndex);
-                            // console.log(queryNames[numberIndex])
-                                    // const nameSplit = queryNames[numberIndex].split(" ")
-                                    const nameSplit = queryNames[numberIndex]
-                                    return (
-                                        <Form.Group as={Row} controlId="formPlaintextEmail" style={{margin:"0px"}}>
-                                        <Row lg={searchedNameSplit.length} md={2} sm={1} xs={1} className="g-4" style={{ margin: "0px" }}>
-                                            {
-                                                Array.from({ length: nameSplit.length })
-                                                    .map((__, nameIndex) => {
-                                                        const name = nameSplit[nameIndex]
-                                                        return (
-                                                            <Col style={{margin:"0px"}}>
-                                                            {/* <Form.Control type="password" placeholder="Password" /> */}
-                                                         
-                                                             <QueryNameInput algorithmsData={algorithmsData} nameIndex={nameIndex} name={name} numberIndex={numberIndex} />
-                                                             </Col>
-                                                        )
-                                                    }
-                                                    )
-                                            }
-                                        </Row>
-                                        </Form.Group>
-                                    )
+                                {
+
+                                    Array.from({ length: queryNames.length })
+                                        .map((_, numberIndex) => {
+                                            const nameSplit = queryNames[numberIndex]
+                                            return (
+                                                <Form.Group as={Row} style={ searchedNameSplit && searchedNameSplit.length===1 ? {} : {marginLeft: "17%" }}>
+                                                    <Row lg={searchedNameSplit.length} md={searchedNameSplit.length} sm={searchedNameSplit.length} xs={searchedNameSplit.length} className="g-4" style={{ margin: "0px" }}>
+                                                        {
+                                                            Array.from({ length: nameSplit.length })
+                                                                .map((__, nameIndex) => {
+                                                                    const name = nameSplit[nameIndex]
+                                                                    return (
+                                                                        <Col style={{ margin: "0px" }}>
+
+                                                                            <QueryNameInput algorithmsData={algorithmsData} nameIndex={nameIndex} name={name} numberIndex={numberIndex} />
+                                                                        </Col>
+                                                                    )
+                                                                }
+                                                                )
+                                                        }
+                                                    </Row>
+                                                </Form.Group>
+                                            )
+                                        }
+                                        )
                                 }
-                                )
-                        }
-                        </Form>
-                    </Accordion.Body>
-                </Accordion.Item>
+                            </Form>
+                        </Accordion.Body>
+                    </Accordion.Item>
                 </Accordion>
-                
-                </Row>
-                
+
+            </Row>
+            <Row style={{marginTop: '80px'}}>
+
+
             <SearchEngines query={query} suggestionsExist={suggestionsExist} />
+            </Row>
 
         </div>
         : <div></div>

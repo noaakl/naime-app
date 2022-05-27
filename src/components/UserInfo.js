@@ -3,7 +3,7 @@ import axios from "axios";
 import Styles from "../App.module.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Avatar from 'react-avatar';
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Card, Row, Col, Table, Container} from 'react-bootstrap';
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 import { Search } from 'react-bootstrap-icons';
@@ -11,8 +11,8 @@ import { Search } from 'react-bootstrap-icons';
 
 const UserInfo = () => {
     const [lastsearch, setlastsearch] = useState([])
-    const [lastranks, setlastranks] = useState([])
-    const [lastdislike, setlastdislike] = useState([])
+    const [lastranks, setLastranks] = useState([])
+    const [lastdislike, setLastdislike] = useState([])
 
     // const likes = useSelector((state) => state.reduser.likes);
     const likesNumber = useSelector((state) => state.reduser.likesCount);
@@ -42,7 +42,7 @@ const UserInfo = () => {
             url: `/api/lastRanks?username=${username}`
         })
             .then((response) => {
-                setlastranks(response.data)
+                setLastranks(response.data)
             })
 
     }
@@ -53,15 +53,20 @@ const UserInfo = () => {
             url: `/api/lastDislike?username=${username}`
         })
             .then((response) => {
-                setlastdislike(response.data)
+                setLastdislike(response.data)
             })
 
     }
 
+    const getUserInfo = () => {
+        getLastUserSearches()
+        getLastUserRanks()
+        getlastDislike()
+    }
+
+
     useMemo(() => {
-        getLastUserSearches();
-        getLastUserRanks();
-        getlastDislike();
+        getUserInfo()
     }, []);
 
     return (
@@ -97,7 +102,7 @@ const UserInfo = () => {
                     <tbody>
                     {lastranks.length !== 0 && lastranks?.map((rank) => {
                     return (
-                        <tr><td>{rank[0]}</td>
+                        <tr key={rank} ><td>{rank[0]}</td>
                         <td>{rank[1]}</td></tr>
                     )})}
                     </tbody></Table></Card.Body></Card>
@@ -115,7 +120,7 @@ const UserInfo = () => {
                     <tbody>
                     {lastdislike.length !== 0 && lastdislike.map((dislike) => {
                     return (
-                        <tr><td>{dislike[0]}</td>
+                        <tr key={dislike} ><td>{dislike[0]}</td>
                         <td>{dislike[1]}</td></tr>
                     )})}
                     </tbody></Table></Card.Body></Card>
@@ -126,8 +131,8 @@ const UserInfo = () => {
                             ><Card.Body style={{ margin: 0, padding: 0, marginTop:"20px", textAlign:"center"}}>
                     <div><h5>Searches <Search/></h5></div>
                     
-                    {lastsearch.length !== 0 && lastsearch.map((search) => {
-                    return (<div style={{marginRight:"10px", marginBottom:"7px"}}>{search}</div>)})}</Card.Body></Card></Col>
+                    {lastsearch.length !== 0 && lastsearch.map((search, _) => {
+                    return (<div key={_} style={{marginRight:"10px", marginBottom:"7px"}}>{search}</div>)})}</Card.Body></Card></Col>
             </Row></Container>
 
 

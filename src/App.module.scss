@@ -72,10 +72,84 @@ body:before {
     z-index: -1;
 }
 
-.info_accordion {
-	width: 50%;
-	text-align: right;
-	opacity: .75;
+.edit_query_accordion {
+	// margin-left: 23%;
+	display: inline-block;
+}
+
+.query_name_count {
+	display: flex;
+	margin-left: 25%;
+}
+
+.query_name_count_text {
+	margin: 6px;
+	text-align: center;
+}
+
+.accordion_modal {
+	// width: 50%;
+	text-align: left;
+	// opacity: .75;
+	// background-color: rgb(158, 160, 143);
+	background-color: rgba(158, 160, 143, 0.404);
+
+}
+
+.modal_header {
+	opacity: .6;
+	background-color: rgb(148, 149, 133);
+	color: black;
+	// background-color: gray;
+}
+
+.accordion_header {
+	opacity: .6;
+	background-color: rgb(148, 149, 133);
+	color: black;
+	// background-color: gray;
+}
+
+.accordion_body {
+	// opacity: .50;
+	background-color: rgba(158, 160, 143, 0.329);
+	
+	// text-align: center;
+	text-align: left;
+	// display: inline-block;
+
+	// width: 100%;
+	// color: gray;
+	// background-color: gray;
+}
+
+.accordion_item {
+	// color: black;
+	// text-align: right;
+
+	list-style: none;
+	margin-bottom: -4.5%;
+
+	// white-space: pre-wrap;
+	// line-height: 5%;
+// 
+
+	// display:inline-block;
+    // border:1px solid #000;
+    // padding:20px;
+	// background-color: gray;
+}
+
+.accordion_item_name {
+	color: black;
+	cursor: pointer;
+	text-align: center;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 11px 11px 11px 11px;
+	// white-space: pre-wrap;
+
+	// line-height: 5%;
+	// background-color: gray;
 }
 
 .search_title {

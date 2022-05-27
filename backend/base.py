@@ -53,8 +53,8 @@ def dashboard():
         for name in selected_name.split():
             # print(name)
             name = name.capitalize()
-            result_dict = create_results_dict(name, key)
-            result_dict['index'] = index
+            result_dict = create_results_dict(name, key, index)
+            # result_dict['index'] = index
             suggestions.append(result_dict)
             index += 1
             # print(name)
@@ -270,7 +270,7 @@ def lastSearches():
 
         if results:
             # return {result[0]: result[1] for result in results}
-            # print(json.dumps([(result[0]) for result in results]))
+            print({i: result[0] for result, i in results})
             return json.dumps([(result[0]) for result in results])
 
     return json.dumps([])

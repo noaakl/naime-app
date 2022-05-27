@@ -7,6 +7,7 @@ from Users import Users
 import jellyfish
 import phonetics
 import editdistance
+from AlgorithmsConstants import algorithms
 
 flask_app = FlaskApplication()
 app = flask_app.get_app()
@@ -186,12 +187,15 @@ def match_rating_codex_suggest_names(selected_name, result_dict):
 def convertSuggestionsToJson(suggestions):
     res = {}
     for algorithm in suggestions:
-        if algorithm == "name":
+        if algorithm == 'index':
+            continue
+        elif algorithm == "name":
             res[algorithm] = suggestions[algorithm]
         else:
-            res[algorithm] = []
+            algorithm_name = algorithms[algorithm]
+            res[algorithm_name] = []
             for candidate in suggestions[algorithm]:
-                res[algorithm].append(candidate["candidate"])
+                res[algorithm_name].append(candidate["candidate"])
     return res
 
 
@@ -253,8 +257,10 @@ def createQuery(name, suggestions, user_likes, numOfQueryNames):
     return query
 
 
-def create_results_dict(selected_name, key):
-    result_dict = {'name': selected_name}
+def create_results_dict(selected_name, key, index):
+    result_dict = {
+        'name': selected_name,
+        'index': index}
 
     name_suggestions = db.session.query(NameSuggestion).filter(
         NameSuggestion.selected_name == selected_name).order_by(NameSuggestion.distance,

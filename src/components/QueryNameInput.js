@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setQuery, editQueryNames } from '../store/action';
 import Styles from '../App.module.scss'
 import axios from "axios";
-import { Row, Col, Button, Modal, Dropdown, Accordion, Form } from 'react-bootstrap'
+import { Row, Col, Card, Button, Modal, Dropdown, Accordion, Form } from 'react-bootstrap'
 import { ListUl } from 'react-bootstrap-icons';
 import AlgorithmsAccordion from "./AlgorithmsAccordion";
 // import QueryModal from "./QueryModal";
@@ -40,9 +40,9 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
         setQueryNameValue(selectedName)
         dispatch(editQueryNames(selectedName, numberIndex, nameIndex))
         /////
-        const userQuery = getUserQuery()
+        getUserQuery()
         // console.log(userQuery)
-        dispatch(setQuery(userQuery))
+        // dispatch(setQuery(userQuery))
         setShowQueryModal(false)
     }
 
@@ -61,17 +61,17 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
     }
 
     return (
-        <Form>
-        <Form.Group as={Row} controlId="formPlaintextEmail" style={{margin:"0px"}}>
+        // <Form>
+        <Form.Group as={Row} style={{margin:"0px"}}>
         {/* <Col key={`${name}_${nameIndex}`}> */}
-            <Row lg={2} md={2} sm={2} xs={2} className="g-4" >
-                <Col className="g-1" style={{margin:"0px"}}>
-                    <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "center", display: "inline", boxSizing: "border-box" }} onChange={(e) => setTimeout(() => {return handleSelectName(e.target.value)}, 1000)} />
+            <Row lg={2} md={2} sm={2} xs={2} className="g-3" >
+                <Col style={{margin:"0px"}}>
+                    <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "left", display: "inline", boxSizing: "border-box" }} onChange={(e) => setTimeout(() => {return handleSelectName(e.target.value)}, 1000)} />
                 </Col>
                 {typeof algorithmsData[nameIndex].Soundex !== 'undefined' && <Col className="g-1" style={{margin:"0px", textAlign:"left"}}>
                     {/* <Dropdown style={{ display: "inline" }}> */}
                     {/* <Dropdown.Toggle className={Styles.sort} variant="icon" bsPrefix="Button" size="xs" id="dropdown-basic"> */}
-                    <ListUl as="button" style={{ marginBottom: "0px" }} onClick={() => setShowQueryModal(true)} />
+                    <ListUl as="button" style={{ marginBottom: "0px", cursor: "pointer" }} onClick={() => setShowQueryModal(true)} />
                     {/* </Dropdown.Toggle> */}
 
                     <Modal show={showQueryModal} onHide={()=>setShowQueryModal(false)}>
@@ -80,12 +80,13 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                         {/* // aria-labelledby="contained-modal-title-vcenter"
 // centered> */}
                         {/* backdrop="static" */}
-                        <Modal.Header closeButton>
-                            <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Header className={Styles.modal_header} closeButton>
+                            <Modal.Title>Select name</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body >
-                        </Modal.Body>
-                        <Accordion alwaysOpen>
+                        <Modal.Body className={Styles.accordion_modal}>
+                        
+                        {/* <Accordion alwaysOpen className={Styles.accordion_modal}> */}
+                        <Accordion className={Styles.accordion_modal}>
                             {
                                 Array.from({ length: algorithmsNames.length })
                                     .map((_, algorithmIndex) => {
@@ -93,23 +94,30 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                                         const data = algorithmsData[nameIndex][algorithm]
                                         return (
                                             <Accordion.Item eventKey={algorithmIndex} key={algorithm}>
-                                                <Accordion.Header>{algorithm}</Accordion.Header>
+                                                <Accordion.Header className={Styles.accordion_body}><b>{algorithm}</b></Accordion.Header>
                                                 <Accordion.Body>
+                                                    <ul className={Styles.accordion_item}>
+                                                    {/* <Row> */}
                                                     {data.map((name) => {
                                                         return (
-                                                            <div key={`${algorithm}_${name.candidate}`}
+                                                            // <Col lg={data.length} md={data.length} sm={data.length}>
+                                                            <li className={Styles.accordion_item_name} key={`${algorithm}_${name.candidate}`}
                                                                 as='button'
-                                                                onClick={() => handleSelectName(name.candidate)}
-                                                                className={Styles.result}>
+                                                                onClick={() => handleSelectName(name.candidate)}>
+                                                                {/* className={Styles.result}> */}
                                                                 {name.candidate}
-                                                            </div>
+                                                            </li>
+                                                            // {/* </Col> */}
                                                         )
                                                     })}
+                                                    </ul>
+                                                    {/* </Row> */}
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                         )
                                     })}
                         </Accordion>
+                        </Modal.Body>
                         {/* <Modal.Footer>
        <Button variant="secondary" onClick={handleCancel}>
            Close
@@ -122,8 +130,8 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                 </Col>}
             </Row>
         {/* </Col> */}
-        </Form.Group>
-        </Form>);
+        </Form.Group>)
+        {/* </Form>) */}
 }
 
 export default QueryNameInput;
