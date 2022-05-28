@@ -9,7 +9,6 @@ export const EDIT_QUERY_NAMES = "EDIT_QUERY_NAMES";
 export const SET_QUERY = "SET_QUERY";
 
 export function setQuery(query) {
-  console.log(query)
   return {
     type: SET_QUERY,
     payload: {
@@ -19,13 +18,10 @@ export function setQuery(query) {
 }
 
 export function addQueryNames(names) {
-  // console.log("noaa")
-  // console.log(names)
   let transformedNames = []
   if (names) {
     transformedNames = names.map((name) => {return name.split(" ")})
   }
-  // console.log(transformedNames)
   return {
     type: ADD_QUERY_NAMES,
     payload: {
@@ -35,8 +31,6 @@ export function addQueryNames(names) {
 }
 
 export function editQueryNames(name, numberIndex, nameIndex) {
-  console.log(numberIndex)
-  console.log(nameIndex)
   return {
     type: EDIT_QUERY_NAMES,
     payload: {

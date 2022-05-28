@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link} from "react-router-dom";
 import Styles from '../App.module.scss'
 import SearchCount from './SearchCount'
 import RankInfo from './RankInfo'
 import Api from './Api'
-import axios from "axios"
 import { Card, Row, Col, Dropdown } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
 const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
-    // console.log(showSuggestions)
-    // const showSuggestions = typeof algorithmsData.soundex !== 'undefined'
     const algorithmsNames = Object.keys(algorithmsData)
     const [rank, setRank] = useState(ranks)
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [isAZData, setAZData] = useState(true)
-    // const [Data, setData] = useState(2)
     const [algorithms, setAlgorithms] = useState([])
     const rankStates = ["likes","dislikes","no rank"]
     const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
-    // const algorithmMapping = {}
-
 
     useEffect(() => {
         setAlgorithms(algorithmsNames)
@@ -33,7 +26,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     }
 
     const handleLikeCount = (name) => {
-        // console.log(rank)
         if ("likes" in rank && name in rank["likes"])
             return rank["likes"][name]
         return 0
@@ -82,7 +74,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            // console.log(rank)
         }
         else if (rankType === -1 ){
             if ("dislikes" in rank && candidate in rank["dislikes"]){
@@ -94,7 +85,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            // console.log(rank)
         }
     }
 
@@ -110,7 +100,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            // console.log(rank)
         }
         else if (rankType === -1 ){
             if ("dislikes" in rank && rank['dislikes'][candidate] > 0){
@@ -122,23 +111,16 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                 setRank(copyOfObject)
 
             }
-            // console.log(rank)
         }
     }
 
 
 
     const handleFilterByRankShow = (likes, dislikes) => {
-        // if (algorithm!=="SpokenName2Vec" && algorithm!=="GRAFT")
-        //     return true
-        // else {
         const checkedRank = rankStatesChecked.slice()
         if (checkedRank.includes("likes") && likes > 0) {return true}
         if (checkedRank.includes("dislikes") && dislikes > 0) {return true}
-        // if (checkedRank.includes("both") && dislike < 0 && like > 0){return true}
         if (checkedRank.includes("no rank") && dislikes === 0 && likes === 0){ return true}
-        // }
-
         return false
     }
 
@@ -154,19 +136,13 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     Object.keys(ranks).forEach(rank => { });
 
     return (
-        // <div className={Styles.container_fluid}>
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}>
-            {/* <Row style={{marginTop:"50px"}}>
-                    <Card><Card.Body style={{textAlign:"center"}}><b>Do you want to rank your results? keep track on your searchs? <br/><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
-                </Row> */}
                 <Row>
                     <Col className={Styles.result_title}>
                     <h2>Synonyms for <b><i>{searchedName}</i></b></h2>
 
-                    {/* <Col > */}
                     <Api name={searchedName}/>
-                    {/* </Col> */}
                     </Col>
                 </Row>
                 <Row>
@@ -174,9 +150,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                         <SearchCount searchedName={searchedName} />
                     </Col>
                 </Row>
-                {/* <Row style ={{marginTop:"15px"}}>
-                    <Card><Card.Body style={{textAlign:"center"}}>Search in google </Card.Body></Card>
-                </Row> */}
                 <Row className={Styles.dropdowns} xs={1} md={1} lg={4}>
                     <Col className={Styles.dropdownsCol}>
                         <Dropdown>
@@ -196,7 +169,6 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                                     setAZData(true)
                                     setSortValue("Default A-Z")
                                 }}>Default A-Z</Dropdown.Item>
-                                {/* <Dropdown.Item onClick={()=>{}}>User Rank</Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
@@ -213,7 +185,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                                 <Form>
                                     {Object.keys(algorithmsData).map((algorithm) => {
                                         return (
-                                            <div className={Styles.filter}>
+                                            <div key={algorithm} className={Styles.filter}>
                                             <Form.Check
                                                 label={algorithm}
                                                 type="checkbox"
@@ -238,7 +210,7 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                                 <Form>
                                     {rankStates.map((rankOption) => {
                                         return (
-                                            <div className={Styles.filter}>
+                                            <div key={rankOption} className={Styles.filter}>
                                             <Form.Check
                                                 label={rankOption}
                                                 type="checkbox"
@@ -273,18 +245,18 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                                     <h3 style={{ textAlign: "center" }}>{algorithm}</h3>
                                     {algorithmsData[algorithm] && algorithmsData[algorithm].map((name) => {
                                         return (
-                                            <>
+                                            <div key={`${algorithm}_${name.candidate}`}>
                                                 {handleFilterByRankShow(handleLikeCount(name.candidate), handledisLikeCount(name.candidate), algorithm) && <Row key={name} >
-                                                    <Col key={`${name}_col`} className={Styles.resultcol}>
+                                                    <Col key={`${name.candidate}_col`} className={Styles.resultcol}>
                                                         <div key={`${algorithm}_${name.candidate}`} className={Styles.result}>{name.candidate}
                                                         </div>
                                                     </Col>
-                                                    <Col key={`${name}_rank`} className={Styles.resultcolrank}>
+                                                    <Col key={`${name.candidate}_rank`} className={Styles.resultcolrank}>
                                                         <RankInfo searchedName={searchedName} name={name} algorithm={algorithm} rankLikes={handleLikeCount(name.candidate)} rankDislikes={handledisLikeCount(name.candidate)} handleAddLike={handleAddLike} handleremoveLike={handleremoveLike} />
                                                     </Col>
                                                 </Row>
                                     }
-                                            </>
+                                            </div>
                                         )
                                     })}</Card.Body>
                             </Card></Col>)

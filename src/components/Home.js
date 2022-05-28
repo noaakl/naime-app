@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Styles from "../App.module.scss";
 import Results from './Results';
-import GoogleSearch from './GoogleSearch';
-import GoogleIFrame from './GoogleIFrame';
 import ExternalSearch from './ExternalSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
@@ -24,13 +22,7 @@ const Home = () => {
     const suggestionsExist = algorithmsData.length > 0
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-      }, [])
-
-    useEffect(() => {
-        // setNameToSearch("")
         setRanks([])
-        // setNameValue("")
         setSuggestions([])
         setAlgorithmsData([])
         setSearchedNames([])
@@ -58,7 +50,6 @@ const Home = () => {
     const searchName = () => {
         if (nameValue !== '') {
 
-            // setNameValue("")
             let searchVal = ""
             searchVal = nameValue
             const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
@@ -68,29 +59,20 @@ const Home = () => {
                 setAlgorithmsData({})
                 setRanks({})
                 const searchData = {
-                    // "name": searchVal.split(' '),
                     "name": searchVal,
                     "username": username
                 }
-                // axios.get('/api/suggestions', {params: searchData})
-                // axios.get('/api/suggestions', searchData)
-                console.log('here')
                 axios({
                     method: "GET",
-                    url: `/api/suggestions`, //TODO: split searchval,
+                    url: `/api/suggestions`,
                     params: searchData
                 })
                     .then((response) => {
-                        // console.log(response.data)
-                        // let index = 0
                         let addedSuggestions = []
                         let addedSearchedNames = []
                         let addedAlgorithmsData = []
                         response.data.forEach(suggestionsData => {
                             if (typeof suggestionsData.soundex !== 'undefined') {
-                                // console.log(suggestionsData)
-                                // setSuggestions([...addedSuggestions, suggestionsData])
-                                // suggestionsData['index'] = index
                                 addedSuggestions = [...addedSuggestions, suggestionsData];
                                 const spoken_name_2_vec = suggestionsData.spoken_name_2_vec;
                                 const double_metaphone = suggestionsData.double_metaphone;
@@ -123,7 +105,7 @@ const Home = () => {
 
                         axios({
                             method: "GET",
-                            url: `/api/rankCount`, //TODO: split searchval,
+                            url: `/api/rankCount`,
                             params: { "name": searchVal }
                         })
                             .then((response) => {
@@ -136,12 +118,9 @@ const Home = () => {
                                             'likes': likes,
                                             'dislikes': dislikes
                                         }];
-                                        // setRanks({'likes': likes,
-                                        //         'dislikes': dislikes})
                                     }
                                 })
                                 setRanks(addedRanks);
-                                // console.log(ranks)
                             })
                     })
 
@@ -203,29 +182,16 @@ const Home = () => {
                                 .map((_, index) => {
                                     const name = searchedNames[index]
                                     const showSuggestions = showResults && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
-                                    // const showSuggestions = false
-                                    // console.log(searchedNames[index])
                                     return (
                                         <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks[index] ? ranks[index] : []} />
                                     )
                                 }
                                 )
                         }
-                        {/* </div> */}
-
-                        {/* <div> */}
                         <div className={Styles.container_fluid}>
                             <div style={{ marginTop: "100px" }}>
                                 <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} algorithmsData={algorithmsData} />
                             </div>
-
-                            {/* <div style={{ marginTop: "100px" }}>
-                                {suggestionsExist && <GoogleSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} />}
-                            </div> */}
-
-                            {/* <div >
-                            {suggestionsExist && <GoogleIFrame searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={suggestionsExist} />}
-                        </div> */}
                         </div>
                     </div>
                 </div>

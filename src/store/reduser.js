@@ -38,7 +38,6 @@ const Reduser = (state = INITIAL_STATE, action) => {
 
     case ADD_QUERY_NAMES: {
       const names = action.payload.transformedNames;
-      // console.log(names)
       return {
         ...state,
         queryNames: names
@@ -50,12 +49,7 @@ const Reduser = (state = INITIAL_STATE, action) => {
       const numberIndex = action.payload.numberIndex;
       const name = action.payload.name;
       let names = [...state.queryNames]
-      console.log(names)
-      console.log(numberIndex)
-      console.log(nameIndex)
-      console.log(names[numberIndex][nameIndex])
       names[numberIndex][nameIndex] = name
-      console.log(names)
       return {
         ...state,
         queryNames: names

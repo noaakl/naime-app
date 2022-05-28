@@ -138,7 +138,6 @@ def double_metaphone_suggest_names(selected_name, result_dict):
 
     candidates = []
     for name_suggestion in name_suggestions:
-        # print(name_suggestion)
         candidate_dict = flask_app.convert_name_suggestion_into_double_metaphone_result(name_suggestion)
         candidate_name = candidate_dict["candidate"]
         if candidate_name != selected_name:
@@ -231,29 +230,22 @@ def createQuery(name, suggestions, user_likes, numOfQueryNames):
 
     splited_name = name.split()
     query = '"{}" OR '.format(name.title())
-    # query = f""""{name.title()}" OR """
     for i in range(top):
         added_name =""
         for index in range(len(splited_name)):
             if index in all_results:
                 result = all_results[index]
                 candidate = result[i].get("name", '')
-                print(candidate)
             else:
                 candidate = splited_name[index]
             if added_name == "":
                 added_name += "{}".format(candidate)
-                # added_name += f"{candidate}"
             else:
                 added_name += " {}".format(candidate)
-                # added_name += f" {candidate}"
         if i < top - 1:
             query += '"{}" OR '.format(added_name)
-            # query += f""""{added_name}" OR """
         else:
             query += '"{}"'.format(added_name)
-            # query += f""""{added_name}" """
-    print(query)
     return query
 
 

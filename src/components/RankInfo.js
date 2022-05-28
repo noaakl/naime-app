@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLikes, addDislikes,removeLikes,removeDislikes } from "../store/action";
 import LikeButton from "./LikeButton";
-import { algorithms } from '../global/AlgorithmsConstants'
 import axios from "axios";
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 
@@ -66,11 +65,8 @@ const RankInfo = ({ searchedName, name, algorithm , rankLikes, rankDislikes, han
 
     const removeRankResult = (rank) => {
         handleremoveLike(rank, name.candidate)
-        // name.add_rank = rank
         name.remove_rank = rank
-        // console.log(likes)
         rank > 0 && username ? dispatch(removeLikes(searchedName, name.candidate)) : dispatch(removeDislikes(searchedName, name.candidate))
-        // if (algorithm in algorithms) {
         const rankData = {
             username: username,
             type_name: algorithm,
@@ -100,8 +96,6 @@ const RankInfo = ({ searchedName, name, algorithm , rankLikes, rankDislikes, han
         <>
             {showNotUser && <><HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{rankLikes}</small>
              <HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px", marginLeft:"8px"}}/><small style={{fontSize:"10px"}}>{rankDislikes}</small></> }
-            {/* <LikeButton show={showLikeRank} name={name} rankFunc={rankResults} rank={1} disable={disable(likes)}/>
-            <LikeButton show={showDislikeRank} name={name} rankFunc={rankResults} rank={-1} disable={disable(dislikes)}/> */}
             <LikeButton show={show} fill={likedThisName} name={name} rankFunc={rankResults} removeFunc={removeRankResult} rank={1} disable={disable(1)} rankLikes={rankLikes} rankDislikes={rankDislikes}/>
             <LikeButton show={show} fill={dislikedThisName} name={name} rankFunc={rankResults} removeFunc={removeRankResult} rank={-1} disable={disable(-1)} rankLikes={rankLikes} rankDislikes={rankDislikes}/>
         </>
@@ -109,7 +103,3 @@ const RankInfo = ({ searchedName, name, algorithm , rankLikes, rankDislikes, han
 }
 
 export default RankInfo;
-
-
-// onMouseOver={() => getNameInfo(searchedName)}
-// disabled={name.add_rank !== 0}

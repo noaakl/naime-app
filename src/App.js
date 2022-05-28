@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux'
 import {store, persistor} from './store/store'
@@ -14,6 +14,9 @@ import Footer from "./components/Footer";
 import { PersistGate } from 'redux-persist/integration/react'
 
 export default function App() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <Provider store={store}>
     {/* <PersistGate loading={null} persistor={persistor}> */}

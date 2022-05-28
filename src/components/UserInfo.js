@@ -3,7 +3,7 @@ import axios from "axios";
 import Styles from "../App.module.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Avatar from 'react-avatar';
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, Row, Col, Table, Container} from 'react-bootstrap';
 import { HandThumbsUpFill, HandThumbsDownFill } from 'react-bootstrap-icons';
 import { Search } from 'react-bootstrap-icons';

@@ -13,7 +13,6 @@ const GoogleIFrame = ({ searchedName, suggestions, suggestionsExist }) => {
 
     useEffect(() => {
         setQuery("")
-        // console.log(searchedName)
         if (searchedName)
             getQuery()
     }, [searchedName, suggestions]);

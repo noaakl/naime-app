@@ -37,7 +37,6 @@ const SingUp = () => {
       url: `/api/signUpCheck?user_name=${username}`
     })
       .then((response) => {
-        // console.log(response)
         if (response.data.result === true) {
           setIsNameNotTaken(true)
           if (!error) {

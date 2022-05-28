@@ -31,53 +31,26 @@ jwt = JWTManager(api)
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
-    print('hereeeeeee')
     suggestions = []
-    # print(request)
-    # result_dict = {}
-    # targeted_name = ""
     if request.method == 'GET':
-        # print(request.args)
-        # selected_name = request.args.get('name')
         selected_name = request.args.get('name', '')
         selected_name = selected_name.title()
-        # username = request.args.get('username')
         username = request.args.get('username', '')
         key = request.args.get('key')
-        # selected_name = selected_name.capitalize()
-        # targeted_name = selected_name
-        # print(selected_name)
-        # noaa = str(selected_name).split()
-        # print('names: '
-        # print(noaa)
-        # print([n for n in noaa])
         index = 0
         for name in selected_name.split():
-            # print(name)
             result_dict = create_results_dict(name, key, index)
-            # result_dict['index'] = index
             suggestions.append(result_dict)
             index += 1
-            # print(name)
-        # print('suggestions:')
-        # print(suggestions)
         if not key:
             if username:
                 new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
                                             user_name=username)
             else:
                 new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
-            # new_user_search
             db.session.add(new_user_search)
             db.session.commit()
-
-    # if targeted_name != "":
-    #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
-    #         json.dump(result_dict, json_file)
-    # print(json.dumps(suggestions))
     return json.dumps(suggestions)
-    # return render_template('dashboard.html', result=result_dict, targeted_name=targeted_name)
-    # return render_template('index_naime.html', result=result_dict, targeted_name=targeted_name)
 
 
 @api.route('/api/searchList', methods=['GET'])
@@ -99,26 +72,11 @@ def rankCount():
     targeted_name = ""
     if request.method == 'GET':
         selected_name = request.args.get('name')
-        print(selected_name)
         res = []
         for name in selected_name.split():
             name = name.capitalize()
-            print(name)
             likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == name).group_by(UsersLikes.candidate).all()
             dislikes = db.session.query(UsersDislikes.candidate, count_).filter(UsersDislikes.selected_name == name).group_by(UsersDislikes.candidate).all()
-            # return{
-            #     "likes" : {like[0]: like[1] for like in likes},
-            #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-            # }
-            # likes_array = []
-            # for like in likes:
-            #     likes_array.append({'candidate': like[0], 'count':like[1]})
-            # print(likes_array)
-            print(likes)
-            print({
-                "likes" : {like[0]: like[1] for like in likes},
-                "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-            })
             res.append({
              "likes" : {like[0]: like[1] for like in likes},
             "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
@@ -156,10 +114,8 @@ def rankResults():
     username = rankData['username']
     selected_name = rankData['selected_name']
     candidate = rankData['candidate']
-    print(rankData['add_rank'])
     if rankData['add_rank'] == 1:
         user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
-        print(user_rank)
         db.session.add(user_rank)
         db.session.commit()
     elif rankData['add_rank'] == -1:
@@ -179,19 +135,12 @@ def editResults():
     selected_name = rankData['selected_name']
     candidate = rankData['candidate']
     user_rank = {}
-    # print(rankData['remove_rank'])
     if rankData['remove_rank'] == 1:
-        # name_suggestion.like -= 1
         user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
         db.session.commit()
-        # user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
     elif rankData['remove_rank'] == -1:
-        # name_suggestion.dislike += 1
         user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
         db.session.commit()
-        # user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    # db.session.delete(user_rank)
-    # db.session.commit()
     return {}
 
 
@@ -272,12 +221,7 @@ def lastSearches():
         # group_by(UserSearch.selected_name).\
 
         if results:
-            print(results)
-            # print ({result[0]: result[1] for result in results})
-            # print({i: results[i][0] for i in range(len(results))})
             return {i: results[i][0] for i in range(len(results))}
-            # print(results)
-            # return json.dumps([(result[0]) for result in results])
 
     return json.dumps([])
 
@@ -322,47 +266,32 @@ def googleSearch():
         name = request.json.get("name", "")
         suggestions = request.json.get("suggestions", [])
         user_likes = request.json.get("userLikes", [])
-        # print(suggestions)
         query = createQuery(name, suggestions, user_likes)
-        # print(query)
-        # query = "noaa"
         res = []
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en')]
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '1'})]#, 'sourceid': 'chrome', 'ie': 'UTF-8', '-site': 'wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
         res = [search_result for search_result in search(query, pause=2, num=10, stop=10)]#'filter': '1', 'sourceid': 'chrome', 'ie': 'UTF-8', 'site': '-wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
-        # res = []
-        # for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '0'}):
-        #     res.append(search_result)
         res_final = {}
         for url in res:
-            # print(url)
             x = requests.get(url)
             tree = fromstring(x.content)
             res_final[url]=tree.findtext('.//title')
         return json.dumps([res_final])
-        # return json.dumps([])
     except ImportError:
         print("No module named 'google' found")
         return json.dumps([])
 
 @api.route('/api/query', methods=["POST"])
 def query():
-    # from googlesearch import search, get_random_user_agent
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
     user_likes = request.json.get("userLikes", [])
     numOfQueryNames = request.json.get("numOfQueryNames", 5)
-    # print(suggestions)
     query = createQuery(name, suggestions, user_likes, numOfQueryNames)
     return json.dumps({"query": query})
 
 @api.route('/api/userQuery', methods=["POST"])
 def userQuery():
-    # from googlesearch import search, get_random_user_agent
     query_names = request.json.get("queryNames", [])
     query = ''
-    print(query_names)
     if query_names:
         for number_index in range(len(query_names)):
             name = query_names[number_index]
@@ -375,5 +304,4 @@ def userQuery():
             query += '"{}"'.format(full_name)
             if number_index < len(query_names) - 1:
                 query += ' OR '
-    print(query)
     return json.dumps({"query": query})
