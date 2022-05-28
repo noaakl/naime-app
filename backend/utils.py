@@ -315,6 +315,5 @@ def create_results_dict(selected_name, key, index):
             return {"401": "Not Found"}, 401
         result_dict = convertSuggestionsToJson(result_dict)
         # result_dict = name_not_exists_suggest_names(selected_name, result_dict)
-    new_user_search = ""
 
     return result_dict

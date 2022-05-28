@@ -32,7 +32,13 @@ const UserInfo = () => {
             url: `/api/lastSearches?username=${username}`
         })
             .then((response) => {
-                setlastsearch(response.data)
+                let searches = [];
+
+                for (const i in response.data) {
+                    searches.push(response.data[i]);
+                }
+                // response.data.map((searchName) => )
+                setlastsearch(searches)
             })
     }
 

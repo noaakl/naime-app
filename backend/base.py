@@ -31,6 +31,7 @@ jwt = JWTManager(api)
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
+    print('hereeeeeee')
     suggestions = []
     # print(request)
     # result_dict = {}
@@ -39,6 +40,7 @@ def dashboard():
         # print(request.args)
         # selected_name = request.args.get('name')
         selected_name = request.args.get('name', '')
+        selected_name = selected_name.title()
         # username = request.args.get('username')
         username = request.args.get('username', '')
         key = request.args.get('key')
@@ -52,7 +54,6 @@ def dashboard():
         index = 0
         for name in selected_name.split():
             # print(name)
-            name = name.capitalize()
             result_dict = create_results_dict(name, key, index)
             # result_dict['index'] = index
             suggestions.append(result_dict)
@@ -60,13 +61,15 @@ def dashboard():
             # print(name)
         # print('suggestions:')
         # print(suggestions)
-        if username:
-            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
-                                         user_name=username)
-        else:
-            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
-        db.session.add(new_user_search)
-        db.session.commit()
+        if not key:
+            if username:
+                new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
+                                            user_name=username)
+            else:
+                new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
+            # new_user_search
+            db.session.add(new_user_search)
+            db.session.commit()
 
     # if targeted_name != "":
     #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
@@ -263,15 +266,18 @@ def lastSearches():
         limit = 5
         results = db.session.query(UserSearch.selected_name, UserSearch.search_date). \
             filter(UserSearch.selected_name != '' and UserSearch.user_name == username). \
-            order_by(desc(UserSearch.search_date)). \
+            order_by(desc(UserSearch.id)). \
             limit(limit). \
             all()
         # group_by(UserSearch.selected_name).\
 
         if results:
-            # return {result[0]: result[1] for result in results}
-            print({i: result[0] for result, i in results})
-            return json.dumps([(result[0]) for result in results])
+            print(results)
+            # print ({result[0]: result[1] for result in results})
+            # print({i: results[i][0] for i in range(len(results))})
+            return {i: results[i][0] for i in range(len(results))}
+            # print(results)
+            # return json.dumps([(result[0]) for result in results])
 
     return json.dumps([])
 

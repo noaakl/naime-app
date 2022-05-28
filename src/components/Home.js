@@ -74,6 +74,7 @@ const Home = () => {
                 }
                 // axios.get('/api/suggestions', {params: searchData})
                 // axios.get('/api/suggestions', searchData)
+                console.log('here')
                 axios({
                     method: "GET",
                     url: `/api/suggestions`, //TODO: split searchval,
