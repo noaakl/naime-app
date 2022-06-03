@@ -104,7 +104,7 @@ const UserInfo = () => {
                     <div><h5 style={{textAlign:"center"}}>Likes <HandThumbsUpFill/></h5></div>
                     <Table striped bordered>
                     <thead><tr><th>Name</th>
-                    <th>candidate</th></tr></thead>
+                    <th>Synonym</th></tr></thead>
                     <tbody>
                     {lastranks.length !== 0 && lastranks?.map((rank) => {
                     return (
@@ -122,7 +122,7 @@ const UserInfo = () => {
                     <div><h5 style={{textAlign:"center"}}>Dislikes <HandThumbsDownFill/></h5></div>
                     <Table striped bordered>
                     <thead><tr><th>Name</th>
-                    <th>candidate</th></tr></thead>
+                    <th>Synonym</th></tr></thead>
                     <tbody>
                     {lastdislike.length !== 0 && lastdislike.map((dislike) => {
                     return (

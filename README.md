@@ -28,7 +28,7 @@ For more information about this project [Click Here](https://github.com/noaakl/F
 
 ##
 
-### BD
+### DB
 
 in order to the program to work, the DB file needs to be located inside the `backend` directory.
 the DB file can not be added to git due to size limitation.
@@ -51,8 +51,8 @@ nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](
 
 &copy; Algorithms by: Dr. Aviad Elyashar, Dr. Rami Puzis, Dr. Michael Fire
 
-- [SpokenName2Vec](https://scholar.google.co.il/citations?view_op=view_citation&hl=en&user=CPE9YOkAAAAJ&citation_for_view=CPE9YOkAAAAJ:3fE2CSJIrl8C)
-- [Graft](https://scholar.google.co.il/citations?view_op=view_citation&hl=en&user=CPE9YOkAAAAJ&citation_for_view=CPE9YOkAAAAJ:kNdYIx-mwKoC)
+- [SpokenName2Vec](https://doi.org/10.1109/TKDE.2021.3096670)
+- [GRAFT](https://doi.org/10.1016/j.knosys.2021.107229)
 
 ##
 

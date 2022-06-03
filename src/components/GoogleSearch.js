@@ -62,7 +62,7 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
                     return (
                         <>
                         <a className={Styles.googleResults} href={key} target="_blank">
-                        <Col key={key} target="_blank" style={{justifyContent:"center"}}>
+                        <Col key={key} target="_blank" rel="noreferrer" style={{justifyContent:"center"}}>
                             <Card style={{minHeight:"200px"}} ><Card.Body>
                             <div key={key}>
                             <h3 className={Styles.googleResults}>{handleGoogleRes(key)}</h3>

@@ -22,8 +22,10 @@ const Home = () => {
     const suggestionsExist = algorithmsData.length > 0
 
     useEffect(() => {
-        setRanks([])
         setSuggestions([])
+        setRanks([])
+        setNameToSearch("")
+        setNameValue("")
         setAlgorithmsData([])
         setSearchedNames([])
         setShowResults(false)

@@ -92,29 +92,29 @@ const Api = ({ name }) => {
         <div style={{ display: apiKey ? 'inline' : 'none', }}>
 
 
-            <Dropdown className={Styles.api} >
+            <Dropdown className={Styles.api} autoClose="outside">
                 <Dropdown.Toggle className={Styles.sort} variant="icon" bsPrefix="Button" size="xs" id="dropdown-basic">
-                <OverlayTrigger
+                <Download style={{ marginRight: "15px", marginLeft: "5px" , verticalAlign:"super" }}/>
+                
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {/* <Dropdown.Item onClick={()=>downloadCSV()}>Download as CSV</Dropdown.Item> */}
+                    <Dropdown.Item onClick={() => downloadJson()}>Download as Json</Dropdown.Item>
+                    <OverlayTrigger
                 key="copy"
                 placement={"right"}
                 overlay={
                         <Popover id={`popover-copy`} style={{display: copied ? '' : 'none',}}>
                          <PopoverBody bsPrefix={Styles.popover}>
-                            URL was copied to clipboard
+                            copied!
                         </PopoverBody>
                     </Popover>
                 }
             >
-                    <Download style={{ marginRight: "15px", marginLeft: "5px" , verticalAlign:"super" }}/>
-
+                    <Dropdown.Item onClick={() => copyJsonURL()}>Copy Json URL</Dropdown.Item>
                     </OverlayTrigger>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    {/* <Dropdown.Item onClick={()=>downloadCSV()}>Download as CSV</Dropdown.Item> */}
-                    <Dropdown.Item onClick={() => downloadJson()}>Download as Json</Dropdown.Item>
-                    <Dropdown.Item onClick={() => copyJsonURL()}>Copy Json URL </Dropdown.Item>
                 </Dropdown.Menu>
+                
             </Dropdown>
 
         </div>
