@@ -63,7 +63,7 @@ const Footer = () => {
                 }}
             >
                 {/* <h5 style={{ color: 'green', fontSize: '13px', margin: '5px 15px' }}>{"Copied!"}</h5> */}
-                <h5 style={{ color: 'green', fontSize: '13px', marginLeft: '15px' }}>{"Copied!"}</h5>
+                <h5 style={{ color: 'green', fontSize: '11px', marginLeft: '15px' }}>{"Copied!"}</h5>
             </div>
         );
     };

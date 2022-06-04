@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Styles from "../App.module.scss";
 import Results from './Results';
@@ -20,6 +20,10 @@ const Home = () => {
     const [searchedNames, setSearchedNames] = useState([])
     const [showResults, setShowResults] = useState(false)
     const suggestionsExist = algorithmsData.length > 0
+    const { name } = useParams();
+    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    // const handleOnClick = useCallback((name) => navigate(`/search/${name}`, {replace: true}), [navigate]);
 
     useEffect(() => {
         setSuggestions([])
@@ -29,7 +33,18 @@ const Home = () => {
         setAlgorithmsData([])
         setSearchedNames([])
         setShowResults(false)
-    }, [username]);
+        if (name) {
+            setNameValue(name)
+            searchName(name)
+        }
+    }, [username, name]);
+
+    // useEffect(() => {
+    //     if (name) {
+    //         setNameValue(name)
+    //         searchName(name)
+    //     }
+    // }, [name]);
 
     const isValidSearchVal = (searchVal) => {
         return !/[^a-zA-Z\s]/.test(searchVal)
@@ -49,7 +64,7 @@ const Home = () => {
         );
     };
 
-    const searchName = () => {
+    const searchName = (nameValue) => {
         if (nameValue !== '') {
 
             let searchVal = ""
@@ -57,6 +72,8 @@ const Home = () => {
             const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
             setShowResults(doSearch)
             if (doSearch) {
+                // handleOnClick()
+                navigate(`/search/${searchVal}`);
                 setNameToSearch(nameValue)
                 setAlgorithmsData({})
                 setRanks({})
@@ -138,10 +155,10 @@ const Home = () => {
                     <div style={{ textAlign: "center" }}>Similar Name Suggestor</div>
                     <div className={Styles.search_wraper} >
                         <div className={Styles.search_inner}>
-                            <input className={Styles.form_control} value={nameValue} onKeyPress={(e) => e.key === "Enter" ? searchName() : ""}
+                            <input className={Styles.form_control} value={nameValue} onKeyPress={(e) => e.key === "Enter" ? searchName(nameValue) : ""}
                                 onChange={(e) => setNameValue(e.target.value)} placeholder="Write name here (i.e Mike, Christina)" />
                             <span className={Styles.search_btn}>
-                                <button className={Styles.search_btn} id="searchName" onClick={() => { searchName() }} method="POST" >
+                                <button className={Styles.search_btn} id="searchName" onClick={() => { searchName(nameValue) }} method="POST" >
                                     <Search size={20} />
                                 </button>
                             </span>

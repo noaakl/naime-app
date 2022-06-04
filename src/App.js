@@ -11,7 +11,7 @@ import UserFeedback from "./components/Feedback";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import { PersistGate } from 'redux-persist/integration/react'
+// import { PersistGate } from 'redux-persist/integration/react'
 
 export default function App() {
   useEffect(() => {
@@ -25,6 +25,7 @@ export default function App() {
     <UserFeedback/>
     <Routes>
       <Route path="/" element={<Home />}></Route>
+      <Route path="/search/:name" element={<Home />}></Route>
       <Route path="/userInfo" element={<UserInfo />}></Route>
       <Route path="/signUp" element={<SingUp />}></Route>
       <Route path="/login" element={<Login />}></Route>

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Styles from "../App.module.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -138,7 +139,7 @@ const UserInfo = () => {
                     <div><h5>Searches <Search/></h5></div>
                     
                     {lastsearch.length !== 0 && lastsearch.map((search, _) => {
-                    return (<div key={_} style={{marginRight:"10px", marginBottom:"7px"}}>{search}</div>)})}</Card.Body></Card></Col>
+                    return (<div key={_} style={{marginRight:"10px", marginBottom:"7px"}}><Link to={`/search/${search}`}>{search}</Link></div>)})}</Card.Body></Card></Col>
             </Row></Container>
 
 
