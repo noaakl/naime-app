@@ -82,6 +82,7 @@ const Api = ({ name }) => {
 
     const copyJsonURL = () => {
         const baseURL = `http://127.0.0.1:5000`
+        // const baseURL = `https://naime.cs.bgu.ac.il`
         const suggestionsAPI = `${baseURL}/api/suggestions?name=${name.toLowerCase()}&key=${apiKey}`
         navigator.clipboard.writeText(suggestionsAPI)
         document.execCommand('copy');

@@ -58,12 +58,12 @@ const Footer = () => {
     const copied = (copy) => {
         return (
             <div
-                style={{
-                    display: copy ? '' : 'none',
-                }}
+                // style={{
+                //     display: copy ? '' : 'none',
+                // }}
             >
                 {/* <h5 style={{ color: 'green', fontSize: '13px', margin: '5px 15px' }}>{"Copied!"}</h5> */}
-                <h5 style={{ color: 'green', fontSize: '11px', marginLeft: '15px' }}>{"Copied!"}</h5>
+                <h5 style={{ color: copy ? 'green' : 'rgba(158, 160, 143, 0.01', fontSize: '12px', margin: '5px 15px' }}>{"Copied!"}</h5>
             </div>
         );
     };
@@ -187,7 +187,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <Modal show={showCiteModal} onHide={() => closeCiteModal()}>
+            <Modal size='xl' show={showCiteModal} onHide={() => closeCiteModal()}>
 
                 <Modal.Header className={Styles.modal_header} closeButton>
                     <Modal.Title>Cite</Modal.Title>
@@ -203,6 +203,7 @@ const Footer = () => {
                     <Modal.Footer className={Styles.accordion_modal}>
                         <ul className={Styles.cite_item}>
                             <li className={Styles.accordion_item_name} key='APA'>
+                                <div onClick={() => copyCite(APA, setCopiedAPA)}>
                                 APA
                                 {/* <OverlayTrigger
                                     key="copy"
@@ -215,7 +216,8 @@ const Footer = () => {
                                         </Popover>
                                     }
                                 > */}
-                                    <Files as='button' onClick={() => copyCite(APA, setCopiedAPA)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
+                                    <Files as='button' size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
+                                    </div>
                                 {/* </OverlayTrigger> */}
                             </li>
                                 {copied(copiedAPA)}
