@@ -24,13 +24,15 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setSuggestions([])
-        setRanks([])
-        setNameToSearch("")
-        setNameValue("")
-        setAlgorithmsData([])
-        setSearchedNames([])
-        setShowResults(false)
+        if (!username) {
+            setSuggestions([])
+            setRanks([])
+            setNameToSearch("")
+            setNameValue("")
+            setAlgorithmsData([])
+            setSearchedNames([])
+            setShowResults(false)
+        }
         if (name) {
             setNameValue(name)
             handleSearch(name)
