@@ -12,8 +12,8 @@ import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 const NavBar = () => {
     const username = useSelector((state) => state.reduser.username);
 
-    const [showAbout, setShowAbout] = useState(false);
-    const handleAbout = () => setShowAbout(!showAbout);
+    // const [showAbout, setShowAbout] = useState(false);
+    // const handleAbout = () => setShowAbout(!showAbout);
     return (
         <>
             <Navbar expand="lg" bg='light'>
@@ -22,7 +22,9 @@ const NavBar = () => {
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto" navbarScroll>
-                            <Nav.Link onClick={handleAbout} variant="Success">About</Nav.Link>
+                            {/* <Nav.Link onClick={handleAbout} variant="Success">About</Nav.Link> */}
+                            <Nav.Link as={Link} to="/about">About</Nav.Link>
+                            <Nav.Link as={Link} to="/info">Algorithms</Nav.Link>
                             <PopularNames />
                             {/* <Nav.Link as={Link} to="/userInfo" style={{ display: username ? '' : 'none' }}>My info</Nav.Link> */}
                         </Nav>
@@ -37,7 +39,7 @@ const NavBar = () => {
             </Navbar>
 
 
-            <div className={Styles.about}>
+            {/* <div className={Styles.about}>
                 <Modal show={showAbout} onHide={handleAbout}>
                     <Modal.Header closeButton>
                         <Modal.Title>nAIme</Modal.Title>
@@ -53,7 +55,7 @@ const NavBar = () => {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </div>
+            </div> */}
         </>
     );
 }
