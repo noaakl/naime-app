@@ -72,7 +72,15 @@ body:before {
     z-index: -1;
 }
 
+.disable {
+	pointer-events: none;
+	cursor: default;
+  }
+
 .edit_query_accordion {
+	// background-color: rgba(221, 76, 57, 0.509);
+	// margin: "40px";
+	// padding: "40px";
 	// margin-left: 23%;
 	display: inline-block;
 }
@@ -123,21 +131,13 @@ body:before {
 	// background-color: gray;
 }
 
-.accordion_item {
-	// color: black;
-	// text-align: right;
+.cite_item {
+	list-style: none;
+}
 
+.accordion_item {
 	list-style: none;
 	margin-bottom: -4.5%;
-
-	// white-space: pre-wrap;
-	// line-height: 5%;
-// 
-
-	// display:inline-block;
-    // border:1px solid #000;
-    // padding:20px;
-	// background-color: gray;
 }
 
 .accordion_item_name {
@@ -146,10 +146,16 @@ body:before {
 	text-align: center;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.171);
 	padding: 11px 11px 11px 11px;
-	// white-space: pre-wrap;
+}
 
-	// line-height: 5%;
-	// background-color: gray;
+.cite_string_item {
+	color: black;
+	// cursor: pointer;
+	text-align: left;
+	// border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 7px;
+	word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .search_title {
@@ -179,7 +185,7 @@ body:before {
 .popover{
 	white-space:pre-line;
 	font-size: 15px;
-	margin: 5px;
+	// margin: 5px;
 }
 
 .result{

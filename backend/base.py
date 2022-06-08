@@ -213,10 +213,10 @@ def lastSearches():
     username = request.args.get('username')
     if username:
         limit = 5
-        results = db.session.query(UserSearch.selected_name, UserSearch.search_date). \
-            filter(UserSearch.selected_name != '' and UserSearch.user_name == username). \
-            order_by(desc(UserSearch.id)). \
-            limit(limit). \
+        results = db.session.query(UserSearch.selected_name, UserSearch.search_date) \
+            .filter(UserSearch.selected_name != '' and UserSearch.user_name == username) \
+            .order_by(desc(UserSearch.id)) \
+            .limit(limit). \
             all()
         # group_by(UserSearch.selected_name).\
 
