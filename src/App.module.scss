@@ -415,15 +415,31 @@ body:before {
 	text-align: right;
 }
 
-.card_img {
-	margin-top: 20px;
-	text-align: center;
+.about_row{
+	padding: 17px;
+}
+
+.about_card{
+	width: 100%;
+	justify-content: center;
+}
+
+.about_Container{
+	padding-bottom: 100px;
+}
+
+.algorithms_info_card{
+	min-height: 540px;
+	width: 100%;
 	justify-content: center;
 }
 
 .card_body_about {
 	margin: 0;
 	padding: 0;
+	h5 {
+		text-align: center
+	}
 }
 
 .result_wrapper {

@@ -7,36 +7,32 @@ import GRAFT from "../GRAFT.jpeg"
 
 
 
-const Info = () => {
+const AlgorithmsInfo = () => {
     return (
         <>
             <div className={Styles.page}>
                 <h1>Algorithms</h1>
                 <div>More information about the algorithms we use</div>
             </div>
-            <Container style={{ paddingBottom: '100px' }}>
+            <Container className={Styles.about_Container}>
                 <Row lg={2} md={1} sm={1} xs={1} style={{ margin: "0", marginTop: "20px" }}>
                     <Col>
-                        <Row style={{ margin: "1px" }}>
-                            <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{
-                                miHeight: "500px", width: "100%", margin: 5, padding: 0,
-                                justifyContent: "center"
-                            }}><Card.Body className={Styles.card_body_about}>
-                                    <h5 style={{ textAlign: "center" }}>SpokenName2Vec</h5>
+                        <Row className={Styles.about_row}>
+                            <Card className={`${Styles.algorithms_info_card} shadow-sm p-3 mb-3 bg-white rounded`} >
+                                <Card.Body className={Styles.card_body_about}>
+                                    <h5>SpokenName2Vec</h5>
                                     a novel and generic deep learning algorithm that utilizes automated speech in most given languages and accents for various name-related tasks.
                                     SpokenName2Vec algorithm generates a fixed-length vector representation derived from an audio segment that expresses the way people pronounce a name in a given language and accent.
                                     This model is much more sophisticated than other algorithms proposed for the task of synonym suggestion, and its ability to detect synonyms that sound alike but are written differently is notable.
                                     <Card.Img variant="bottom" src={SpokenName2Vec} className={Styles.card_img}/>
+                                    <strong>for more information - click <a href='https://doi.org/10.1016/j.knosys.2021.107229' target="_blank">here</a> for the artical </strong>
                                 </Card.Body></Card>
                         </Row>
                     </Col>
                     <Col>
-                        <Row style={{ margin: "1px" }}>
-                            <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{
-                                minHeight: "500px", width: "100%", margin: 5, padding: 0,
-                                justifyContent: "center"
-                            }}><Card.Body className={Styles.card_body_about}>
-                                    <h5 style={{ textAlign: "center" }}>GRAFT</h5>
+                        <Row className={Styles.about_row}>
+                            <Card className={`${Styles.algorithms_info_card} shadow-sm p-3 mb-3 bg-white rounded`} ><Card.Body className={Styles.card_body_about}>
+                                    <h5>GRAFT</h5>
                                     a novel algorithm for improving the suggestion of alternative spellings associated with a name provided as a query.
                                     The algorithm based on the construction and analysis of digitized family trees, combined with network science.
                                     By constructing digitized family trees, the algorithm utilize the valuable ancestral information in these family trees to detect family members who share a similar name.
@@ -44,7 +40,7 @@ const Info = () => {
                                     Then, we search for the name provided as a query in the graph and select candidates to be suggested as alternative names according to a general ordering function.
                                     <br></br><br></br>
                                     <Card.Img variant="bottom" src={GRAFT} className={Styles.card_img}/>
-                                    <strong>for more information - click here for the artical </strong>
+                                    <strong>for more information - click <a href='https://doi.org/10.1109/TKDE.2021.3096670' target="_blank">here</a> for the artical </strong>
                                     </Card.Body></Card>
                         </Row>
                     </Col>
@@ -57,4 +53,4 @@ const Info = () => {
     )
 }
 
-export default Info;
+export default AlgorithmsInfo;

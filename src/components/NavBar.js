@@ -24,7 +24,7 @@ const NavBar = () => {
                         <Nav className="me-auto" navbarScroll>
                             {/* <Nav.Link onClick={handleAbout} variant="Success">About</Nav.Link> */}
                             <Nav.Link as={Link} to="/about">About</Nav.Link>
-                            <Nav.Link as={Link} to="/info">Algorithms</Nav.Link>
+                            <Nav.Link as={Link} to="/AlgorithmsInfo">Algorithms</Nav.Link>
                             {/* <PopularNames /> */}
                             {/* <Nav.Link as={Link} to="/userInfo" style={{ display: username ? '' : 'none' }}>My info</Nav.Link> */}
                         </Nav>

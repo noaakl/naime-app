@@ -8,7 +8,7 @@ import UserInfo from "./components/UserInfo";
 import SingUp from "./components/SignUp";
 import Login from "./components/Login";
 import About from "./components/About";
-import Info from "./components/Info";
+import AlgorithmsInfo from "./components/AlgorithmsInfo";
 import UserFeedback from "./components/Feedback";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/NavBar";
@@ -31,7 +31,7 @@ export default function App() {
       <Route path="/signUp" element={<SingUp />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/about" element={<About />}></Route>
-      <Route path="/info" element={<Info />}></Route>
+      <Route path="/AlgorithmsInfo" element={<AlgorithmsInfo />}></Route>
     </Routes>
     </BrowserRouter>
     <Footer/>
