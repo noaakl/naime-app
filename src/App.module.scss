@@ -148,6 +148,14 @@ body:before {
 	padding: 11px 11px 11px 11px;
 }
 
+.accordion_selected_item_name {
+	color: rgba(0, 0, 0, 0.486);
+	cursor: pointer;
+	text-align: center;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 11px 11px 11px 11px;
+}
+
 .cite_string_item {
 	color: black;
 	// cursor: pointer;

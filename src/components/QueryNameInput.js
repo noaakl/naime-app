@@ -72,7 +72,7 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                                                     <ul className={Styles.accordion_item}>
                                                     {data.map((name) => {
                                                         return (
-                                                            <li className={Styles.accordion_item_name} key={`${algorithm}_${name.candidate}`}
+                                                            <li className={queryNameValue == name.candidate ? Styles.accordion_selected_item_name : Styles.accordion_item_name} key={`${algorithm}_${name.candidate}`}
                                                                 as='button'
                                                                 onClick={() => handleSelectName(name.candidate, algorithmIndex)}>
                                                                 {name.candidate}
