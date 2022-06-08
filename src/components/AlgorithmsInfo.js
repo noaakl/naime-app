@@ -26,7 +26,7 @@ const AlgorithmsInfo = () => {
                                         <br></br><br></br>
                                     <Card.Img variant="bottom" src={SpokenName2Vec} className={Styles.card_img}/>
                                     <br></br><br></br>
-                                    <strong>for more information - click <a href='https://doi.org/10.1016/j.knosys.2021.107229' target="_blank">here</a> for the artical </strong>
+                                    <strong>For more information - Click <a href='https://doi.org/10.1016/j.knosys.2021.107229' target="_blank">HERE</a> for the article </strong>
                                 </Card.Body></Card>
                         </Row>
                     </Col>
@@ -41,7 +41,7 @@ const AlgorithmsInfo = () => {
                                     <br></br><br></br>
                                     <Card.Img variant="bottom" src={GRAFT} className={Styles.card_img}/>
                                     <br></br><br></br>
-                                    <strong>for more information - click <a href='https://doi.org/10.1109/TKDE.2021.3096670' target="_blank">here</a> for the artical </strong>
+                                    <strong>For more information - Click <a href='https://doi.org/10.1109/TKDE.2021.3096670' target="_blank">HERE</a> for the article </strong>
                                     </Card.Body></Card>
                         </Row>
                     </Col>
