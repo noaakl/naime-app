@@ -148,6 +148,14 @@ body:before {
 	padding: 11px 11px 11px 11px;
 }
 
+.accordion_selected_item_name {
+	color: rgba(0, 0, 0, 0.486);
+	cursor: pointer;
+	text-align: center;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 11px 11px 11px 11px;
+}
+
 .cite_string_item {
 	color: black;
 	// cursor: pointer;
@@ -414,6 +422,33 @@ body:before {
 
 .rightFooter{
 	text-align: right;
+}
+
+.about_row{
+	padding: 17px;
+}
+
+.about_card{
+	width: 100%;
+	justify-content: center;
+}
+
+.about_Container{
+	padding-bottom: 100px;
+}
+
+.algorithms_info_card{
+	min-height: 650px;
+	width: 100%;
+	justify-content: center;
+}
+
+.card_body_about {
+	margin: 0;
+	padding: 0;
+	h5 {
+		text-align: center
+	}
 }
 
 .result_wrapper {

@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import Styles from '../App.module.scss'
 import { MDBFooter } from "mdbreact";
 import naimeLogo from '../images/logon.png';
-import googleScholarLogo from '../images/google-scholar.png';
 import { Github, Files } from 'react-bootstrap-icons';
 import { Dropdown, Modal, Button } from 'react-bootstrap'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Popover from 'react-bootstrap/Popover'
-import PopoverBody from 'react-bootstrap/PopoverBody'
 const Footer = () => {
 
     const [showCiteModal, setShowCiteModal] = useState(false)
