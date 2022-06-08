@@ -1,7 +1,7 @@
 import Styles from '../App.module.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios";
-import { NavDropdown } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 const PopularNames = ({ searchedName }) => {
     const [topSearches, setTopSearches] = useState({});
@@ -22,11 +22,19 @@ const PopularNames = ({ searchedName }) => {
             }
         })}
 
+    useEffect(() => {
+            getPopularNames(searchedName)
+          }, [])
+
     return (
-    <NavDropdown title="Top 5 searches" id="navbarScrollingDropdown"  onClick={() => getPopularNames(searchedName)}>
-    {Object.keys(topSearches).map((name) => {
-         return (<NavDropdown.Item key={name} className={Styles.info_accordion}> {'\n'+name}: {topSearches[name]} times </NavDropdown.Item>)})}
-  </NavDropdown>
+//     <NavDropdown title="Top 5 searches" id="navbarScrollingDropdown"  onClick={() => getPopularNames(searchedName)}>
+//     {Object.keys(topSearches).map((name) => {
+//          return (<NavDropdown.Item key={name} className={Styles.info_accordion}> {'\n'+name}: {topSearches[name]} times </NavDropdown.Item>)})}
+//   </NavDropdown>
+      <Col>
+      {Object.keys(topSearches).map((name) => {
+           return (<Row key={name} style={{margin:"5px"}}> {'\n'+name}: {topSearches[name]} times </Row>)})}
+    </Col>
 
     );}
 

@@ -5,6 +5,7 @@ import { Card, Row, Col, Container } from 'react-bootstrap';
 import poster from "../SISE_Name_Search_25.jpg"
 import { ArrowRightCircleFill } from 'react-bootstrap-icons';
 import { Link } from "react-router-dom";
+import PopularNames from './PopularNames';
 
 
 
@@ -42,6 +43,14 @@ const About = () => {
                             justifyContent: "center"
                         }}><Card.Body className={Styles.card_body_about}>
                             <h5>More Information About the algorithms <Link to={"/info"}><ArrowRightCircleFill style={{marginLeft:"5px", color:"rgb(80, 128, 102)"}}/></Link></h5>
+                            </Card.Body></Card>
+                    </Row>
+                    <Row style={{margin:"1px"}}>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{width: "100%", margin: 5, padding: 0,
+                            justifyContent: "center"
+                        }}><Card.Body className={Styles.card_body_about}>
+                            <h5>Top 5 Searches</h5>
+                            <PopularNames />
                             </Card.Body></Card>
                     </Row>
 
