@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux'
-import {store, persistor} from './store/store'
+import {store} from './store/store'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import UserInfo from "./components/UserInfo";

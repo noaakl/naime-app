@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Styles from "../App.module.scss";
-import PopularNames from './PopularNames';
 import Logout from "./Logout";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from 'react-bootstrap/Modal';
-import { Button, Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 
 const NavBar = () => {
