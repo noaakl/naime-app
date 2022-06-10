@@ -163,6 +163,7 @@ body:before {
 	// border-bottom: 1px solid rgba(0, 0, 0, 0.171);
 	padding: 7px;
 	word-wrap: break-word;
+	white-space: pre-line;
     white-space: pre-wrap;
 }
 
@@ -440,6 +441,13 @@ body:before {
 	min-height: 650px;
 	width: 100%;
 	justify-content: center;
+	display: flex;
+	flex: 1;
+
+	p {
+		flex: 1;
+		height: 320px;
+	}
 }
 
 .card_body_about {

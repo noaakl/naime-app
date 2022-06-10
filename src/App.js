@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux'
-import {store, persistor} from './store/store'
+import {store} from './store/store'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import UserInfo from "./components/UserInfo";
@@ -13,7 +13,7 @@ import UserFeedback from "./components/Feedback";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import { PersistGate } from 'redux-persist/integration/react'
+// import { PersistGate } from 'redux-persist/integration/react'
 
 export default function App() {
   useEffect(() => {
@@ -27,6 +27,7 @@ export default function App() {
     <UserFeedback/>
     <Routes>
       <Route path="/" element={<Home />}></Route>
+      <Route path="/search/:name" element={<Home />}></Route>
       <Route path="/userInfo" element={<UserInfo />}></Route>
       <Route path="/signUp" element={<SingUp />}></Route>
       <Route path="/login" element={<Login />}></Route>

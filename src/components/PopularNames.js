@@ -1,4 +1,4 @@
-import Styles from '../App.module.scss'
+import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import axios from "axios";
 import { Row, Col } from 'react-bootstrap';
@@ -33,7 +33,7 @@ const PopularNames = ({ searchedName }) => {
 //   </NavDropdown>
       <Col>
       {Object.keys(topSearches).map((name) => {
-           return (<Row key={name} style={{margin:"5px"}}> {'\n'+name}: {topSearches[name]} times </Row>)})}
+           return (<Row key={name} style={{margin:"5px"}}> <span><Link to={`/search/${name}`}>{'\n'+name}</Link>: {topSearches[name]} times </span></Row>)})}
     </Col>
 
     );}

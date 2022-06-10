@@ -44,21 +44,22 @@ const Footer = () => {
         setCopiedBibTeX(false)
     }
 
-    const copyCite = (toCopy, setCopied) => {
+    const copyCite = (toCopy, setCopied, setNotCopied) => {
         navigator.clipboard.writeText(toCopy)
         document.execCommand('copy');
         setCopied(true)
+        setNotCopied(false)
     }
 
     const copied = (copy) => {
         return (
             <div
-                style={{
-                    display: copy ? '' : 'none',
-                }}
+                // style={{
+                //     display: copy ? '' : 'none',
+                // }}
             >
                 {/* <h5 style={{ color: 'green', fontSize: '13px', margin: '5px 15px' }}>{"Copied!"}</h5> */}
-                <h5 style={{ color: 'green', fontSize: '13px', marginLeft: '15px' }}>{"Copied!"}</h5>
+                <h5 style={{ color: copy ? 'green' : 'rgba(158, 160, 143, 0.01', fontSize: '12px', margin: '5px 15px' }}>{"Copied!"}</h5>
             </div>
         );
     };
@@ -164,7 +165,7 @@ const Footer = () => {
                                 <p style={{ marginLeft: '10px' }}>
                                     {/* //TODO: change */}
                                     <i className='fas fa-envelope me-3'></i>
-                                    aviade@post.bgu.ac.il
+                                    nAIme.project@gmail.com
                                 </p>
                                 <p style={{ marginLeft: '10px' }}>
                                     <i className='fas fa-phone me-3'></i> +972747795152
@@ -182,7 +183,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <Modal show={showCiteModal} onHide={() => closeCiteModal()}>
+            <Modal size='xl' show={showCiteModal} onHide={() => closeCiteModal()}>
 
                 <Modal.Header className={Styles.modal_header} closeButton>
                     <Modal.Title>Cite</Modal.Title>
@@ -198,6 +199,7 @@ const Footer = () => {
                     <Modal.Footer className={Styles.accordion_modal}>
                         <ul className={Styles.cite_item}>
                             <li className={Styles.accordion_item_name} key='APA'>
+                                <div onClick={() => copyCite(APA, setCopiedAPA, setCopiedBibTeX)}>
                                 APA
                                 {/* <OverlayTrigger
                                     key="copy"
@@ -210,7 +212,8 @@ const Footer = () => {
                                         </Popover>
                                     }
                                 > */}
-                                    <Files as='button' onClick={() => copyCite(APA, setCopiedAPA)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
+                                    <Files as='button' size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
+                                    </div>
                                 {/* </OverlayTrigger> */}
                             </li>
                                 {copied(copiedAPA)}
@@ -240,7 +243,7 @@ const Footer = () => {
                                         </Popover>
                                     }
                                 > */}
-                                    <Files as='button' onClick={() => copyCite(BibTeX, setCopiedBibTeX)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
+                                    <Files as='button' onClick={() => copyCite(BibTeX, setCopiedBibTeX, setCopiedAPA)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
                                 {/* </OverlayTrigger> */}
 
                             </li>
