@@ -441,6 +441,13 @@ body:before {
 	min-height: 650px;
 	width: 100%;
 	justify-content: center;
+	display: flex;
+	flex: 1;
+
+	p {
+		flex: 1;
+		height: 320px;
+	}
 }
 
 .card_body_about {

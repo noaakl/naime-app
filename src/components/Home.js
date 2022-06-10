@@ -24,7 +24,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!username) {
+        if (!username || !name) {
             setSuggestions([])
             setRanks([])
             setNameToSearch("")

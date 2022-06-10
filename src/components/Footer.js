@@ -44,10 +44,11 @@ const Footer = () => {
         setCopiedBibTeX(false)
     }
 
-    const copyCite = (toCopy, setCopied) => {
+    const copyCite = (toCopy, setCopied, setNotCopied) => {
         navigator.clipboard.writeText(toCopy)
         document.execCommand('copy');
         setCopied(true)
+        setNotCopied(false)
     }
 
     const copied = (copy) => {
@@ -164,7 +165,7 @@ const Footer = () => {
                                 <p style={{ marginLeft: '10px' }}>
                                     {/* //TODO: change */}
                                     <i className='fas fa-envelope me-3'></i>
-                                    aviade@post.bgu.ac.il
+                                    nAIme.project@gmail.com
                                 </p>
                                 <p style={{ marginLeft: '10px' }}>
                                     <i className='fas fa-phone me-3'></i> +972747795152
@@ -198,7 +199,7 @@ const Footer = () => {
                     <Modal.Footer className={Styles.accordion_modal}>
                         <ul className={Styles.cite_item}>
                             <li className={Styles.accordion_item_name} key='APA'>
-                                <div onClick={() => copyCite(APA, setCopiedAPA)}>
+                                <div onClick={() => copyCite(APA, setCopiedAPA, setCopiedBibTeX)}>
                                 APA
                                 {/* <OverlayTrigger
                                     key="copy"
@@ -242,7 +243,7 @@ const Footer = () => {
                                         </Popover>
                                     }
                                 > */}
-                                    <Files as='button' onClick={() => copyCite(BibTeX, setCopiedBibTeX)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
+                                    <Files as='button' onClick={() => copyCite(BibTeX, setCopiedBibTeX, setCopiedAPA)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
                                 {/* </OverlayTrigger> */}
 
                             </li>
