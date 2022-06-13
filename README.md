@@ -37,7 +37,7 @@ the DB file can not be added to git due to size limitations.
 
 ### Feedback
 
-Users' feedback can be found on `https://feeder.sh/dashboard`
+Users' feedback can be found on [feeder](https://feeder.sh/dashboard)
 
 ##
 
