@@ -17,8 +17,8 @@ const SingUp = () => {
   const isPasswordMatch = !confirmPassword || password === confirmPassword;
   const isEmailValid = String(email).toLowerCase().match(
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-  const error = !username.length>2 || !firstName.length>2 || !lastName.length>2 || !isEmailValid || !password.length>6 || !isNameNotTaken || !isPasswordMatch;
-  // const [error, setError] = useState(false);
+  const valueError = username.length<2 || firstName.length<2 || lastName.length<2 || !isEmailValid || password.length<6 || !isNameNotTaken || !isPasswordMatch;
+  // const [valueError, setvalueError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -39,7 +39,7 @@ const SingUp = () => {
       .then((response) => {
         if (response.data.result === true) {
           setIsNameNotTaken(true)
-          if (!error) {
+          if (!valueError) {
             axios.post('/api/signUp', user_info)
               .then(() => setShowSuccessMessage(true))
               .catch(function (error) {
@@ -54,7 +54,7 @@ const SingUp = () => {
   };
 
   const handleFill = (e, setter) => {
-    setter(e.target.value);
+    setter(String(e.target.value));
     if (setter === setUsername) {
       setIsNameNotTaken(true)
     }

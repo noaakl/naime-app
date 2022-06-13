@@ -7,11 +7,10 @@ import { Card, Row, Col, Dropdown } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import { SortDown, FunnelFill } from 'react-bootstrap-icons';
 
-const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
+const Results = ({ searchedName, algorithmsData, ranks }) => {
     const algorithmsNames = Object.keys(algorithmsData)
     const [rank, setRank] = useState(ranks)
     const [sortValue, setSortValue] = useState("Default A-Z")
-    const [isAZData, setAZData] = useState(true)
     const [algorithms, setAlgorithms] = useState([])
     const rankStates = ["likes","dislikes","no rank"]
     const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
@@ -22,7 +21,11 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
     }, [algorithmsData, ranks]);
 
     const sortFunc = (a, b) => {
-        return isAZData ? a.candidate.localeCompare(b.candidate) : b.user_rank - a.user_rank
+        return sortValue == "Default A-Z" ? a.candidate.localeCompare(b.candidate) : calculateRank(b.candidate) - calculateRank(a.candidate)
+    }
+
+    const calculateRank = (candidate) => {
+        return handleLikeCount(candidate) - handledisLikeCount(candidate)
     }
 
     const handleLikeCount = (name) => {
@@ -132,7 +135,8 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
         return algorithms.includes(value)
     }
 
-    Object.keys(algorithmsData).forEach(algorithm => { algorithmsData[algorithm].sort(sortFunc) });
+    Object.keys(algorithmsData).forEach(algorithm => {
+        algorithmsData[algorithm].sort(sortFunc) });
     Object.keys(ranks).forEach(rank => { });
 
     return (
@@ -161,12 +165,10 @@ const Results = ({ searchedName, algorithmsData, showSuggestions, ranks }) => {
                             <Dropdown.Menu>
                                 <Dropdown.Item
                                     onClick={() => {
-                                        setAZData(false)
                                         setSortValue("User Rank")
                                     }}>
                                     User Rank</Dropdown.Item>
                                 <Dropdown.Item onClick={() => {
-                                    setAZData(true)
                                     setSortValue("Default A-Z")
                                 }}>Default A-Z</Dropdown.Item>
                             </Dropdown.Menu>

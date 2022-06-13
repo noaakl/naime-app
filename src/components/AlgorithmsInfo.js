@@ -1,6 +1,6 @@
 import Styles from "../App.module.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Row, Col, Container } from 'react-bootstrap';
 import SpokenName2Vec from "../SpokenName2Vec.jpeg"
 import GRAFT from "../GRAFT.jpeg"
@@ -8,6 +8,11 @@ import GRAFT from "../GRAFT.jpeg"
 
 
 const AlgorithmsInfo = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
+
     return (
         <>
             <div className={Styles.page}>

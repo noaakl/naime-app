@@ -7,6 +7,7 @@ from Users import Users
 import jellyfish
 import phonetics
 import editdistance
+from sqlalchemy import or_
 from AlgorithmsConstants import algorithms
 
 flask_app = FlaskApplication()

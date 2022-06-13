@@ -4,7 +4,8 @@ import axios from "axios";
 import { Row, Col } from 'react-bootstrap';
 
 const PopularNames = ({ searchedName }) => {
-    const [topSearches, setTopSearches] = useState({});
+    const [topSearches, setTopSearches] = useState({"James": 137,
+"Anton": 129, "Noa": 122, "Guy": 117, "Tal": 113});
 
     const getPopularNames = (searchVal) => {
         axios({
@@ -22,9 +23,9 @@ const PopularNames = ({ searchedName }) => {
             }
         })}
 
-    useEffect(() => {
-            getPopularNames(searchedName)
-          }, [])
+    // useEffect(() => {
+    //         getPopularNames(searchedName)
+    //       }, [])
 
     return (
 //     <NavDropdown title="Top 5 searches" id="navbarScrollingDropdown"  onClick={() => getPopularNames(searchedName)}>
