@@ -11,52 +11,29 @@ import PopoverBody from 'react-bootstrap/PopoverBody'
 const Api = ({ name }) => {
     const apiKey = useSelector((state) => state.reduser.apiKey);
     const fileName = `naime suggestions for ${name}`
-    // const [fileName, setfileName] = useState(`naime suggestions for ${name}`)
     const [copied, setCopied] = useState(false)
     const [suggestions, setSuggestions] = useState({})
-    // const [csvData, setCsvData] = useState("")
-    // const hat = require('hat');
-    // const apiKey = hat();
-    // const textAreaRef = useRef(null);
 
     useEffect(() => {
         getSuggestions()
-        // ConvertSuggestionsToCSV()
     }, [name]);
 
     const getSuggestions = () => {
         if (apiKey) {
             const searchData = {
-                // "name": searchVal.split(' '),
                 "name": name,
                 "key": apiKey
             }
-            // axios.get('/api/suggestions', {params: searchData})
-            // axios.get('/api/suggestions', searchData)
             axios({
                 method: "GET",
-                url: `/api/suggestions`, //TODO: split searchval,
+                url: `/api/suggestions`,
                 params: searchData
             })
                 .then((response) => {
                     setSuggestions(response.data)
                 })
-            }
+        }
     }
-
-    // const ConvertSuggestionsToCSV = () => {
-    //     let json2csv = require("json2csv");
-    //     setCsvData(json2csv.parse(suggestions, { fields: Object.keys(suggestions) }))
-
-
-    // }
-
-    // const downloadCSV = () => {
-    //     const data = csvData
-    //     console.log(data)
-    //     const type = 'text/csv'
-    //     return download(data, type)
-    // }
 
     const downloadJson = () => {
         const data = JSON.stringify(suggestions)
@@ -66,9 +43,9 @@ const Api = ({ name }) => {
 
     const download = (data, type) => {
         let file = new Blob([data], { type: type });
-        if (window.navigator.msSaveOrOpenBlob) // IE10+
+        if (window.navigator.msSaveOrOpenBlob)
             window.navigator.msSaveOrOpenBlob(file, fileName);
-        else { // Others
+        else {
             let a = document.createElement("a"),
                 url = URL.createObjectURL(file);
             a.href = url;
@@ -97,27 +74,25 @@ const Api = ({ name }) => {
 
             <Dropdown className={Styles.api} autoClose="outside">
                 <Dropdown.Toggle className={Styles.sort} variant="icon" bsPrefix="Button" size="xs" id="dropdown-basic">
-                <Download style={{ marginRight: "15px", marginLeft: "5px" , verticalAlign:"super" }}/>
-                
+                    <Download style={{ marginRight: "15px", marginLeft: "5px", verticalAlign: "super" }} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {/* <Dropdown.Item onClick={()=>downloadCSV()}>Download as CSV</Dropdown.Item> */}
                     <Dropdown.Item onClick={() => downloadJson()}>Download as Json</Dropdown.Item>
                     <OverlayTrigger
-                key="copy"
-                placement={"right"}
-                overlay={
-                        <Popover id={`popover-copy`} style={{display: copied ? '' : 'none',}}>
-                         <PopoverBody bsPrefix={Styles.popover}>
-                            copied!
-                        </PopoverBody>
-                    </Popover>
-                }
-            >
-                    <Dropdown.Item onClick={() => copyJsonURL()}>Copy Json URL</Dropdown.Item>
+                        key="copy"
+                        placement={"right"}
+                        overlay={
+                            <Popover id={`popover-copy`} style={{ display: copied ? '' : 'none', }}>
+                                <PopoverBody bsPrefix={Styles.popover}>
+                                    copied!
+                                </PopoverBody>
+                            </Popover>
+                        }
+                    >
+                        <Dropdown.Item onClick={() => copyJsonURL()}>Copy Json URL</Dropdown.Item>
                     </OverlayTrigger>
                 </Dropdown.Menu>
-                
+
             </Dropdown>
 
         </div>

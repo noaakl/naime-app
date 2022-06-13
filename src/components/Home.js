@@ -20,21 +20,11 @@ const Home = () => {
     const [searchedNames, setSearchedNames] = useState([])
     const [didSearch, setDidSearch] = useState(false)
     const [showResults, setShowResults] = useState(false)
-    // const [suggestionsExist, setSuggestionsExist] = useState(false)
     const suggestionsExist = algorithmsData.length > 0
     const { name } = useParams();
     const navigate = useNavigate();
-    // console.log(showResults)
-
-    // const showResults = () => {
-    //     nameToSearch.filter((name) => name != '')
-    //     console.log(nameToSearch)
-    //     return (nameToSearch)
-    // }
-    // console.log(!!showResults)
 
     useEffect(() => {
-        // setShowResults(false)
         if (!username || !name) {
             setSuggestions([])
             setRanks([])
@@ -43,21 +33,12 @@ const Home = () => {
             setAlgorithmsData([])
             setSearchedNames([])
             setDidSearch(false)
-            // setShowResults(false)
         }
         if (name) {
-            // setShowResults(false)
             setNameValue(name)
             searchName(name)
         }
     }, [username, name]);
-
-    // useEffect(() => {
-    //     if (name) {
-    //         setNameValue(name)
-    //         searchName(name)
-    //     }
-    // }, [name]);
 
     const isValidSearchVal = (searchVal) => {
         return !/[^a-zA-Z\s]/.test(searchVal)
@@ -79,15 +60,6 @@ const Home = () => {
 
     const handleSearch = (searchVal) => {
         navigate(`/search/${searchVal}`);
-        // if (nameValue !== '') {
-        //     const searchVal = nameValue
-        //     const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
-        //     setDidSearch(doSearch)
-            // if (doSearch) {
-            //     navigate(`/search/${searchVal}`);
-                // searchName(nameValue)
-        //     }
-        // }
     }
 
     const searchName = (nameValue) => {
@@ -125,9 +97,6 @@ const Home = () => {
                                 const metaphone = suggestionsData.metaphone;
                                 const nysiis = suggestionsData.nysiis;
                                 const soundex = suggestionsData.soundex;
-
-                                // setSearchedNames([...addedSearchedNames, suggestionsData.name]);
-                                // addedSearchedNames = [...addedSearchedNames, suggestionsData.name];
                                 addedAlgorithmsData = [...addedAlgorithmsData, {
                                     'SpokenName2Vec': spoken_name_2_vec,
                                     'Double Metaphone': double_metaphone,
@@ -218,27 +187,23 @@ const Home = () => {
 
 
 
-                    <div className={Styles.container_fluid}>
+                            <div className={Styles.container_fluid}>
 
-                        {
-                            Array.from({ length: searchedNames.length })
-                                .map((_, index) => {
-                                    const name = searchedNames[index]
-                                    const showSuggestions = didSearch && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
-                                    if (name) {
-                                        return (
-                                            <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} ranks={ranks[index] ? ranks[index] : []} />
-                                        )
-                                    }
+                                {
+                                    Array.from({ length: searchedNames.length })
+                                        .map((_, index) => {
+                                            const name = searchedNames[index]
+                                            return (
+                                                <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} ranks={ranks[index] ? ranks[index] : []} />
+                                            )
+                                        }).filter((_, index) => searchedNames[index])
                                 }
-                                )
-                        }
-                        <div className={Styles.container_fluid}>
-                            <div style={{ marginTop: "100px" }}>
-                                <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={didSearch && suggestionsExist} algorithmsData={algorithmsData} />
-                            </div>
-                        </div>
-                    </div></>)}
+                                <div className={Styles.container_fluid}>
+                                    <div style={{ marginTop: "100px" }}>
+                                        <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={didSearch && suggestionsExist} algorithmsData={algorithmsData} />
+                                    </div>
+                                </div>
+                            </div></>)}
                 </div>
             </div>
         </>

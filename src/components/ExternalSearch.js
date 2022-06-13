@@ -17,24 +17,8 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
     const query = useSelector((state) => state.reduser.query);
     const queryNames = useSelector((state) => state.reduser.queryNames);
     const defultNumOfNames = 5
-    // const [numOfQueryNames, setNumOfQueryNames] = useState(defultNumOfNames);
     const [tempNumOfQueryNames, setTempNumOfQueryNames] = useState(defultNumOfNames);
-    // const [show, setShow] = useState(false);
     const searchedNameSplit = searchedName.split(" ")
-
-
-    // const handleSave = () => {
-    //     setNumOfQueryNames(tempNumOfQueryNames)
-    //     dispatch(editQueryNames())
-    //     setShow(false)
-    //     const userQuery = getUserQuery()
-    //     setQuery(userQuery)
-    // }
-    // const handleCancel = () => {
-    //     setTempNumOfQueryNames(defultNumOfNames)
-    //     setShow(false)
-    // }
-    // const handleShow = () => setShow(true);
 
     const handleChangeNum = (newNum) => {
         setTempNumOfQueryNames(newNum)
@@ -76,82 +60,82 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
             </Row>
 
             <div style={{ display: !username ? 'inline' : 'none', }} className={Styles.container_fluid}>
+                <div className={Styles.result_wrapper}>
                     <div className={Styles.result_wrapper}>
-                        <div className={Styles.result_wrapper}>
-                            <Container>
-                                <Row className="justify-content-center" style={{ marginTop: "30px", marginBottom: "4px" }}>
-                                    <Card className="flex-fill mx-auto" style={{ width: "90%" }}><Card.Body style={{ textAlign: "center" }}>
-                                        <b>Do you want to use the algorithms' top suggestions to search in popular search engines? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
-                                </Row>
-                            </Container>
-                        </div>
+                        <Container>
+                            <Row className="justify-content-center" style={{ marginTop: "30px", marginBottom: "4px" }}>
+                                <Card className="flex-fill mx-auto" style={{ width: "90%" }}><Card.Body style={{ textAlign: "center" }}>
+                                    <b>Do you want to use the algorithms' top suggestions to search in popular search engines? <br /><Link to={"/signup"}>CLICK HERE</Link> to sign up </b></Card.Body></Card>
+                            </Row>
+                        </Container>
                     </div>
                 </div>
-                <div style={{ display: username ? 'inline' : 'none', }}>
+            </div>
+            <div style={{ display: username ? 'inline' : 'none', }}>
 
-                
 
-            <Row className={Styles.result_wrapper} style={{ textAlign: "center", marginBottom: "0px", marginTop: "0px" }}>
-                <div>Click the search engines to search for results using the algorithms' top suggestions!</div>
-                <div>The search query consists of the original searched name and the top 4 ranked synonyms,</div>
-                <div>calculated by your rankings, the name's general ranking and its Edit-Distance from the original searched name.</div>
-                <p><b><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></b></p>
-                
-            </Row>
-            <Row style={{ marginTop: '30px' }}>
-                <Accordion alwaysOpen style={{ textAlign: "center" }}>
-                    <Accordion.Item eventKey={0}>
-                        {/* <Accordion.Header style={{ textAlign: "center" }} className={Styles.accordion_header}> */}
-                        <Accordion.Header className={Styles.edit_query_accordion} style={{ margin: "10px", textAlign: "center"}}>
-                            <Row>
-                                {/* <p><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></p> */}
-                                {/* <div style={{ margin: "10px 10px 10px 210%",}}> */}
-                                <div >
-                                    <b>Click Here to Change the Query </b></div>
-                            </Row>
-                        </Accordion.Header>
-                        <Accordion.Body className={Styles.accordion_body}>
-                            <div className={Styles.query_name_count}>
-                                <span className={Styles.query_name_count_text}>
-                                    Choose number of names to include in the query
-                                </span>
-                                <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} style={{ width: "50px", textAlign: "center" }} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
-                            </div>
-                            <Form>
 
-                                {
+                <Row className={Styles.result_wrapper} style={{ textAlign: "center", marginBottom: "0px", marginTop: "0px" }}>
+                    <div>Click the search engines to search for results using the algorithms' top suggestions!</div>
+                    <div>The search query consists of the original searched name and the top 4 ranked synonyms,</div>
+                    <div>calculated by your rankings, the name's general ranking and its Edit-Distance from the original searched name.</div>
+                    <p><b><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></b></p>
 
-                                    Array.from({ length: queryNames.length })
-                                        .map((_, numberIndex) => {
-                                            const nameSplit = queryNames[numberIndex]
-                                            return (
-                                                <Form.Group key={numberIndex} as={Row} style={searchedNameSplit && searchedNameSplit.length === 1 ? {} : { marginLeft: "17%" }}>
-                                                    <Row lg={searchedNameSplit.length} md={searchedNameSplit.length} sm={searchedNameSplit.length} xs={searchedNameSplit.length} className="g-4" style={{ margin: "0px" }}>
-                                                        {
-                                                            Array.from({ length: nameSplit.length })
-                                                                .map((__, nameIndex) => {
-                                                                    const name = nameSplit[nameIndex]
-                                                                    return (
-                                                                        <Col key={nameIndex} style={{ margin: "0px" }}>
+                </Row>
+                <Row style={{ marginTop: '30px' }}>
+                    <Accordion alwaysOpen style={{ textAlign: "center" }}>
+                        <Accordion.Item eventKey={0}>
+                            {/* <Accordion.Header style={{ textAlign: "center" }} className={Styles.accordion_header}> */}
+                            <Accordion.Header className={Styles.edit_query_accordion} style={{ margin: "10px", textAlign: "center" }}>
+                                <Row>
+                                    {/* <p><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></p> */}
+                                    {/* <div style={{ margin: "10px 10px 10px 210%",}}> */}
+                                    <div >
+                                        <b>Click Here to Change the Query </b></div>
+                                </Row>
+                            </Accordion.Header>
+                            <Accordion.Body className={Styles.accordion_body}>
+                                <div className={Styles.query_name_count}>
+                                    <span className={Styles.query_name_count_text}>
+                                        Choose number of names to include in the query
+                                    </span>
+                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} style={{ width: "50px", textAlign: "center" }} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
+                                </div>
+                                <Form>
 
-                                                                            <QueryNameInput algorithmsData={algorithmsData} nameIndex={nameIndex} name={name} numberIndex={numberIndex} />
-                                                                        </Col>
+                                    {
+
+                                        Array.from({ length: queryNames.length })
+                                            .map((_, numberIndex) => {
+                                                const nameSplit = queryNames[numberIndex]
+                                                return (
+                                                    <Form.Group key={numberIndex} as={Row} style={searchedNameSplit && searchedNameSplit.length === 1 ? {} : { marginLeft: "17%" }}>
+                                                        <Row lg={searchedNameSplit.length} md={searchedNameSplit.length} sm={searchedNameSplit.length} xs={searchedNameSplit.length} className="g-4" style={{ margin: "0px" }}>
+                                                            {
+                                                                Array.from({ length: nameSplit.length })
+                                                                    .map((__, nameIndex) => {
+                                                                        const name = nameSplit[nameIndex]
+                                                                        return (
+                                                                            <Col key={nameIndex} style={{ margin: "0px" }}>
+
+                                                                                <QueryNameInput algorithmsData={algorithmsData} nameIndex={nameIndex} name={name} numberIndex={numberIndex} />
+                                                                            </Col>
+                                                                        )
+                                                                    }
                                                                     )
-                                                                }
-                                                                )
-                                                        }
-                                                    </Row>
-                                                </Form.Group>
+                                                            }
+                                                        </Row>
+                                                    </Form.Group>
+                                                )
+                                            }
                                             )
-                                        }
-                                        )
-                                }
-                            </Form>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
+                                    }
+                                </Form>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
 
-            </Row>
+                </Row>
             </div>
             <Row style={{ marginTop: '30px' }}>
 

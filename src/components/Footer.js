@@ -54,11 +54,7 @@ const Footer = () => {
     const copied = (copy) => {
         return (
             <div
-                // style={{
-                //     display: copy ? '' : 'none',
-                // }}
             >
-                {/* <h5 style={{ color: 'green', fontSize: '13px', margin: '5px 15px' }}>{"Copied!"}</h5> */}
                 <h5 style={{ color: copy ? 'green' : 'rgba(158, 160, 143, 0.01', fontSize: '12px', margin: '5px 15px' }}>{"Copied!"}</h5>
             </div>
         );
@@ -130,7 +126,6 @@ const Footer = () => {
                                 <Dropdown >
                                     <Dropdown.Toggle variant="link" className='text-reset' bsPrefix="button" id="dropdown-basic" >
                                         <div>
-                                            {/* <img src={googleScholarLogo} alt="Logo" width="21" height="20" style={{ margin: "0", display: 'inline-block', color: 'black', marginRight: '10px' }} /> */}
                                             Graft
                                         </div>
                                     </Dropdown.Toggle>
@@ -147,7 +142,6 @@ const Footer = () => {
                                 <Dropdown style={{ marginRight: '30px' }}>
                                     <Dropdown.Toggle bsPrefix="button" variant="link" className='text-reset' id="dropdown-basic" >
                                         <div>
-                                            {/* <img src={googleScholarLogo} alt="Logo" width="21" height="20" style={{ color: 'black', marginRight: '10px' }} /> */}
                                             SpokenName2Vec
                                         </div>
                                     </Dropdown.Toggle>
@@ -163,7 +157,6 @@ const Footer = () => {
                             <div className='col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4'>
                                 <h6 style={{ marginLeft: '40px' }} className='text-uppercase fw-bold mb-4'>Contact</h6>
                                 <p style={{ marginLeft: '10px' }}>
-                                    {/* //TODO: change */}
                                     <i className='fas fa-envelope me-3'></i>
                                     nAIme.project@gmail.com
                                 </p>
@@ -200,23 +193,11 @@ const Footer = () => {
                         <ul className={Styles.cite_item}>
                             <li className={Styles.accordion_item_name} key='APA'>
                                 <div onClick={() => copyCite(APA, setCopiedAPA, setCopiedBibTeX)}>
-                                APA
-                                {/* <OverlayTrigger
-                                    key="copy"
-                                    placement={"right"}
-                                    overlay={
-                                        <Popover id={`popover-copy`} style={{ display: copiedAPA ? '' : 'none', }}>
-                                            <PopoverBody bsPrefix={Styles.popover}>
-                                                copied!
-                                            </PopoverBody>
-                                        </Popover>
-                                    }
-                                > */}
-                                    <Files as='button' size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
-                                    </div>
-                                {/* </OverlayTrigger> */}
+                                    APA
+                                    <Files as='button' size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black' }} />
+                                </div>
                             </li>
-                                {copied(copiedAPA)}
+                            {copied(copiedAPA)}
                         </ul>
                     </Modal.Footer>
                 </section>
@@ -232,20 +213,7 @@ const Footer = () => {
                         <ul className={Styles.cite_item}>
                             <li className={Styles.accordion_item_name} key='BibTeX'>
                                 BibTeX
-                                {/* <OverlayTrigger
-                                    key="copy"
-                                    placement={"right"}
-                                    overlay={
-                                        <Popover id={`popover-copy`} style={{ display: copiedBibTeX ? '' : 'none', }}>
-                                            <PopoverBody>
-                                                copied!
-                                            </PopoverBody>
-                                        </Popover>
-                                    }
-                                > */}
-                                    <Files as='button' onClick={() => copyCite(BibTeX, setCopiedBibTeX, setCopiedAPA)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black'}} />
-                                {/* </OverlayTrigger> */}
-
+                                <Files as='button' onClick={() => copyCite(BibTeX, setCopiedBibTeX, setCopiedAPA)} size={20} style={{ margin: "0px 0px 5px 5px", display: 'inline-block', color: 'black' }} />
                             </li>
                             {copied(copiedBibTeX)}
                         </ul>

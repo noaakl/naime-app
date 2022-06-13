@@ -1,37 +1,31 @@
 import React from "react";
 import Styles from '../App.module.scss'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Popover from 'react-bootstrap/Popover'
-import PopoverBody from 'react-bootstrap/PopoverBody'
-import ToggleButton from 'react-bootstrap/ToggleButton'
 import { Button } from 'react-bootstrap'
 import { useState, useEffect } from "react";
+import { HandThumbsUpFill, HandThumbsDownFill, HandThumbsUp, HandThumbsDown } from 'react-bootstrap-icons';
 
-import { HandThumbsUpFill, HandThumbsDownFill,HandThumbsUp, HandThumbsDown } from 'react-bootstrap-icons';
-
-const LikeButton = ({ show, name, rankFunc,removeFunc, fill, rank, disable, rankLikes, rankDislikes}) => {
+const LikeButton = ({ show, name, rankFunc, removeFunc, fill, rank, disable, rankLikes, rankDislikes }) => {
     const like = rank === 1
     const disables = disable
     const fill_test = fill
     const [filled, setFilled] = useState(fill)
-    // const [clicked, setClicked] = useState(disable)
     const [likesCount, setLikesCount] = useState(rankLikes)
     const [dislikesCount, setDislikesCount] = useState(rankDislikes)
 
     useEffect(() => {
         setLikesCount(rankLikes)
         setDislikesCount(rankDislikes)
-    }, [rankLikes,rankDislikes]);
-    
+    }, [rankLikes, rankDislikes]);
+
     const rankfun = () => {
-        if (!filled){
+        if (!filled) {
             rankFunc(rank)
             if (like)
                 setLikesCount(likesCount + 1)
             else
                 setDislikesCount(dislikesCount + 1)
         }
-        else{
+        else {
             removeFunc(rank)
             if (like)
                 setLikesCount(likesCount - 1)
@@ -39,20 +33,19 @@ const LikeButton = ({ show, name, rankFunc,removeFunc, fill, rank, disable, rank
                 setDislikesCount(dislikesCount - 1)
         }
         setFilled(!filled)
-
     }
 
     return (
-        
-        <>{show && (
-        <Button  variant="text"  className={Styles.rank_button} disabled={disables} onClick={() => { rankfun() }}  >
-                 {like  && fill_test ?<> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{likesCount}</small></>:<></>}
-                 {like && !fill_test ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{likesCount}</small></>:<></>}
-                
-                 {!like  && fill_test ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{dislikesCount}</small></>:<></>}
-                 {!like && !fill_test ?<> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/><small style={{fontSize:"10px"}}>{dislikesCount}</small></>:<></>}
 
-        </Button>)}
+        <>{show && (
+            <Button variant="text" className={Styles.rank_button} disabled={disables} onClick={() => { rankfun() }}  >
+                {like && fill_test ? <> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{ marginRight: "3px" }} /><small style={{ fontSize: "10px" }}>{likesCount}</small></> : <></>}
+                {like && !fill_test ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{ marginRight: "3px" }} /><small style={{ fontSize: "10px" }}>{likesCount}</small></> : <></>}
+
+                {!like && fill_test ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{ marginRight: "3px" }} /><small style={{ fontSize: "10px" }}>{dislikesCount}</small></> : <></>}
+                {!like && !fill_test ? <> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{ marginRight: "3px" }} /><small style={{ fontSize: "10px" }}>{dislikesCount}</small></> : <></>}
+
+            </Button>)}
         </>
         // <>
         //     {show && <OverlayTrigger
@@ -74,7 +67,7 @@ const LikeButton = ({ show, name, rankFunc,removeFunc, fill, rank, disable, rank
         //         >
         //         {like  && fill ?<> <HandThumbsUpFill color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/></>:<></>}
         //         {like && !fill ? <><HandThumbsUp color="rgba(54, 105, 35, 1)" style={{marginRight:"3px"}}/></>:<></>}
-                
+
         //         {!like  && fill ? <><HandThumbsDownFill color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/></>:<></>}
         //         {!like && !fill ?<> <HandThumbsDown color="rgba(240, 92, 62, 1)" style={{marginRight:"3px"}}/></>:<></>}
         //         </ToggleButton>

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Styles from "../App.module.scss";
@@ -17,8 +16,7 @@ const SingUp = () => {
   const isPasswordMatch = !confirmPassword || password === confirmPassword;
   const isEmailValid = String(email).toLowerCase().match(
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-  const valueError = username.length<2 || firstName.length<2 || lastName.length<2 || !isEmailValid || password.length<6 || !isNameNotTaken || !isPasswordMatch;
-  // const [valueError, setvalueError] = useState(false);
+  const valueError = username.length < 2 || firstName.length < 2 || lastName.length < 2 || !isEmailValid || password.length < 6 || !isNameNotTaken || !isPasswordMatch;
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -76,17 +74,14 @@ const SingUp = () => {
   return (
     <div className={Styles.signup} >
       <Container className="d-flex" id={Styles.signup}>
-        <Card className="text-center h-100" style={{ width: '40rem', marginTop: '40px', marginBottom:'20px', padding: '15px', position: "center", alignItems: "center", justifyContent: "center" }}>
+        <Card className="text-center h-100" style={{ width: '40rem', marginTop: '40px', marginBottom: '20px', padding: '15px', position: "center", alignItems: "center", justifyContent: "center" }}>
           <Card.Body>
             <h3>Sign Up</h3>
             <h5>sign up to keep track of your searches and ranks</h5>
             <br></br>
             <div className="messages">
-
             </div>
-            {/* <Form onSubmit={handleSubmitRefresh} > */}
             <Form>
-
               <Form.Group className="mb-3" controlId="formUserName">
                 <Form.Label className="label">User Name</Form.Label>
                 <Form.Control placeholder="Enter User Name" onChange={(e) => handleFill(e, setUsername)} className="input"
@@ -113,7 +108,6 @@ const SingUp = () => {
                 <Form.Label className="label">E-Mail Address</Form.Label>
                 <Form.Control placeholder="Enter E-Mail Address, e.g user@naime.com" onChange={(e) => handleFill(e, setEmail)} className="input"
                   value={email} type="text" />
-                {/* {validateValue(email, "Please enter e-mail")} */}
                 {validateValue(isEmailValid, "Please enter a valid E-Mail Address, e.g user@naime.com", 0)}
               </Form.Group>
 
@@ -128,14 +122,12 @@ const SingUp = () => {
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control type="password" placeholder="Repeat Password" onChange={(e) => handleFill(e, setConfirmPassword)} className="input"
                   value={confirmPassword} />
-                {/* {validateValue(confirmPassword, "Please enter confirmation password")} */}
                 {validateValue(isPasswordMatch, "Confirmation Password does't match the password. Please try again", 0)}
               </Form.Group>
 
               <Button variant="success" onClick={handleSubmit} className="btn" type="submit">
                 Submit
               </Button>
-              {/* {successMessage()} */}
             </Form>
             <br></br>
             <h5 style={{ fontSize: '15px' }}>If you already have an account click <Link to={"/login"}>HERE</Link> to login</h5>

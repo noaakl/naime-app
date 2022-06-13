@@ -17,9 +17,8 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
     }, [searchedName, suggestions]);
 
 
-    const handleGoogleRes = (key) =>{
-        // if (googleResults[key]===null || googleResults[key]==="403 Forbidden"){return "Title doesn't exist"} 
-        if (googleResults[key]===null || googleResults[key]==="403 Forbidden"){return ""} 
+    const handleGoogleRes = (key) => {
+        if (googleResults[key] === null || googleResults[key] === "403 Forbidden") { return "" }
         return googleResults[key]
     }
     const getGoogleResults = () => {
@@ -29,53 +28,53 @@ const GoogleSearch = ({ searchedName, suggestions, suggestionsExist }) => {
             "userLikes": likes[searchedName] ? likes[searchedName] : []
         }
         axios.post('/api/googleSearch', searchData)
-        .then((response) => {
-            if (response.data.length > 0)
-                setGoogleResults(response.data[0])
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+            .then((response) => {
+                if (response.data.length > 0)
+                    setGoogleResults(response.data[0])
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return suggestionsExist ?
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}></div>
-            <Row className={Styles.result_wrapper} style={{margin:"0px"}}>
-                    <Col className={Styles.result_title} style={{marginTop:"30px", marginBottom:"0px"}}>
-                        <h3>Google Results for the Name <b><i>{searchedName.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
-                    </Col>
-                </Row>
-                <Row className={Styles.result_wrapper} style={{textAlign:"center", marginBottom:"30px", marginTop:"0px"}}>
+            <Row className={Styles.result_wrapper} style={{ margin: "0px" }}>
+                <Col className={Styles.result_title} style={{ marginTop: "30px", marginBottom: "0px" }}>
+                    <h3>Google Results for the Name <b><i>{searchedName.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
+                </Col>
+            </Row>
+            <Row className={Styles.result_wrapper} style={{ textAlign: "center", marginBottom: "30px", marginTop: "0px" }}>
                 <p>Google search results using the algorithms suggestions within the query</p>
-                </Row>
-                {googleResults.length === 0 &&
-                    <span className={Styles.spinner}><Spinner
+            </Row>
+            {googleResults.length === 0 &&
+                <span className={Styles.spinner}><Spinner
                     // as="span"
                     animation="grow"
                     size="sm"
                     role="status"
                     aria-hidden="true"
-                  /> Loading...</span>}
-                <Row lg={5} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
+                /> Loading...</span>}
+            <Row lg={5} md={3} sm={2} xs={1} className="g-4" style={{ margin: 0, padding: 0 }}>
                 {Object.keys(googleResults).map((key, _) => {
                     return (
                         <>
-                        <a className={Styles.googleResults} href={key} target="_blank">
-                        <Col key={key} target="_blank" rel="noreferrer" style={{justifyContent:"center"}}>
-                            <Card style={{minHeight:"200px"}} ><Card.Body>
-                            <div key={key}>
-                            <h3 className={Styles.googleResults}>{handleGoogleRes(key)}</h3>
-                            {/* <p style={{fontSize:"11px"}}>URL: {key}</p> */}
-                            <p className={Styles.url}>URL:<br/> {key}</p>
-                            </div>
-                            </Card.Body></Card>
-                        </Col>
-                        </a>
+                            <a className={Styles.googleResults} href={key} target="_blank">
+                                <Col key={key} target="_blank" rel="noreferrer" style={{ justifyContent: "center" }}>
+                                    <Card style={{ minHeight: "200px" }} ><Card.Body>
+                                        <div key={key}>
+                                            <h3 className={Styles.googleResults}>{handleGoogleRes(key)}</h3>
+                                            {/* <p style={{fontSize:"11px"}}>URL: {key}</p> */}
+                                            <p className={Styles.url}>URL:<br /> {key}</p>
+                                        </div>
+                                    </Card.Body></Card>
+                                </Col>
+                            </a>
                         </>
                     )
                 })}
-                </Row>
+            </Row>
         </div>
         : <div></div>
 };
