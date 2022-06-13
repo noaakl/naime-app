@@ -20,23 +20,23 @@ const Logout = ({ username }) => {
 
     return (
         <>
-        <NavDropdown title={`Hello ${username}`} id="navbarScrollingDropdown" style={{ display: username ? '' : 'none' }}>
-            <NavDropdown.Item as={Link} to="/" className={Styles.info_accordion} onClick={()=>setShow(true)}> Log Out </NavDropdown.Item>
-        </NavDropdown>
+            <NavDropdown title={`Hello ${username}`} id="navbarScrollingDropdown" style={{ display: username ? '' : 'none' }}>
+                <NavDropdown.Item as={Link} to="/" className={Styles.info_accordion} onClick={() => setShow(true)}> Log Out </NavDropdown.Item>
+            </NavDropdown>
 
-        <div className={Styles.about}>
-        <Modal show={show} onHide={handleShow}>
-                <Modal.Body>Are you sure you want to log out?</Modal.Body> 
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleShow} style={{ backgroundColor: 'rgb(95, 158, 124)'}}>
-                    No
-                </Button>
-                <Button variant="secondary" onClick={Logout}>
-                    Yes
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    </div>
+            <div className={Styles.about}>
+                <Modal show={show} onHide={handleShow}>
+                    <Modal.Body>Are you sure you want to log out?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleShow} style={{ backgroundColor: 'rgb(95, 158, 124)' }}>
+                            No
+                        </Button>
+                        <Button variant="secondary" onClick={Logout}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </>
 
     );

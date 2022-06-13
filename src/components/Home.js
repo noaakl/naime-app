@@ -20,21 +20,11 @@ const Home = () => {
     const [searchedNames, setSearchedNames] = useState([])
     const [didSearch, setDidSearch] = useState(false)
     const [showResults, setShowResults] = useState(false)
-    // const [suggestionsExist, setSuggestionsExist] = useState(false)
     const suggestionsExist = algorithmsData.length > 0
     const { name } = useParams();
     const navigate = useNavigate();
-    // console.log(showResults)
-
-    // const showResults = () => {
-    //     nameToSearch.filter((name) => name != '')
-    //     console.log(nameToSearch)
-    //     return (nameToSearch)
-    // }
-    // console.log(!!showResults)
 
     useEffect(() => {
-        // setShowResults(false)
         if (!username || !name) {
             setSuggestions([])
             setRanks([])
@@ -43,21 +33,12 @@ const Home = () => {
             setAlgorithmsData([])
             setSearchedNames([])
             setDidSearch(false)
-            // setShowResults(false)
         }
         if (name) {
-            // setShowResults(false)
             setNameValue(name)
             searchName(name)
         }
     }, [username, name]);
-
-    // useEffect(() => {
-    //     if (name) {
-    //         setNameValue(name)
-    //         searchName(name)
-    //     }
-    // }, [name]);
 
     const isValidSearchVal = (searchVal) => {
         return !/[^a-zA-Z\s]/.test(searchVal)
@@ -79,15 +60,6 @@ const Home = () => {
 
     const handleSearch = (searchVal) => {
         navigate(`/search/${searchVal}`);
-        // if (nameValue !== '') {
-        //     const searchVal = nameValue
-        //     const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
-        //     setDidSearch(doSearch)
-        // if (doSearch) {
-        //     navigate(`/search/${searchVal}`);
-        // searchName(nameValue)
-        //     }
-        // }
     }
 
     const searchName = (nameValue) => {
@@ -125,9 +97,6 @@ const Home = () => {
                                 const metaphone = suggestionsData.metaphone;
                                 const nysiis = suggestionsData.nysiis;
                                 const soundex = suggestionsData.soundex;
-
-                                // setSearchedNames([...addedSearchedNames, suggestionsData.name]);
-                                // addedSearchedNames = [...addedSearchedNames, suggestionsData.name];
                                 addedAlgorithmsData = [...addedAlgorithmsData, {
                                     'SpokenName2Vec': spoken_name_2_vec,
                                     'Double Metaphone': double_metaphone,

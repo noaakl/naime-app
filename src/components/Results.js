@@ -12,8 +12,8 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
     const [rank, setRank] = useState(ranks)
     const [sortValue, setSortValue] = useState("Default A-Z")
     const [algorithms, setAlgorithms] = useState([])
-    const rankStates = ["likes","dislikes","no rank"]
-    const [rankStatesChecked, setRankStatesChecked] = useState(["likes","dislikes","no rank"])
+    const rankStates = ["likes", "dislikes", "no rank"]
+    const [rankStatesChecked, setRankStatesChecked] = useState(["likes", "dislikes", "no rank"])
 
     useEffect(() => {
         setAlgorithms(algorithmsNames)
@@ -35,8 +35,9 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
     }
 
     const handledisLikeCount = (name) => {
-        if ("dislikes" in rank && name in rank["dislikes"]){
-            return rank["dislikes"][name]}
+        if ("dislikes" in rank && name in rank["dislikes"]) {
+            return rank["dislikes"][name]
+        }
         return 0
     }
 
@@ -67,63 +68,59 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
 
     const handleAddLike = (rankType, candidate) => {
         let copyOfObject = { ...rank }
-        if (rankType === 1){
-            if ("likes" in rank && candidate in rank["likes"]){
-                copyOfObject["likes"][candidate] +=1
+        if (rankType === 1) {
+            if ("likes" in rank && candidate in rank["likes"]) {
+                copyOfObject["likes"][candidate] += 1
                 setRank(copyOfObject)
             }
             else {
-                copyOfObject["likes"][candidate] =1
+                copyOfObject["likes"][candidate] = 1
                 setRank(copyOfObject)
-
             }
         }
-        else if (rankType === -1 ){
-            if ("dislikes" in rank && candidate in rank["dislikes"]){
-                copyOfObject["dislikes"][candidate] +=1
+        else if (rankType === -1) {
+            if ("dislikes" in rank && candidate in rank["dislikes"]) {
+                copyOfObject["dislikes"][candidate] += 1
                 setRank(copyOfObject)
             }
             else {
-                copyOfObject["dislikes"][candidate] =1
+                copyOfObject["dislikes"][candidate] = 1
                 setRank(copyOfObject)
-
             }
         }
     }
 
     const handleremoveLike = (rankType, candidate) => {
         let copyOfObject = { ...rank }
-        if (rankType === 1){
-            if ("likes" in rank && rank['likes'][candidate] > 0){
-                copyOfObject["likes"][candidate] -=1
+        if (rankType === 1) {
+            if ("likes" in rank && rank['likes'][candidate] > 0) {
+                copyOfObject["likes"][candidate] -= 1
                 setRank(copyOfObject)
             }
-            else  {
+            else {
                 copyOfObject["likes"][candidate] = 0
                 setRank(copyOfObject)
 
             }
         }
-        else if (rankType === -1 ){
-            if ("dislikes" in rank && rank['dislikes'][candidate] > 0){
-                copyOfObject["dislikes"][candidate] -=1
+        else if (rankType === -1) {
+            if ("dislikes" in rank && rank['dislikes'][candidate] > 0) {
+                copyOfObject["dislikes"][candidate] -= 1
                 setRank(copyOfObject)
             }
             else {
-                copyOfObject["dislikes"][candidate] =0
+                copyOfObject["dislikes"][candidate] = 0
                 setRank(copyOfObject)
 
             }
         }
     }
 
-
-
     const handleFilterByRankShow = (likes, dislikes) => {
         const checkedRank = rankStatesChecked.slice()
-        if (checkedRank.includes("likes") && likes > 0) {return true}
-        if (checkedRank.includes("dislikes") && dislikes > 0) {return true}
-        if (checkedRank.includes("no rank") && dislikes === 0 && likes === 0){ return true}
+        if (checkedRank.includes("likes") && likes > 0) { return true }
+        if (checkedRank.includes("dislikes") && dislikes > 0) { return true }
+        if (checkedRank.includes("no rank") && dislikes === 0 && likes === 0) { return true }
         return false
     }
 
@@ -136,17 +133,17 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
     }
 
     Object.keys(algorithmsData).forEach(algorithm => {
-        algorithmsData[algorithm].sort(sortFunc) });
-    Object.keys(ranks).forEach(rank => { });
+        algorithmsData[algorithm].sort(sortFunc)
+    });
 
     return (
         <div className={Styles.result_wrapper}>
             <div className={Styles.result_wrapper}>
                 <Row>
                     <Col className={Styles.result_title}>
-                    <h2>Synonyms for <b><i>{searchedName}</i></b></h2>
+                        <h2>Synonyms for <b><i>{searchedName}</i></b></h2>
 
-                    <Api name={searchedName}/>
+                        <Api name={searchedName} />
                     </Col>
                 </Row>
                 <Row>
@@ -175,8 +172,8 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                         </Dropdown>
                     </Col>
 
-                    <Col style={{width:"500px"}} className={Styles.dropdownsCol}>
-                        <Dropdown style={{display:"inline", margin:"5px"}}>
+                    <Col style={{ width: "500px" }} className={Styles.dropdownsCol}>
+                        <Dropdown style={{ display: "inline", margin: "5px" }}>
                             <strong>Filter by </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
                             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
                                 {"Algorithm"}
@@ -188,21 +185,21 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                                     {Object.keys(algorithmsData).map((algorithm) => {
                                         return (
                                             <div key={algorithm} className={Styles.filter}>
-                                            <Form.Check
-                                                label={algorithm}
-                                                type="checkbox"
-                                                id={algorithm}
-                                                name="algorithms"
-                                                checked={isChecked(algorithm)}
-                                                onChange={() => handleFilterCheck(algorithm)} />
-                                                </div>
+                                                <Form.Check
+                                                    label={algorithm}
+                                                    type="checkbox"
+                                                    id={algorithm}
+                                                    name="algorithms"
+                                                    checked={isChecked(algorithm)}
+                                                    onChange={() => handleFilterCheck(algorithm)} />
+                                            </div>
                                         )
                                     })
                                     }
                                 </Form>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Dropdown style={{display:"inline"}}>
+                        <Dropdown style={{ display: "inline" }}>
                             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
                                 {"Rank"}
 
@@ -213,14 +210,14 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                                     {rankStates.map((rankOption) => {
                                         return (
                                             <div key={rankOption} className={Styles.filter}>
-                                            <Form.Check
-                                                label={rankOption}
-                                                type="checkbox"
-                                                id={rankOption}
-                                                name="algorithms"
-                                                checked={isCheckedRank(rankOption)}
-                                                onChange={() => handleFilterByRankCheck(rankOption)} />
-                                                </div>
+                                                <Form.Check
+                                                    label={rankOption}
+                                                    type="checkbox"
+                                                    id={rankOption}
+                                                    name="algorithms"
+                                                    checked={isCheckedRank(rankOption)}
+                                                    onChange={() => handleFilterByRankCheck(rankOption)} />
+                                            </div>
                                         )
                                     })
                                     }
@@ -229,7 +226,7 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                         </Dropdown>
                     </Col>
 
-         
+
 
                 </Row>
             </div>
@@ -257,7 +254,7 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                                                         <RankInfo searchedName={searchedName} name={name} algorithm={algorithm} rankLikes={handleLikeCount(name.candidate)} rankDislikes={handledisLikeCount(name.candidate)} handleAddLike={handleAddLike} handleremoveLike={handleremoveLike} />
                                                     </Col>
                                                 </Row>
-                                    }
+                                                }
                                             </div>
                                         )
                                     })}</Card.Body>
