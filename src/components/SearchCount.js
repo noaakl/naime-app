@@ -3,7 +3,8 @@ import axios from "axios";
 import { InfoCircleFill } from 'react-bootstrap-icons';
 
 const SearchCount = ({ searchedName }) => {
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
+    const [count, setCount] = useState(137);
 
     useEffect(() => {
         getNameInfo(searchedName)
@@ -14,9 +15,10 @@ const SearchCount = ({ searchedName }) => {
           method: "GET",
           url: `/api/searchList?name=${searchVal}`
         })
-        .then((response) => {
-            setCount(response.data.count)
-        })}
+        // .then((response) => {
+        //     setCount(response.data.count)
+        // })
+        }
 
     return (
         <>

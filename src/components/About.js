@@ -37,7 +37,7 @@ const About = () => {
                         <Row className={Styles.about_row}>
                             <Card className={`${Styles.about_card} shadow-sm p-3 mb-3 bg-white rounded`} ><Card.Body className={Styles.card_body_about}>
                                     <h5>Top 5 Searches</h5>
-                                    <p><PopularNames /></p>
+                                    <PopularNames />
                                 </Card.Body></Card>
                         </Row>
                         <Row className={Styles.about_row}>
