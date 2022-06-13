@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Styles from '../App.module.scss'
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/action';
 import { NavDropdown } from 'react-bootstrap';
@@ -9,19 +9,22 @@ import { Button } from 'react-bootstrap';
 
 const Logout = ({ username }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
+
 
     const handleShow = () => setShow(!show);
 
     const Logout = () => {
         handleShow()
         dispatch(logout())
+        navigate("/");
     }
 
     return (
         <>
         <NavDropdown title={`Hello ${username}`} id="navbarScrollingDropdown" style={{ display: username ? '' : 'none' }}>
-            <NavDropdown.Item as={Link} to="/" className={Styles.info_accordion} onClick={()=>setShow(true)}> Log Out </NavDropdown.Item>
+            <NavDropdown.Item className={Styles.info_accordion} onClick={()=>setShow(true)}> Log Out </NavDropdown.Item>
         </NavDropdown>
 
         <div className={Styles.about}>
