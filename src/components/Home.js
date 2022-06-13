@@ -18,12 +18,23 @@ const Home = () => {
     const [nameValue, setNameValue] = useState("")
     const [algorithmsData, setAlgorithmsData] = useState([])
     const [searchedNames, setSearchedNames] = useState([])
+    const [didSearch, setDidSearch] = useState(false)
     const [showResults, setShowResults] = useState(false)
+    // const [suggestionsExist, setSuggestionsExist] = useState(false)
     const suggestionsExist = algorithmsData.length > 0
     const { name } = useParams();
     const navigate = useNavigate();
+    // console.log(showResults)
+
+    // const showResults = () => {
+    //     nameToSearch.filter((name) => name != '')
+    //     console.log(nameToSearch)
+    //     return (nameToSearch)
+    // }
+    // console.log(!!showResults)
 
     useEffect(() => {
+        // setShowResults(false)
         if (!username || !name) {
             setSuggestions([])
             setRanks([])
@@ -31,11 +42,13 @@ const Home = () => {
             setNameValue("")
             setAlgorithmsData([])
             setSearchedNames([])
-            setShowResults(false)
+            setDidSearch(false)
+            // setShowResults(false)
         }
         if (name) {
+            // setShowResults(false)
             setNameValue(name)
-            handleSearch(name)
+            searchName(name)
         }
     }, [username, name]);
 
@@ -64,93 +77,104 @@ const Home = () => {
         );
     };
 
-    const handleSearch = (nameValue) => {
+    const handleSearch = (searchVal) => {
+        navigate(`/search/${searchVal}`);
+        // if (nameValue !== '') {
+        //     const searchVal = nameValue
+        //     const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
+        //     setDidSearch(doSearch)
+            // if (doSearch) {
+            //     navigate(`/search/${searchVal}`);
+                // searchName(nameValue)
+        //     }
+        // }
+    }
+
+    const searchName = (nameValue) => {
         if (nameValue !== '') {
             const searchVal = nameValue
             const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
-            setShowResults(doSearch)
+            setDidSearch(doSearch)
             if (doSearch) {
-                navigate(`/search/${searchVal}`);
-                searchName(nameValue)
-            }
-        }
-    }
-
-    const searchName = (searchVal) => {
-        setNameToSearch(searchVal)
-        setAlgorithmsData({})
-        setRanks({})
-        const searchData = {
-            "name": searchVal,
-            "username": username
-        }
-        axios({
-            method: "GET",
-            url: `/api/suggestions`,
-            params: searchData
-        })
-            .then((response) => {
-                let addedSuggestions = []
-                let addedSearchedNames = []
-                let addedAlgorithmsData = []
-                response.data.forEach(suggestionsData => {
-                    if (typeof suggestionsData.soundex !== 'undefined') {
-                        addedSuggestions = [...addedSuggestions, suggestionsData];
-                        const spoken_name_2_vec = suggestionsData.spoken_name_2_vec;
-                        const double_metaphone = suggestionsData.double_metaphone;
-                        const family_trees = suggestionsData.family_trees;
-                        const match_rating_codex = suggestionsData.match_rating_codex;
-                        const metaphone = suggestionsData.metaphone;
-                        const nysiis = suggestionsData.nysiis;
-                        const soundex = suggestionsData.soundex;
-
-                        // setSearchedNames([...oldSearchedNames, suggestionsData.name]);
-                        addedSearchedNames = [...addedSearchedNames, suggestionsData.name];
-                        addedAlgorithmsData = [...addedAlgorithmsData, {
-                            'SpokenName2Vec': spoken_name_2_vec,
-                            'Double Metaphone': double_metaphone,
-                            'GRAFT': family_trees,
-                            'Match Rating Codex': match_rating_codex,
-                            'Metaphone': metaphone,
-                            'Nysiis': nysiis,
-                            'Soundex': soundex
-                        }];
-                    }
-                    else {
-                        addedAlgorithmsData = [...addedAlgorithmsData, {}]
-                    }
-
-                });
-                setSuggestions(addedSuggestions);
-                setSearchedNames(addedSearchedNames);
-                setAlgorithmsData(addedAlgorithmsData);
-
+                setNameToSearch(searchVal)
+                setAlgorithmsData([])
+                setRanks([])
+                setShowResults(false)
+                const searchData = {
+                    "name": searchVal,
+                    "username": username
+                }
                 axios({
                     method: "GET",
-                    url: `/api/rankCount`,
-                    params: { "name": searchVal }
+                    url: `/api/suggestions`,
+                    params: searchData
                 })
                     .then((response) => {
-                        let addedRanks = []
-                        response.data.forEach(ranksData => {
-                            if (typeof ranksData.likes !== 'undefined') {
-                                const likes = ranksData.likes
-                                const dislikes = ranksData.dislikes
-                                addedRanks = [...addedRanks, {
-                                    'likes': likes,
-                                    'dislikes': dislikes
+                        let addedSuggestions = []
+                        let addedSearchedNames = []
+                        let addedAlgorithmsData = []
+                        response.data.forEach(suggestionsData => {
+                            addedSearchedNames = [...addedSearchedNames, suggestionsData.name]
+                            if (typeof suggestionsData.soundex !== 'undefined') {
+                                setShowResults(true)
+                                addedSuggestions = [...addedSuggestions, suggestionsData];
+                                const spoken_name_2_vec = suggestionsData.spoken_name_2_vec;
+                                const double_metaphone = suggestionsData.double_metaphone;
+                                const family_trees = suggestionsData.family_trees;
+                                const match_rating_codex = suggestionsData.match_rating_codex;
+                                const metaphone = suggestionsData.metaphone;
+                                const nysiis = suggestionsData.nysiis;
+                                const soundex = suggestionsData.soundex;
+
+                                // setSearchedNames([...addedSearchedNames, suggestionsData.name]);
+                                // addedSearchedNames = [...addedSearchedNames, suggestionsData.name];
+                                addedAlgorithmsData = [...addedAlgorithmsData, {
+                                    'SpokenName2Vec': spoken_name_2_vec,
+                                    'Double Metaphone': double_metaphone,
+                                    'GRAFT': family_trees,
+                                    'Match Rating Codex': match_rating_codex,
+                                    'Metaphone': metaphone,
+                                    'Nysiis': nysiis,
+                                    'Soundex': soundex
                                 }];
                             }
+                            else {
+                                addedAlgorithmsData = [...addedAlgorithmsData, {}]
+                            }
+
+                        });
+                        setSuggestions(addedSuggestions);
+                        setSearchedNames(addedSearchedNames);
+                        setAlgorithmsData(addedAlgorithmsData);
+
+                        axios({
+                            method: "GET",
+                            url: `/api/rankCount`,
+                            params: { "name": searchVal }
                         })
-                        setRanks(addedRanks);
+                            .then((response) => {
+                                let addedRanks = []
+                                response.data.forEach(ranksData => {
+                                    if (typeof ranksData.likes !== 'undefined') {
+                                        const likes = ranksData.likes
+                                        const dislikes = ranksData.dislikes
+                                        addedRanks = [...addedRanks, {
+                                            'likes': likes,
+                                            'dislikes': dislikes
+                                        }];
+                                    }
+                                })
+                                setRanks(addedRanks);
+                            })
                     })
-            })
+            }
+        }
     }
 
     return (
         <>
             <div className={Styles.Search_container}>
-                <div className={showResults ? Styles.page : Styles.search_page}>
+                <div className={didSearch ? Styles.page : Styles.search_page}>
                     <h1 style={{ textAlign: "center" }}>nAIme</h1>
                     <div style={{ textAlign: "center" }}>Similar Name Suggestor</div>
                     <div className={Styles.search_wraper} >
@@ -183,14 +207,14 @@ const Home = () => {
 
                 <div style={{ display: nameToSearch !== "" ? 'inline' : 'none', }} >
 
-                    {searchedNames.length === 0 ? (<div className={Styles.no_result_wrapper}>
+                    {!showResults ? (<div className={Styles.no_result_wrapper}>
                         <h2>No Synonyms Suggested for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h2>
                     </div>)
-                        : (<Row className={Styles.result_wrapper}>
+                        : (<><Row className={Styles.result_wrapper}>
                             <Col className={Styles.result_title} style={{ margin: "30px 0 0 0 " }}>
                                 <h3>Suggested Synonyms for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h3>
                             </Col>
-                        </Row>)}
+                        </Row>
 
 
 
@@ -200,19 +224,21 @@ const Home = () => {
                             Array.from({ length: searchedNames.length })
                                 .map((_, index) => {
                                     const name = searchedNames[index]
-                                    const showSuggestions = showResults && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
-                                    return (
-                                        <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} showSuggestions={showSuggestions} ranks={ranks[index] ? ranks[index] : []} />
-                                    )
+                                    const showSuggestions = didSearch && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
+                                    if (name) {
+                                        return (
+                                            <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} ranks={ranks[index] ? ranks[index] : []} />
+                                        )
+                                    }
                                 }
                                 )
                         }
                         <div className={Styles.container_fluid}>
                             <div style={{ marginTop: "100px" }}>
-                                <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={showResults && suggestionsExist} algorithmsData={algorithmsData} />
+                                <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={didSearch && suggestionsExist} algorithmsData={algorithmsData} />
                             </div>
                         </div>
-                    </div>
+                    </div></>)}
                 </div>
             </div>
         </>
@@ -220,5 +246,4 @@ const Home = () => {
 }
 
 export default Home;
-
 
