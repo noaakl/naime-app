@@ -7,7 +7,6 @@ import { Download } from 'react-bootstrap-icons';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PopoverBody from 'react-bootstrap/PopoverBody'
-import { download } from "../utils";
 
 const Api = ({ name }) => {
     const apiKey = useSelector((state) => state.reduser.apiKey);
@@ -33,13 +32,31 @@ const Api = ({ name }) => {
                 .then((response) => {
                     setSuggestions(response.data)
                 })
-            }
+        }
     }
 
     const downloadJson = () => {
         const data = JSON.stringify(suggestions)
         const type = 'application/json'
-        return download(data, type, fileName)
+        return download(data, type)
+    }
+
+    const download = (data, type) => {
+        let file = new Blob([data], { type: type });
+        if (window.navigator.msSaveOrOpenBlob)
+            window.navigator.msSaveOrOpenBlob(file, fileName);
+        else {
+            let a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function () {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
     }
 
     const copyJsonURL = () => {
@@ -57,26 +74,25 @@ const Api = ({ name }) => {
 
             <Dropdown className={Styles.api} autoClose="outside">
                 <Dropdown.Toggle className={Styles.sort} variant="icon" bsPrefix="Button" size="xs" id="dropdown-basic">
-                <Download style={{ marginRight: "15px", marginLeft: "5px" , verticalAlign:"super" }}/>
-                
+                    <Download style={{ marginRight: "15px", marginLeft: "5px", verticalAlign: "super" }} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={() => downloadJson()}>Download as Json</Dropdown.Item>
                     <OverlayTrigger
-                key="copy"
-                placement={"right"}
-                overlay={
-                        <Popover id={`popover-copy`} style={{display: copied ? '' : 'none',}}>
-                         <PopoverBody bsPrefix={Styles.popover}>
-                            copied!
-                        </PopoverBody>
-                    </Popover>
-                }
-            >
-                    <Dropdown.Item onClick={() => copyJsonURL()}>Copy Json URL</Dropdown.Item>
+                        key="copy"
+                        placement={"right"}
+                        overlay={
+                            <Popover id={`popover-copy`} style={{ display: copied ? '' : 'none', }}>
+                                <PopoverBody bsPrefix={Styles.popover}>
+                                    copied!
+                                </PopoverBody>
+                            </Popover>
+                        }
+                    >
+                        <Dropdown.Item onClick={() => copyJsonURL()}>Copy Json URL</Dropdown.Item>
                     </OverlayTrigger>
                 </Dropdown.Menu>
-                
+
             </Dropdown>
 
         </div>
