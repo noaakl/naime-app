@@ -3,8 +3,8 @@
 # nAIme
 Our nAime website delivers the SpokenName2Vec and GRAFT novelty algorithms along with the Jellyfish package algorithms.
 Using these algorithms you will be able to retrieve alternative and similar names for a given name query.
-In this nAime website you will also see different statistics on name searches such as all time top names searched and how many searches included your very own query.
-You will be able to rank the quality of the retrieved names, sort and filter the results to your liking.
+On this nAime website, you will also see different statistics on name searches such as all-time top names searched and how many searches included your very own query.
+You will be able to rank the quality of the retrieved names, and sort and filter the results to your liking.
 
 The nAime website is part of our Name Search Final Project.
 For more information about this project [Click Here](https://github.com/noaakl/Final_Project_Names)
@@ -30,14 +30,22 @@ For more information about this project [Click Here](https://github.com/noaakl/F
 
 ### DB
 
-in order to the program to work, the DB file needs to be located inside the `backend` directory.
-the DB file can not be added to git due to size limitation.
+For the program to work, the DB file needs to be located inside the `backend` directory.
+the DB file can not be added to git due to size limitations.
+
+##
+
+### Feedback
+
+Users' feedback can be found on [feeder](https://feeder.sh/dashboard)
 
 ##
 
 ### Use-cases
 
 - Search for alternative names to a given name query
+- Use search results on common search engines
+- Rank results
 
 ##
 
@@ -53,7 +61,7 @@ nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](
 &copy; Algorithms by: Dr. Aviad Elyashar, Dr. Rami Puzis, Dr. Michael Fire
 
 
-- To cite [SpokenName2Vec](https://doi.org/10.1109/TKDE.2021.3096670) paper, please use the following bibtex reference:
+- To cite [SpokenName2Vec](https://doi.org/10.1109/TKDE.2021.3096670) paper, please use the following BibTeX reference:
 
 ```
 @article{elyashar2021does,
@@ -67,7 +75,7 @@ nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](
 }
 ```
 
-- To cite [GRAFT](https://doi.org/10.1016/j.knosys.2021.107229) paper, please use the following bibtex reference:
+- To cite [GRAFT](https://doi.org/10.1016/j.knosys.2021.107229) paper, please use the following BibTeX reference:
 
 ```
 article{elyashar2021runs,
