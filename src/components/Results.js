@@ -21,7 +21,7 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
     }, [algorithmsData, ranks]);
 
     const sortFunc = (a, b) => {
-        return sortValue == "Default A-Z" ? a.candidate.localeCompare(b.candidate) : calculateRank(b.candidate) - calculateRank(a.candidate)
+        return sortValue === "Default A-Z" ? a.candidate.localeCompare(b.candidate) : calculateRank(b.candidate) - calculateRank(a.candidate)
     }
 
     const calculateRank = (candidate) => {

@@ -2,8 +2,8 @@ import Styles from "../App.module.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from "react";
 import { Card, Row, Col, Container } from 'react-bootstrap';
-import SpokenName2Vec from "../SpokenName2Vec.jpeg"
-import GRAFT from "../GRAFT.jpeg"
+import SpokenName2Vec from "../images/SpokenName2Vec.jpeg"
+import GRAFT from "../images/GRAFT.jpeg"
 
 
 

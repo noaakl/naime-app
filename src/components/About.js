@@ -2,7 +2,7 @@ import Styles from "../App.module.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import { Card, Row, Col, Container } from 'react-bootstrap';
-import poster from "../SISE_Name_Search_25.jpg"
+import poster from "../images/SISE_Name_Search_25.jpg"
 import { ArrowRightCircleFill } from 'react-bootstrap-icons';
 import { Link } from "react-router-dom";
 import PopularNames from './PopularNames';

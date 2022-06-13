@@ -83,9 +83,9 @@ const Home = () => {
         //     const searchVal = nameValue
         //     const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
         //     setDidSearch(doSearch)
-            // if (doSearch) {
-            //     navigate(`/search/${searchVal}`);
-                // searchName(nameValue)
+        // if (doSearch) {
+        //     navigate(`/search/${searchVal}`);
+        // searchName(nameValue)
         //     }
         // }
     }
@@ -218,27 +218,23 @@ const Home = () => {
 
 
 
-                    <div className={Styles.container_fluid}>
+                            <div className={Styles.container_fluid}>
 
-                        {
-                            Array.from({ length: searchedNames.length })
-                                .map((_, index) => {
-                                    const name = searchedNames[index]
-                                    const showSuggestions = didSearch && suggestionsExist && name !== "" && typeof algorithmsData[index].Soundex !== 'undefined'
-                                    if (name) {
-                                        return (
-                                            <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} ranks={ranks[index] ? ranks[index] : []} />
-                                        )
-                                    }
+                                {
+                                    Array.from({ length: searchedNames.length })
+                                        .map((_, index) => {
+                                            const name = searchedNames[index]
+                                            return (
+                                                <Results key={index} searchedName={name} algorithmsData={algorithmsData[index] ? algorithmsData[index] : []} ranks={ranks[index] ? ranks[index] : []} />
+                                            )
+                                        }).filter((_, index) => searchedNames[index])
                                 }
-                                )
-                        }
-                        <div className={Styles.container_fluid}>
-                            <div style={{ marginTop: "100px" }}>
-                                <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={didSearch && suggestionsExist} algorithmsData={algorithmsData} />
-                            </div>
-                        </div>
-                    </div></>)}
+                                <div className={Styles.container_fluid}>
+                                    <div style={{ marginTop: "100px" }}>
+                                        <ExternalSearch searchedName={nameToSearch} suggestions={suggestions} suggestionsExist={didSearch && suggestionsExist} algorithmsData={algorithmsData} />
+                                    </div>
+                                </div>
+                            </div></>)}
                 </div>
             </div>
         </>
