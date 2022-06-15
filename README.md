@@ -30,8 +30,8 @@ For more information about this project [Click Here](https://github.com/noaakl/F
 
 ### DB
 
-For the program to work, the DB file needs to be located inside the `backend` directory.
-the DB file can not be added to git due to size limitations.
+- DB file can be found [here](https://drive.google.com/file/d/1Nemx_f0gaseBycK5uZkdjX4Y-f8wLfbP/view?usp=sharing)
+- Locate the DB file inside the `backend` directory.
 
 ##
 
