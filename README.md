@@ -11,6 +11,20 @@ For more information about this project [Click Here](https://github.com/noaakl/F
 
 ##
 
+### Use-cases
+
+- Search for alternative names to a given name query
+- Use search results on common search engines
+- Rank results
+
+##
+
+### Development
+
+nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](https://flask.palletsprojects.com/en/2.0.x/) on the server side, and designed using [Bootstrap](https://react-bootstrap.github.io/) components.
+
+##
+
 ### Run the Project:
 - `cd backend`
 - For mac/unix users:
@@ -40,20 +54,6 @@ For more information about this project [Click Here](https://github.com/noaakl/F
 ### Feedback
 
 Users' feedback can be found on [feeder](https://feeder.sh/dashboard)
-
-##
-
-### Use-cases
-
-- Search for alternative names to a given name query
-- Use search results on common search engines
-- Rank results
-
-##
-
-### Development
-
-nAIme was built with [ReactJS](https://reactjs.org) on the client side, [Flask](https://flask.palletsprojects.com/en/2.0.x/) on the server side, and designed using [Bootstrap](https://react-bootstrap.github.io/) components.
 
 ##
 
