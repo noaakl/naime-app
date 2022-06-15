@@ -154,18 +154,19 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                 <Row className={Styles.dropdowns} xs={1} md={1} lg={4}>
                     <Col className={Styles.dropdownsCol}>
                         <Dropdown>
-                            <strong>Sort by  </strong><SortDown style={{ marginRight: "15px", marginLeft: "5px" }} /><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="dropdown-basic">
+                            <strong>Sort by  </strong><SortDown style={{ marginRight: "15px", marginLeft: "5px" }} /><Dropdown.Toggle className={Styles.sort} variant="secondary" size="sm" id="sort-dropdown-basic">
                                 {sortValue}
 
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
                                 <Dropdown.Item
+                                    data-cy="user-rank"
                                     onClick={() => {
                                         setSortValue("User Rank")
                                     }}>
                                     User Rank</Dropdown.Item>
-                                <Dropdown.Item onClick={() => {
+                                <Dropdown.Item data-cy="default-A-Z" onClick={() => {
                                     setSortValue("Default A-Z")
                                 }}>Default A-Z</Dropdown.Item>
                             </Dropdown.Menu>
@@ -175,7 +176,7 @@ const Results = ({ searchedName, algorithmsData, ranks }) => {
                     <Col style={{ width: "500px" }} className={Styles.dropdownsCol}>
                         <Dropdown style={{ display: "inline", margin: "5px" }}>
                             <strong>Filter by </strong><FunnelFill style={{ marginRight: "15px", marginLeft: "5px" }} />
-                            <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
+                            <Dropdown.Toggle variant="secondary" size="sm" id="filter-algorithm-dropdown-basic">
                                 {"Algorithm"}
 
                             </Dropdown.Toggle>

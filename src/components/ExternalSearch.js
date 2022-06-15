@@ -28,7 +28,7 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
     useEffect(() => {
         dispatch(setQuery(""))
         dispatch(addQueryNames(""))
-        if (searchedName)
+        if (searchedName && suggestions.length > 0)
             getQuery(defultNumOfNames)
     }, [searchedName, suggestions, defultNumOfNames]);
 
