@@ -7,9 +7,7 @@ from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, \
     unset_jwt_cookies, jwt_required, JWTManager
 from flask_application import FlaskApplication
 from sqlalchemy import func, desc
-from utils import createQuery, convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, \
-    soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, \
-    match_rating_codex_suggest_names, create_results_dict
+from utils import createQuery, create_results_dict
 from UserSearch import UserSearch
 from UsersLikes import UsersLikes
 from UsersDislikes import UsersDislikes
@@ -45,7 +43,7 @@ def dashboard():
         if not key:
             if username:
                 new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
-                                            user_name=username)
+                                             user_name=username)
             else:
                 new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
             db.session.add(new_user_search)
@@ -75,12 +73,14 @@ def rankCount():
         res = []
         for name in selected_name.split():
             name = name.capitalize()
-            likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == name).group_by(UsersLikes.candidate).all()
-            dislikes = db.session.query(UsersDislikes.candidate, count_).filter(UsersDislikes.selected_name == name).group_by(UsersDislikes.candidate).all()
+            likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == name).group_by(
+                UsersLikes.candidate).all()
+            dislikes = db.session.query(UsersDislikes.candidate, count_).filter(
+                UsersDislikes.selected_name == name).group_by(UsersDislikes.candidate).all()
             res.append({
-             "likes" : {like[0]: like[1] for like in likes},
-            "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        })
+                "likes": {like[0]: like[1] for like in likes},
+                "dislikes": {dislike[0]: dislike[1] for dislike in dislikes}
+            })
         return json.dumps(res)
         # return{
         #      "likes" : {like[0]: like[1] for like in likes},
@@ -136,10 +136,12 @@ def editResults():
     candidate = rankData['candidate']
     user_rank = {}
     if rankData['remove_rank'] == 1:
-        user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
+        user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(
+            UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
         db.session.commit()
     elif rankData['remove_rank'] == -1:
-        user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
+        user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(
+            UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
         db.session.commit()
     return {}
 
@@ -259,34 +261,15 @@ def lastDislike():
     return json.dumps([])
 
 
-@api.route('/api/googleSearch', methods=["POST"])
-def googleSearch():
-    try:
-        from googlesearch import search
-        name = request.json.get("name", "")
-        suggestions = request.json.get("suggestions", [])
-        user_likes = request.json.get("userLikes", [])
-        query = createQuery(name, suggestions, user_likes)
-        res = []
-        res = [search_result for search_result in search(query, pause=2, num=10, stop=10)]#'filter': '1', 'sourceid': 'chrome', 'ie': 'UTF-8', 'site': '-wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
-        res_final = {}
-        for url in res:
-            x = requests.get(url)
-            tree = fromstring(x.content)
-            res_final[url]=tree.findtext('.//title')
-        return json.dumps([res_final])
-    except ImportError:
-        print("No module named 'google' found")
-        return json.dumps([])
-
 @api.route('/api/query', methods=["POST"])
 def query():
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
     user_likes = request.json.get("userLikes", [])
-    numOfQueryNames = request.json.get("numOfQueryNames", 5)
+    numOfQueryNames = request.json.get("numOfQueryNames", 4)
     query = createQuery(name, suggestions, user_likes, numOfQueryNames)
     return json.dumps({"query": query})
+
 
 @api.route('/api/userQuery', methods=["POST"])
 def userQuery():

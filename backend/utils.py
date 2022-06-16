@@ -1,3 +1,4 @@
+import json
 import math
 
 from PhoneticAlgorithmsCodes import PhoneticAlgorithmsCodes
@@ -15,7 +16,7 @@ app = flask_app.get_app()
 db = flask_app.get_db()
 
 
-def spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict):
+def spoken_name_2_vec_suggest_names(name_suggestions, result_dict):
     result_dict['spoken_name_2_vec'] = []
 
     candidates = []
@@ -23,6 +24,10 @@ def spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict
     optional_candidates = []
 
     for name_suggestion in name_suggestions:
+        # print(name_suggestions[0])
+        # attributes = [attr for attr in name_suggestion.__dict__]
+        # for attr in attributes:
+        #     print(name_suggestion.__getattribute__(attr))
         name_type = name_suggestion.type_name
         if name_type == "Sound":
             optional_candidates.append(name_suggestion)
@@ -36,18 +41,10 @@ def spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict
                                                                                                      candidate,
                                                                                                      candidates,
                                                                                                      distinct_candidate_set)
-            # candidate_dict = flask_app.convert_name_suggestion_into_result(name_suggestion)
-            # candidates.append(candidate_dict)
-            #
-            # distinct_candidate_set.add(candidate)
 
         elif not candidate in distinct_candidate_set and distance == 0:
             candidate_dict, candidates, distinct_candidate_set = convert_name_suggestion_into_result(
                 name_suggestion, candidate, candidates, distinct_candidate_set)
-            # candidate_dict = flask_app.convert_name_suggestion_into_result(name_suggestion)
-            # candidates.append(candidate_dict)
-            #
-            # distinct_candidate_set.add(candidate)
 
     result_dict['spoken_name_2_vec'] = candidates
     return result_dict
@@ -62,7 +59,7 @@ def convert_name_suggestion_into_result(name_suggestion, candidate, candidates, 
     return candidate_dict, candidates, distinct_candidate_set
 
 
-def family_trees_suggest_names(selected_name, name_suggestions, result_dict):
+def family_trees_suggest_names(name_suggestions, result_dict):
     result_dict['family_trees'] = []
 
     candidates = []
@@ -264,9 +261,8 @@ def create_results_dict(selected_name, key, index):
         return {}
 
     else:
-
-        result_dict = spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict)
-        result_dict = family_trees_suggest_names(selected_name, name_suggestions, result_dict)
+        result_dict = spoken_name_2_vec_suggest_names(name_suggestions, result_dict)
+        result_dict = family_trees_suggest_names(name_suggestions, result_dict)
         result_dict = soundex_suggest_names(selected_name, result_dict)
         result_dict = metaphone_suggest_names(selected_name, result_dict)
         result_dict = double_metaphone_suggest_names(selected_name, result_dict)

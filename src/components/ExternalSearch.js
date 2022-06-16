@@ -33,10 +33,11 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
     }, [searchedName, suggestions, defultNumOfNames]);
 
     const getQuery = (num) => {
+        const name = searchedName.charAt(0).toUpperCase() + searchedName.slice(1)
         const searchData = {
-            "name": searchedName,
+            "name": name,
             "suggestions": suggestions,
-            "userLikes": likes[searchedName] ? likes[searchedName] : [],
+            "userLikes": likes[name] ? likes[name] : [],
             "numOfQueryNames": num
         }
         axios.post('/api/query', searchData)
