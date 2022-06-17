@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setQuery, editQueryNames } from '../store/action';
+import { setQuery, editQueryNames, dragUpQueryName, dragDownQueryName } from '../store/action';
 import Styles from '../App.module.scss'
 import axios from "axios";
 import { Row, Col, Modal, Accordion, Form } from 'react-bootstrap'
-import { ListUl } from 'react-bootstrap-icons';
+import { ListUl, ArrowUp, ArrowDown } from 'react-bootstrap-icons';
 
-const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
+const QueryNameInput = ({ nameSplit, nameIndex, numberIndex, algorithmsData }) => {
     const dispatch = useDispatch()
-    const queryNames = useSelector((state) => state.reduser.queryNames);
+    // const [index, setIndex] = useState(nameIndex)
     const [showQueryModal, setShowQueryModal] = useState(false)
-    const [queryNameValue, setQueryNameValue] = useState(name)
+    // const [queryNameValue, setQueryNameValue] = useState(name)
     const [algorithmIndex, setAlgorithmIndex] = useState(null)
     const algorithmsNames = [
         "SpokenName2Vec",
@@ -21,14 +21,20 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
         "Nysiis",
         "Soundex"
     ]
+    const queryNames = useSelector((state) => state.reduser.queryNames);
+    const queryNameValue = nameSplit[nameIndex]
+    // const queryNameValue = queryNames[numberIndex];
+    // const reduser = useSelector((state) => state.reduser);
+    // console.log(reduser)
 
     const handleSelectName = (selectedName, index) => {
-        setQueryNameValue(selectedName)
+        // setQueryNameValue(selectedName)
         setAlgorithmIndex(index)
         dispatch(editQueryNames(selectedName, numberIndex, nameIndex))
         getUserQuery()
         setShowQueryModal(false)
     }
+
 
     const getUserQuery = () => {
         axios.post('/api/userQuery', { queryNames: queryNames })
@@ -41,14 +47,35 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
             });
     }
 
+    const DragUp = (numberIndex, nameIndex) => {
+        if (numberIndex > 0) {
+            dispatch(dragUpQueryName(numberIndex, nameIndex))
+            getUserQuery()
+        }
+    }
+
+    const DragDown = (numberIndex, nameIndex) => {
+        if (numberIndex < queryNames.length-1) {
+            dispatch(dragDownQueryName(numberIndex, nameIndex))
+            getUserQuery()
+        }
+    }
+
     return (
         <Form.Group as={Row} style={{ margin: "0px" }}>
             <Row lg={2} md={2} sm={2} xs={2} className="g-3" >
-                <Col style={{ margin: "0px" }}>
-                    <Form.Control id={`${name}_${numberIndex}`} key={`${name}_${numberIndex}`} defaultValue={queryNameValue} style={{ textAlign: "left", display: "inline", boxSizing: "border-box" }} onChange={(e) => setTimeout(() => { return handleSelectName(e.target.value, null) }, 1000)} />
+                <Col style={{ margin: "0px", display: "inline" }}>
+                    <ListUl as="button" style={{margin: "11px 0px 0px 10px", position: 'absolute', cursor: "pointer" }} onClick={() => setShowQueryModal(true)} />
+                        <Form.Control
+                            id={`${queryNameValue}_${numberIndex}`}
+                            key={`${queryNameValue}_${numberIndex}`}
+                            defaultValue={queryNameValue}
+                            style={{ paddingLeft: '40px', textAlign: "left", display: "inline", boxSizing: "border-box" }}
+                            onChange={(e) => setTimeout(() => { return handleSelectName(e.target.value, null) }, 1000)} />
+                            <ArrowUp  as="button" style={{ margin: '10px', position: 'absolute', display: "inline", cursor:  numberIndex > 0 ? "pointer" : '' }} onClick={() => DragUp(numberIndex, nameIndex)}/>
+                            <ArrowDown as="button" style={{ margin: '10px 10px 10px 25px', position: 'absolute', display: "inline", cursor: numberIndex < queryNames.length-1 ? "pointer" : '' }} onClick={() => DragDown(numberIndex, nameIndex)}/>
                 </Col>
                 {typeof algorithmsData[nameIndex].Soundex !== 'undefined' && <Col className="g-1" style={{ margin: "0px", textAlign: "left" }}>
-                    <ListUl as="button" style={{ marginBottom: "0px", cursor: "pointer" }} onClick={() => setShowQueryModal(true)} />
 
                     <Modal show={showQueryModal} onHide={() => setShowQueryModal(false)}>
 
@@ -70,7 +97,7 @@ const QueryNameInput = ({ name, nameIndex, numberIndex, algorithmsData }) => {
                                                         <ul className={Styles.accordion_item}>
                                                             {data.map((name) => {
                                                                 return (
-                                                                    <li className={queryNameValue === name.candidate ? Styles.accordion_selected_item_name : Styles.accordion_item_name} key={`${algorithm}_${name.candidate}`}
+                                                                    <li className={queryNameValue == name.candidate ? Styles.accordion_selected_item_name : Styles.accordion_item_name} key={`${algorithm}_${name.candidate}`}
                                                                         as='button'
                                                                         onClick={() => handleSelectName(name.candidate, algorithmIndex)}>
                                                                         {name.candidate}

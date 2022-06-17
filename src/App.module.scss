@@ -78,21 +78,46 @@ body:before {
   }
 
 .edit_query_accordion {
-	// background-color: rgba(221, 76, 57, 0.509);
-	// margin: "40px";
-	// padding: "40px";
-	// margin-left: 23%;
+	position: relative;
+	text-align: center;
+	align-items: center;
+	// width: 85%;
+	// display: inline-block;
+	// display: flex;
+}
+
+.query_name_count_wrapper {
+	// display: flex;
+	text-align: center;
+	align-items: center;
 	display: inline-block;
+	position: relative;
+	margin: 5px 0px 15px 0px;
 }
 
 .query_name_count {
 	display: flex;
-	margin-left: 25%;
+	text-align: center;
+	align-items: center;
+	// display: inline-block;
+	position: relative;
+	// margin-left: 25%;
 }
 
 .query_name_count_text {
+	display: flex;
 	margin: 6px;
 	text-align: center;
+	align-items: center;
+
+}
+
+.query_name_count_form_control {
+	display: flex;
+	// margin: 6px;
+	text-align: center;
+	align-items: center;
+	width: 50px;
 }
 
 .accordion_modal {
@@ -121,9 +146,11 @@ body:before {
 .accordion_body {
 	// opacity: .50;
 	background-color: rgba(158, 160, 143, 0.329);
+	align-items: center;
+	position: relative;
 	
-	// text-align: center;
-	text-align: left;
+	text-align: center;
+	// text-align: left;
 	// display: inline-block;
 
 	// width: 100%;
