@@ -23,7 +23,7 @@ const NavBar = () => {
                         <Nav className="ml-auto my-2 my-lg-0" >
                             <Nav.Link as={Link} to="/signUp" style={{ display: !username ? '' : 'none' }}>Sign Up</Nav.Link>
                             <Nav.Link as={Link} to="/login" style={{ display: !username ? '' : 'none' }}>Log In</Nav.Link>
-                            <Nav.Link as={Link} to="/userInfo" style={{ display: username ? '' : 'none' }}>My info</Nav.Link>
+                            <Nav.Link as={Link} to="/userInfo" style={{ display: username ? '' : 'none' }}>My Info</Nav.Link>
                             <Logout username={username} />
                         </Nav>
                     </Navbar.Collapse>

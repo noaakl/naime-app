@@ -135,7 +135,7 @@ const Login = () => {
               {wrongPassName()}
               {successMessage()}
               <br></br>
-              <h5 style={{ fontSize: '15px' }}>Not a memeber? Click <Link to={"/signup"}>HERE</Link> to sign up</h5>
+              <h5 style={{ fontSize: '15px' }}>Not a memeber? <Link to={"/signup"}>CLICK HERE</Link> to sign up</h5>
             </Form>
           </Card.Body>
 

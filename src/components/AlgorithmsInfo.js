@@ -29,7 +29,7 @@ const AlgorithmsInfo = () => {
                                     <br></br>
                                     <Card.Img variant="bottom" src={SpokenName2Vec} />
                                     <br></br><br></br>
-                                    <strong>For more information - Click <a href='https://doi.org/10.1016/j.knosys.2021.107229' target="_blank" rel="noreferrer" >HERE</a> for the article </strong>
+                                    <strong>For more information - <a data-cy='SpokenName2Vec-article' href='https://doi.org/10.1016/j.knosys.2021.107229' target="_blank" rel="noreferrer" >CLICK HERE</a> for the article </strong>
                                 </Card.Body></Card>
                         </Row>
                     </Col>
@@ -44,7 +44,7 @@ const AlgorithmsInfo = () => {
                                 <br></br>
                                 <Card.Img variant="bottom" src={GRAFT} />
                                 <br></br><br></br>
-                                <strong>For more information - Click <a href='https://doi.org/10.1109/TKDE.2021.3096670' target="_blank" rel="noreferrer">HERE</a> for the article </strong>
+                                <strong>For more information - <a data-cy='GRAFT-article' href='https://doi.org/10.1109/TKDE.2021.3096670' target="_blank" rel="noreferrer">CLICK HERE</a> for the article </strong>
                             </Card.Body>
                             </Card>
                         </Row>

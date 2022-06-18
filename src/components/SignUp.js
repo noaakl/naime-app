@@ -130,7 +130,7 @@ const SingUp = () => {
               </Button>
             </Form>
             <br></br>
-            <h5 style={{ fontSize: '15px' }}>If you already have an account click <Link to={"/login"}>HERE</Link> to login</h5>
+            <h5 style={{ fontSize: '15px' }}>If you already have an account <Link to={"/login"}>CLICK HERE</Link> to login</h5>
           </Card.Body>
         </Card>
       </Container>

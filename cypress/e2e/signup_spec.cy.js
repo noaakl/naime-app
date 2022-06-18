@@ -1,41 +1,36 @@
 describe('Signup', () => {
     it('fails', () => {
       cy.visit('http://localhost:3000/signUp');
-      // cy.get('.App_form_control__vYEIq').type("james{enter}");
-      // cy.contains('Suggested Synonyms for the Name James').should('be.visible');
-      // cy.url().should('include', '/search/james');
-      // cy.contains('CLICK HERE').should('have.attr', 'href', '/signup')
-      // cy.contains('Behind The Name').should('have.attr', 'href', 'https://www.behindthename.com/name/James')
-      // cy.get("#sort-dropdown-basic").click();
-      // cy.get("[data-cy=user-rank").click();
-      // cy.get("#sort-dropdown-basic").click();
-      // cy.get("[data-cy=default-A-Z").click();
-      // cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > .App_resultcol__FABO0 > .App_result__eNtnc').should('have.text', 'Jaems')
-      // cy.get("#filter-algorithm-dropdown-basic").click();
-      // cy.get('.form-check > #SpokenName2Vec').click();
-      // cy.get("#filter-algorithm-dropdown-basic").click();
-      // cy.contains('SpokenName2Vec').should('not.be.visible');
-      // cy.get('.frf-trigger-button').click()
-      // cy.contains('Send Feedback')
+      cy.get('#formUserName').click().type("u")
+      cy.get('#formFirstName').click().type("u")
+      cy.get('#formLastName').click().type("u")
+      cy.get('#formEmail').click().type("u")
+      cy.get('#formBasicPassword').click().type("u")
+      cy.get('#formConfirmationPassword').click().type("s")
+      cy.get('form > .btn').click()
+      cy.contains('User name must contain atleat 2 characters').should('be.visible');
+      cy.contains('First name must contain atleat 2 characters').should('be.visible');
+      cy.contains('Last name must contain atleat 2 characters').should('be.visible');
+      cy.contains('Please enter a valid E-Mail Address, e.g user@naime.com').should('be.visible');
+      cy.contains('Password must contain atleat 6 characters').should('be.visible');
+      cy.contains("Confirmation Password does't match the password. Please try again").should('be.visible');
+      cy.get('#formUserName').click().type("sername1")
+      cy.get('form > .btn').click()
+      cy.contains("User Name already exist. Please try again").should('be.visible');
     })
   
     it('passes', () => {
-    //   cy.visit('http://localhost:3000/');
-    //   cy.get('.App_form_control__vYEIq').type("james{enter}");
-    //   cy.contains('Suggested Synonyms for the Name James').should('be.visible');
-    //   cy.url().should('include', '/search/james');
-    //   cy.contains('CLICK HERE').should('have.attr', 'href', '/signup')
-    //   cy.contains('Behind The Name').should('have.attr', 'href', 'https://www.behindthename.com/name/James')
-    //   cy.get("#sort-dropdown-basic").click();
-    //   cy.get("[data-cy=user-rank").click();
-    //   cy.get("#sort-dropdown-basic").click();
-    //   cy.get("[data-cy=default-A-Z").click();
-    //   cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > .App_resultcol__FABO0 > .App_result__eNtnc').should('have.text', 'Jaems')
-    //   cy.get("#filter-algorithm-dropdown-basic").click();
-    //   cy.get('.form-check > #SpokenName2Vec').click();
-    //   cy.get("#filter-algorithm-dropdown-basic").click();
-    //   cy.contains('SpokenName2Vec').should('not.be.visible');
-    //   cy.get('.frf-trigger-button').click()
-    //   cy.contains('Send Feedback')
+      cy.visit('http://localhost:3000/signUp');
+      cy.get('.navbar').should('be.visible')
+      cy.get('#formUserName').click().type("username")
+      cy.get('#formFirstName').click().type("firstname")
+      cy.get('#formLastName').click().type("lastname")
+      cy.get('#formEmail').click().type("username@gmail.com")
+      cy.get('#formBasicPassword').click().type("21hdj3u22614iuoh")
+      cy.get('#formConfirmationPassword').click().type("21hdj3u22614iuoh")
+      cy.get('form > .btn').click()
+      cy.contains('User username successfully registered').should('be.visible');
+      cy.get('.modal-footer > .btn').click()
+      cy.url().should('include', '/login');
     })
   })
