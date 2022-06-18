@@ -100,7 +100,7 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                                     <div className={Styles.query_name_count_text}>
                                         Choose number of names to include in the query
                                     </div>
-                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} className={Styles.query_name_count_form_control} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
+                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} className={Styles.query_name_count_form_control} style={{width: '50px'}} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
                                 </div>
                                 </Row>
                                 <Form>
