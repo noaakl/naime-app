@@ -30,7 +30,7 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
         dispatch(addQueryNames(""))
         if (searchedName && suggestions.length > 0)
             getQuery(defultNumOfNames)
-    }, [searchedName, suggestions, defultNumOfNames]);
+    }, [searchedName, suggestions]);
 
     const getQuery = (num) => {
         const name = searchedName.charAt(0).toUpperCase() + searchedName.slice(1)
@@ -83,11 +83,11 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                     <p><b><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></b></p>
 
                 </Row>
-                <Row style={{ marginTop: '30px' }}>
-                    <Accordion alwaysOpen style={{ textAlign: "center" }}>
+                <Row style={{ marginTop: '30px' }} >
+                    <Accordion alwaysOpen className={Styles.edit_query_accordion}>
                         <Accordion.Item eventKey={0}>
                             {/* <Accordion.Header style={{ textAlign: "center" }} className={Styles.accordion_header}> */}
-                            <Accordion.Header className={Styles.edit_query_accordion} style={{ margin: "10px", textAlign: "center" }}>
+                            <Accordion.Header style={{display: 'inline-block', margin: "10px", textAlign: "center" }}>
                                 <Row>
                                     {/* <p><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></p> */}
                                     {/* <div style={{ margin: "10px 10px 10px 210%",}}> */}
@@ -96,12 +96,14 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                                 </Row>
                             </Accordion.Header>
                             <Accordion.Body className={Styles.accordion_body}>
+                                <Row className={Styles.query_name_count_wrapper}>
                                 <div className={Styles.query_name_count}>
-                                    <span className={Styles.query_name_count_text}>
+                                    <div className={Styles.query_name_count_text}>
                                         Choose number of names to include in the query
-                                    </span>
-                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} style={{ width: "50px", textAlign: "center" }} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
+                                    </div>
+                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} className={Styles.query_name_count_form_control} style={{width: '50px'}} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
                                 </div>
+                                </Row>
                                 <Form>
 
                                     {
@@ -119,7 +121,7 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                                                                         return (
                                                                             <Col key={nameIndex} style={{ margin: "0px" }}>
 
-                                                                                <QueryNameInput algorithmsData={algorithmsData} nameIndex={nameIndex} name={name} numberIndex={numberIndex} />
+                                                                                <QueryNameInput algorithmsData={algorithmsData} nameIndex={nameIndex} nameSplit={nameSplit} numberIndex={numberIndex} />
                                                                             </Col>
                                                                         )
                                                                     }
@@ -135,7 +137,6 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
-
                 </Row>
             </div>
             <Row style={{ marginTop: '30px' }}>

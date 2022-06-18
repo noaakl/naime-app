@@ -6,6 +6,8 @@ import { REMOVE_LIKES } from "./action";
 import { REMOVE_DISLIKES } from "./action";
 import { ADD_QUERY_NAMES } from "./action";
 import { EDIT_QUERY_NAMES } from "./action";
+import { DRAG_UP_QUERY_NAME } from "./action";
+import { DRAG_DOWN_QUERY_NAME } from "./action";
 import { SET_QUERY } from "./action";
 // import { HIDE_QUERY_MODAL } from "./action";
 
@@ -50,6 +52,40 @@ const Reduser = (state = INITIAL_STATE, action) => {
       const name = action.payload.name;
       let names = [...state.queryNames]
       names[numberIndex][nameIndex] = name
+      return {
+        ...state,
+        queryNames: names
+      };
+    }
+
+    case DRAG_UP_QUERY_NAME: {
+      // const nameCount = state.queryNames.length()
+      const numberIndex = parseInt(action.payload.numberIndex);
+      const nameIndex = action.payload.nameIndex;
+      let names = [...state.queryNames]
+      if (numberIndex > 0) {
+        const nameToDragUp = names[numberIndex][nameIndex]
+        const nameToDragDown = names[numberIndex-1][nameIndex]
+        names[numberIndex][nameIndex] = nameToDragDown
+        names[numberIndex-1][nameIndex] = nameToDragUp
+      }
+      return {
+        ...state,
+        queryNames: names
+      };
+    }
+
+    case DRAG_DOWN_QUERY_NAME: {
+      const nameCount = state.queryNames.length
+      const numberIndex = parseInt(action.payload.numberIndex);
+      const nameIndex = action.payload.nameIndex;
+      let names = [...state.queryNames]
+      if (numberIndex < nameCount - 1) {
+        const nameToDragDown = names[numberIndex][nameIndex]
+        const nameToDragUp = names[numberIndex+1][nameIndex]
+        names[numberIndex][nameIndex] = nameToDragUp
+        names[numberIndex+1][nameIndex] = nameToDragDown
+      }
       return {
         ...state,
         queryNames: names
