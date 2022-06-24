@@ -5,9 +5,7 @@ from datetime import datetime, timedelta
 from flask_jwt_extended import create_access_token, JWTManager
 from flask_application import FlaskApplication
 from sqlalchemy import func, desc
-from utils import createQuery, convertSuggestionsToJson, spoken_name_2_vec_suggest_names, family_trees_suggest_names, \
-    soundex_suggest_names, metaphone_suggest_names, double_metaphone_suggest_names, nysiis_suggest_names, \
-    match_rating_codex_suggest_names
+from utils import createQuery, create_results_dict
 from UserSearch import UserSearch
 from UsersLikes import UsersLikes
 from UsersDislikes import UsersDislikes
@@ -37,90 +35,26 @@ def index():
 
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
-    # print(request)
-    result_dict = {}
-    targeted_name = ""
+    suggestions = []
     if request.method == 'GET':
-        selected_name = request.args.get('name')
-        username = request.args.get('username')
+        selected_name = request.args.get('name', '')
+        selected_name = selected_name.title()
+        username = request.args.get('username', '')
         key = request.args.get('key')
-        selected_name = selected_name.capitalize()
-        targeted_name = selected_name
-
-        result_dict['name'] = selected_name
-
-        name_suggestions = db.session.query(NameSuggestion).filter(
-            NameSuggestion.selected_name == selected_name).order_by(NameSuggestion.distance,
-                                                                    NameSuggestion.edit_distance,
-                                                                    NameSuggestion.rank).all()
-
-        if len(name_suggestions) > 0:
-
-            result_dict = spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict)
-            result_dict = family_trees_suggest_names(selected_name, name_suggestions, result_dict)
-            result_dict = soundex_suggest_names(selected_name, result_dict)
-            result_dict = metaphone_suggest_names(selected_name, result_dict)
-            result_dict = double_metaphone_suggest_names(selected_name, result_dict)
-            result_dict = nysiis_suggest_names(selected_name, result_dict)
-            result_dict = match_rating_codex_suggest_names(selected_name, result_dict)
-
-            spoken_name_2_vec_candidates = [d['candidate'] for d in result_dict["spoken_name_2_vec"]]
-            family_trees_candidates = [d['candidate'] for d in result_dict["family_trees"]]
-            soundex_candidates = [d['candidate'] for d in result_dict["soundex"]]
-            metaphone_candidates = [d['candidate'] for d in result_dict["metaphone"]]
-            double_metaphone_candidates = [d['candidate'] for d in result_dict["double_metaphone"]]
-            nysiis_candidates = [d['candidate'] for d in result_dict["nysiis"]]
-            match_rating_codex_candidates = [d['candidate'] for d in result_dict["match_rating_codex"]]
-
-
-            other_candidates = list(set(soundex_candidates + metaphone_candidates + double_metaphone_candidates +
-                                        nysiis_candidates + match_rating_codex_candidates))
-
-            spoken_name_2_vec_exclusive_names = list(set(spoken_name_2_vec_candidates) - set(other_candidates))
-
-            for exclusive_name in spoken_name_2_vec_exclusive_names:
-                spoken_name_suggestions = result_dict["spoken_name_2_vec"]
-                for spoken_name_suggestion in spoken_name_suggestions:
-                    if spoken_name_suggestion["candidate"] == exclusive_name:
-                        spoken_name_suggestion["exclusive"] = 1
-                        break
-
-            family_trees_exclusive_names = list(set(family_trees_candidates) - set(other_candidates))
-
-            for exclusive_name in family_trees_exclusive_names:
-                suggestions = result_dict["family_trees"]
-                for suggestion in suggestions:
-                    if suggestion["candidate"] == exclusive_name:
-                        suggestion["exclusive"] = 1
-                        break
-
-
-        else:
-            result_dict = {}
-            # result_dict = name_not_exists_suggest_names(selected_name, result_dict)
-        new_user_search = ""
-        if username:
-            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
-                                         user_name=username)
-        else:
-            new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
-        db.session.add(new_user_search)
-        db.session.commit()
-
-        if key:
-            user_name_search = db.session.query(Users).filter(Users.api_key == key).all()
-            if len(user_name_search) == 0:
-                return {"401": "Not Found"}, 401
-            result_dict = convertSuggestionsToJson(result_dict)
-
-      
-
-    # if targeted_name != "":
-    #     with open('{0}.json'.format(targeted_name), 'w') as json_file:
-    #         json.dump(result_dict, json_file)
-    return json.dumps(result_dict)
-    # return render_template('dashboard.html', result=result_dict, targeted_name=targeted_name)
-    # return render_template('index_naime.html', result=result_dict, targeted_name=targeted_name)
+        index = 0
+        for name in selected_name.split():
+            result_dict = create_results_dict(name, key, index)
+            suggestions.append(result_dict)
+            index += 1
+        if not key:
+            if username:
+                new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English",
+                                             user_name=username)
+            else:
+                new_user_search = UserSearch(selected_name=selected_name, type_name='', language="English")
+            db.session.add(new_user_search)
+            db.session.commit()
+    return json.dumps(suggestions)
 
 
 @api.route('/api/searchList', methods=['GET'])
@@ -141,27 +75,19 @@ def rankCount():
     result_dict = {}
     targeted_name = ""
     if request.method == 'GET':
-        selected_name = request.args.get('name').capitalize()
-        print(selected_name)
-        likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == selected_name).group_by(UsersLikes.candidate).all()
-        dislikes = db.session.query(UsersDislikes.candidate, count_).filter(UsersDislikes.selected_name == selected_name).group_by(UsersDislikes.candidate).all()
-        # return{
-        #     "likes" : {like[0]: like[1] for like in likes},
-        #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        # }
-        # likes_array = []
-        # for like in likes:
-        #     likes_array.append({'candidate': like[0], 'count':like[1]})
-        # print(likes_array)
-        print(likes)
-        print({
-             "likes" : {like[0]: like[1] for like in likes},
-            "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        })
-        return{
-             "likes" : {like[0]: like[1] for like in likes},
-            "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        }
+        selected_name = request.args.get('name')
+        res = []
+        for name in selected_name.split():
+            name = name.capitalize()
+            likes = db.session.query(UsersLikes.candidate, count_).filter(UsersLikes.selected_name == name).group_by(
+                UsersLikes.candidate).all()
+            dislikes = db.session.query(UsersDislikes.candidate, count_).filter(
+                UsersDislikes.selected_name == name).group_by(UsersDislikes.candidate).all()
+            res.append({
+                "likes": {like[0]: like[1] for like in likes},
+                "dislikes": {dislike[0]: dislike[1] for dislike in dislikes}
+            })
+        return json.dumps(res)
 
 
 @api.route('/api/popularSearches', methods=['GET'])
@@ -176,7 +102,6 @@ def popularSearchesInfo():
         all()
 
     if results:
-        # return {result[0]: result[1] for result in results}
         return json.dumps([(result[0], result[1]) for result in results])
 
     return {}
@@ -190,14 +115,11 @@ def rankResults():
     username = rankData['username']
     selected_name = rankData['selected_name']
     candidate = rankData['candidate']
-    print(rankData['add_rank'])
     if rankData['add_rank'] == 1:
         user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
-        print(user_rank)
         db.session.add(user_rank)
         db.session.commit()
     elif rankData['add_rank'] == -1:
-        # name_suggestion.dislike -= 1
         user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
         db.session.add(user_rank)
         db.session.commit()
@@ -213,19 +135,14 @@ def editResults():
     selected_name = rankData['selected_name']
     candidate = rankData['candidate']
     user_rank = {}
-    print(rankData['remove_rank'])
     if rankData['remove_rank'] == 1:
-        # name_suggestion.like -= 1
-        user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
+        user_rank = db.session.query(UsersLikes).filter(UsersLikes.user_name == username).filter(
+            UsersLikes.selected_name == selected_name).filter(UsersLikes.candidate == candidate).delete()
         db.session.commit()
-        # user_rank = UsersLikes(user_name=username, selected_name=selected_name, candidate=candidate)
     elif rankData['remove_rank'] == -1:
-        # name_suggestion.dislike += 1
-        user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
+        user_rank = db.session.query(UsersDislikes).filter(UsersDislikes.user_name == username).filter(
+            UsersDislikes.selected_name == selected_name).filter(UsersDislikes.candidate == candidate).delete()
         db.session.commit()
-        # user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
-    # db.session.delete(user_rank)
-    # db.session.commit()
     return {}
 
 
@@ -298,17 +215,14 @@ def lastSearches():
     username = request.args.get('username')
     if username:
         limit = 5
-        results = db.session.query(UserSearch.selected_name, UserSearch.search_date). \
-            filter(UserSearch.selected_name != '' and UserSearch.user_name == username). \
-            order_by(desc(UserSearch.search_date)). \
-            limit(limit). \
+        results = db.session.query(UserSearch.selected_name, UserSearch.search_date) \
+            .filter(UserSearch.selected_name != '' and UserSearch.user_name == username) \
+            .order_by(desc(UserSearch.id)) \
+            .limit(limit). \
             all()
-        # group_by(UserSearch.selected_name).\
 
         if results:
-            # return {result[0]: result[1] for result in results}
-            # print(json.dumps([(result[0]) for result in results]))
-            return json.dumps([(result[0]) for result in results])
+            return {i: results[i][0] for i in range(len(results))}
 
     return json.dumps([])
 
@@ -346,33 +260,30 @@ def lastDislike():
     return json.dumps([])
 
 
-@api.route('/api/googleSearch', methods=["POST"])
-def googleSearch():
-    try:
-        from googlesearch import search, get_random_user_agent
-        name = request.json.get("name", "")
-        suggestions = request.json.get("suggestions", {})
-        user_likes = request.json.get("userLikes", [])
-        # print(suggestions)
-        query = createQuery(name, suggestions, user_likes)
-        # print(query)
-        # query = "noaa"
-        res = []
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, pause=2, lang='en')]
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en')]
-        # res = [search_result for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '1'})]#, 'sourceid': 'chrome', 'ie': 'UTF-8', '-site': 'wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
-        res = [search_result for search_result in search(query, num=10, stop=10, user_agent='', extra_params={'oq': query})]#'filter': '1', 'sourceid': 'chrome', 'ie': 'UTF-8', 'site': '-wikipedia'})] #'-related': 'https://en.wikipedia.org/wiki'#, '-site': 'youtube.com'})]
-        # res = []
-        # for search_result in search(query, tld="co.in", num=10, stop=10, lang='en', safe=True, extra_params={'filter': '0'}):
-        #     res.append(search_result)
-        res_final = {}
-        # for url in res:
-        #     # print(url)
-        #     # x = requests.get(url)
-        #     # tree = fromstring(x.content)
-        #     # res_final[url]=tree.findtext('.//title')
-        #     res_final[url]= ""
-        return json.dumps([])
-    except ImportError:
-        print("No module named 'google' found")
-        return json.dumps([])
+@api.route('/api/query', methods=["POST"])
+def query():
+    name = request.json.get("name", "")
+    suggestions = request.json.get("suggestions", {})
+    user_likes = request.json.get("userLikes", [])
+    numOfQueryNames = request.json.get("numOfQueryNames", 4)
+    query = createQuery(name, suggestions, user_likes, numOfQueryNames)
+    return json.dumps({"query": query})
+
+
+@api.route('/api/userQuery', methods=["POST"])
+def userQuery():
+    query_names = request.json.get("queryNames", [])
+    query = ''
+    if query_names:
+        for number_index in range(len(query_names)):
+            name = query_names[number_index]
+            full_name = ""
+            for name_index in range(len(name)):
+                name_part = name[name_index]
+                full_name += name_part.title()
+                if name_index < len(name) - 1:
+                    full_name += ' '
+            query += '"{}"'.format(full_name)
+            if number_index < len(query_names) - 1:
+                query += ' OR '
+    return json.dumps({"query": query})

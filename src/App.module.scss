@@ -72,10 +72,126 @@ body:before {
     z-index: -1;
 }
 
-.info_accordion {
-	width: 50%;
-	text-align: right;
-	opacity: .75;
+.disable {
+	pointer-events: none;
+	cursor: default;
+  }
+
+.edit_query_accordion {
+	position: relative;
+	text-align: center;
+	align-items: center;
+	// width: 85%;
+	// display: inline-block;
+	// display: flex;
+}
+
+.query_name_count_wrapper {
+	// display: flex;
+	text-align: center;
+	align-items: center;
+	display: inline-block;
+	position: relative;
+	margin: 5px 0px 15px 0px;
+}
+
+.query_name_count {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	// display: inline-block;
+	position: relative;
+	justify-content: center;
+	// margin-left: 25%;
+}
+
+.query_name_count_text {
+	display: flex;
+	margin: 6px;
+	text-align: center;
+	align-items: center;
+}
+
+.query_name_count_form_control {
+	display: flex;
+	// margin: 6px;
+	text-align: center;
+	align-items: center;
+	width: 50px;
+}
+
+.accordion_modal {
+	// width: 50%;
+	text-align: left;
+	// opacity: .75;
+	// background-color: rgb(158, 160, 143);
+	background-color: rgba(158, 160, 143, 0.404);
+
+}
+
+.modal_header {
+	opacity: .6;
+	background-color: rgb(148, 149, 133);
+	color: black;
+	// background-color: gray;
+}
+
+.accordion_header {
+	opacity: .6;
+	background-color: rgb(148, 149, 133);
+	color: black;
+	// background-color: gray;
+}
+
+.accordion_body {
+	// opacity: .50;
+	background-color: rgba(158, 160, 143, 0.329);
+	align-items: center;
+	position: relative;
+	
+	text-align: center;
+	// text-align: left;
+	// display: inline-block;
+
+	// width: 100%;
+	// color: gray;
+	// background-color: gray;
+}
+
+.cite_item {
+	list-style: none;
+}
+
+.accordion_item {
+	list-style: none;
+	margin-bottom: -4.5%;
+}
+
+.accordion_item_name {
+	color: black;
+	cursor: pointer;
+	text-align: center;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 11px 11px 11px 11px;
+}
+
+.accordion_selected_item_name {
+	color: rgba(0, 0, 0, 0.486);
+	cursor: pointer;
+	text-align: center;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 11px 11px 11px 11px;
+}
+
+.cite_string_item {
+	color: black;
+	// cursor: pointer;
+	text-align: left;
+	// border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+	padding: 7px;
+	word-wrap: break-word;
+	white-space: pre-line;
+    white-space: pre-wrap;
 }
 
 .search_title {
@@ -93,10 +209,19 @@ body:before {
 	}
 }
 
+.social_media_text{
+	color: white;
+	font-size: 16px;
+	font-family: sans-serif;
+	margin-left: 7px;
+	text-decoration: none;
+	// margin-top: 50px;
+}
+
 .popover{
 	white-space:pre-line;
 	font-size: 15px;
-	margin: 5px;
+	// margin: 5px;
 }
 
 .result{
@@ -326,6 +451,40 @@ body:before {
 	text-align: right;
 }
 
+.about_row{
+	padding: 17px;
+}
+
+.about_card{
+	width: 100%;
+	justify-content: center;
+}
+
+.about_Container{
+	padding-bottom: 100px;
+}
+
+.algorithms_info_card{
+	min-height: 650px;
+	width: 100%;
+	justify-content: center;
+	display: flex;
+	flex: 1;
+
+	p {
+		flex: 1;
+		height: 320px;
+	}
+}
+
+.card_body_about {
+	margin: 0;
+	padding: 0;
+	h5 {
+		text-align: center
+	}
+}
+
 .result_wrapper {
     width: 100%;
     margin-bottom: 8px;
@@ -401,7 +560,45 @@ body:before {
 	}
 
     .result_title{
-        margin: 40px 15px;
+        margin: 40px 12px 4px;
+        float: left;
+        // color: white;
+		font-size: 22px;
+
+		h2 {
+            list-style: none;
+            position: relative;
+            float: left;
+			margin-top: 3px;
+        }
+
+		h3 {
+			font-size: 22px;
+            list-style: none;
+            position: relative;
+            float: center;
+			font-size: 22px;
+			text-align: center;
+			margin-top: 3px;
+		}
+    }
+
+	.result_main_title {
+		margin: 20px 15px;
+        float: left;
+        // color: white;
+		font-size: 22px;
+            list-style: none;
+            position: relative;
+            float: center;
+			font-size: 22px;
+			text-align: center;
+			margin-top: 3px;
+			// color:rgb(80, 128, 102);
+	}
+
+    .google_result_title{
+        margin: 20px 15px;
         float: left;
         // color: white;
 		font-size: 22px;

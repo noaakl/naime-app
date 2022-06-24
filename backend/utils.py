@@ -1,17 +1,22 @@
+import json
 import math
 
 from PhoneticAlgorithmsCodes import PhoneticAlgorithmsCodes
 from flask_application import FlaskApplication
+from NameSuggestion import NameSuggestion
+from Users import Users
 import jellyfish
 import phonetics
 import editdistance
+from sqlalchemy import or_
+from AlgorithmsConstants import algorithms
 
 flask_app = FlaskApplication()
 app = flask_app.get_app()
 db = flask_app.get_db()
 
 
-def spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict):
+def spoken_name_2_vec_suggest_names(name_suggestions, result_dict):
     result_dict['spoken_name_2_vec'] = []
 
     candidates = []
@@ -32,18 +37,10 @@ def spoken_name_2_vec_suggest_names(selected_name, name_suggestions, result_dict
                                                                                                      candidate,
                                                                                                      candidates,
                                                                                                      distinct_candidate_set)
-            # candidate_dict = flask_app.convert_name_suggestion_into_result(name_suggestion)
-            # candidates.append(candidate_dict)
-            #
-            # distinct_candidate_set.add(candidate)
 
         elif not candidate in distinct_candidate_set and distance == 0:
             candidate_dict, candidates, distinct_candidate_set = convert_name_suggestion_into_result(
                 name_suggestion, candidate, candidates, distinct_candidate_set)
-            # candidate_dict = flask_app.convert_name_suggestion_into_result(name_suggestion)
-            # candidates.append(candidate_dict)
-            #
-            # distinct_candidate_set.add(candidate)
 
     result_dict['spoken_name_2_vec'] = candidates
     return result_dict
@@ -58,7 +55,7 @@ def convert_name_suggestion_into_result(name_suggestion, candidate, candidates, 
     return candidate_dict, candidates, distinct_candidate_set
 
 
-def family_trees_suggest_names(selected_name, name_suggestions, result_dict):
+def family_trees_suggest_names(name_suggestions, result_dict):
     result_dict['family_trees'] = []
 
     candidates = []
@@ -135,7 +132,6 @@ def double_metaphone_suggest_names(selected_name, result_dict):
 
     candidates = []
     for name_suggestion in name_suggestions:
-        # print(name_suggestion)
         candidate_dict = flask_app.convert_name_suggestion_into_double_metaphone_result(name_suggestion)
         candidate_name = candidate_dict["candidate"]
         if candidate_name != selected_name:
@@ -184,16 +180,19 @@ def match_rating_codex_suggest_names(selected_name, result_dict):
 def convertSuggestionsToJson(suggestions):
     res = {}
     for algorithm in suggestions:
-        if algorithm == "name":
+        if algorithm == 'index':
+            continue
+        elif algorithm == "name":
             res[algorithm] = suggestions[algorithm]
         else:
-            res[algorithm] = []
+            algorithm_name = algorithms[algorithm]
+            res[algorithm_name] = []
             for candidate in suggestions[algorithm]:
-                res[algorithm].append(candidate["candidate"])
+                res[algorithm_name].append(candidate["candidate"])
     return res
 
 
-def createQuery(name, suggestions, user_likes):
+def createQuery(name, suggestions, user_likes, numOfQueryNames):
 
     def sort_by_likes_and_edit_distance(candidate, name=name, user_likes=user_likes):
         if not name or not candidate:
@@ -202,46 +201,103 @@ def createQuery(name, suggestions, user_likes):
             return math.inf
         if candidate["user_rank"] != 0:  # by all users likes and dislikes
             return candidate["user_rank"]
-        # name = name.lower()
-        # candidate = candidate.lower()
         edit_dist = editdistance.eval(name.lower(), candidate["name"].lower())  # by edit distance
         return -edit_dist
 
-    top = 4
-    all_results = []
-    for algorithm in suggestions:
-        if algorithm != "name":
-            for suggestion in suggestions[algorithm]:
-                candidate_data = {
-                    "name": suggestion["candidate"],
-                    "user_rank": suggestion.get("user_rank", 0)
-                }
-                # print(candidate)
-                # all_results.append(candidate["candidate"])
-                all_results.append(candidate_data)
-    all_results.sort(key=sort_by_likes_and_edit_distance, reverse=True)
-    qurey = "{} OR".format(name)
-    #query = f"'{name}' OR"
+    # top = 4
+    top = int(numOfQueryNames) - 1
+    all_results = {}
+
+    for name_suggestions in suggestions:
+        name_results = []
+        for algorithm in name_suggestions:
+            if algorithm != "name" and algorithm != "index":
+                for suggestion in name_suggestions[algorithm]:
+                    candidate_data = {
+                        "name": suggestion["candidate"],
+                        "user_rank": suggestion.get("user_rank", 0),
+                    }
+                    name_results.append(candidate_data)
+
+        name_results.sort(key=sort_by_likes_and_edit_distance, reverse=True)
+        all_results[name_suggestions['index']] = name_results
+
+    splited_name = name.split()
+    query = '"{}" OR '.format(name.title())
     for i in range(top):
-        if i < len(all_results):
-            candidate = all_results[i].get("name", '')
-            print(all_results[i])
-            if i < top - 1:
-                query += '{} OR'.format(candidate)
-                # query += f"'{candidate}' OR"
+        added_name =""
+        for index in range(len(splited_name)):
+            if index in all_results:
+                result = all_results[index]
+                candidate = result[i].get("name", '')
             else:
-                query +='{}'.format(candidate)
-                # query += f"'{candidate}'"
-    print(query)
+                candidate = splited_name[index]
+            if added_name == "":
+                added_name += "{}".format(candidate)
+            else:
+                added_name += " {}".format(candidate)
+        if i < top - 1:
+            query += '"{}" OR '.format(added_name)
+        else:
+            query += '"{}"'.format(added_name)
     return query
 
 
-# def sort_by_likes_and_edit_distance(name, candidate, user_likes):
-#     if not name or not candidate:
-#         return math.inf
-#     if candidate in user_likes:
-#         return -1
-#     name = name.lower()
-#     candidate = candidate.lower()
-#     edit_dist = editdistance.eval(name, candidate)
-#     return edit_dist
+def create_results_dict(selected_name, key, index):
+    result_dict = {
+        'name': selected_name,
+        'index': index}
+
+    name_suggestions = db.session.query(NameSuggestion).filter(
+        NameSuggestion.selected_name == selected_name).order_by(NameSuggestion.distance,
+                                                                NameSuggestion.edit_distance,
+                                                                NameSuggestion.rank).all()
+
+    if len(name_suggestions) <= 0:
+        return {}
+
+    else:
+        result_dict = spoken_name_2_vec_suggest_names(name_suggestions, result_dict)
+        result_dict = family_trees_suggest_names(name_suggestions, result_dict)
+        result_dict = soundex_suggest_names(selected_name, result_dict)
+        result_dict = metaphone_suggest_names(selected_name, result_dict)
+        result_dict = double_metaphone_suggest_names(selected_name, result_dict)
+        result_dict = nysiis_suggest_names(selected_name, result_dict)
+        result_dict = match_rating_codex_suggest_names(selected_name, result_dict)
+
+        spoken_name_2_vec_candidates = [d['candidate'] for d in result_dict["spoken_name_2_vec"]]
+        family_trees_candidates = [d['candidate'] for d in result_dict["family_trees"]]
+        soundex_candidates = [d['candidate'] for d in result_dict["soundex"]]
+        metaphone_candidates = [d['candidate'] for d in result_dict["metaphone"]]
+        double_metaphone_candidates = [d['candidate'] for d in result_dict["double_metaphone"]]
+        nysiis_candidates = [d['candidate'] for d in result_dict["nysiis"]]
+        match_rating_codex_candidates = [d['candidate'] for d in result_dict["match_rating_codex"]]
+
+        other_candidates = list(set(soundex_candidates + metaphone_candidates + double_metaphone_candidates +
+                                    nysiis_candidates + match_rating_codex_candidates))
+
+        spoken_name_2_vec_exclusive_names = list(set(spoken_name_2_vec_candidates) - set(other_candidates))
+
+        for exclusive_name in spoken_name_2_vec_exclusive_names:
+            spoken_name_suggestions = result_dict["spoken_name_2_vec"]
+            for spoken_name_suggestion in spoken_name_suggestions:
+                if spoken_name_suggestion["candidate"] == exclusive_name:
+                    spoken_name_suggestion["exclusive"] = 1
+                    break
+
+        family_trees_exclusive_names = list(set(family_trees_candidates) - set(other_candidates))
+
+        for exclusive_name in family_trees_exclusive_names:
+            suggestions = result_dict["family_trees"]
+            for suggestion in suggestions:
+                if suggestion["candidate"] == exclusive_name:
+                    suggestion["exclusive"] = 1
+                    break
+
+    if key:
+        user_name_search = db.session.query(Users).filter(Users.api_key == key).all()
+        if len(user_name_search) == 0:
+            return {"401": "Not Found"}, 401
+        result_dict = convertSuggestionsToJson(result_dict)
+        
+    return result_dict
