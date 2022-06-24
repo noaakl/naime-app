@@ -24,10 +24,6 @@ def spoken_name_2_vec_suggest_names(name_suggestions, result_dict):
     optional_candidates = []
 
     for name_suggestion in name_suggestions:
-        # print(name_suggestions[0])
-        # attributes = [attr for attr in name_suggestion.__dict__]
-        # for attr in attributes:
-        #     print(name_suggestion.__getattribute__(attr))
         name_type = name_suggestion.type_name
         if name_type == "Sound":
             optional_candidates.append(name_suggestion)
@@ -223,7 +219,7 @@ def createQuery(name, suggestions, user_likes, numOfQueryNames):
                     }
                     name_results.append(candidate_data)
 
-        name_results.sort(key=sort_by_likes_and_edit_distance, reverse=True) #TODO: check if sorted
+        name_results.sort(key=sort_by_likes_and_edit_distance, reverse=True)
         all_results[name_suggestions['index']] = name_results
 
     splited_name = name.split()
@@ -303,6 +299,5 @@ def create_results_dict(selected_name, key, index):
         if len(user_name_search) == 0:
             return {"401": "Not Found"}, 401
         result_dict = convertSuggestionsToJson(result_dict)
-        # result_dict = name_not_exists_suggest_names(selected_name, result_dict)
-
+        
     return result_dict

@@ -82,10 +82,6 @@ def rankCount():
                 "dislikes": {dislike[0]: dislike[1] for dislike in dislikes}
             })
         return json.dumps(res)
-        # return{
-        #      "likes" : {like[0]: like[1] for like in likes},
-        #     "dislikes" : {dislike[0]: dislike[1] for dislike in dislikes}
-        # }
 
 
 @api.route('/api/popularSearches', methods=['GET'])
@@ -100,7 +96,6 @@ def popularSearchesInfo():
         all()
 
     if results:
-        # return {result[0]: result[1] for result in results}
         return json.dumps([(result[0], result[1]) for result in results])
 
     return {}
@@ -119,7 +114,6 @@ def rankResults():
         db.session.add(user_rank)
         db.session.commit()
     elif rankData['add_rank'] == -1:
-        # name_suggestion.dislike -= 1
         user_rank = UsersDislikes(user_name=username, selected_name=selected_name, candidate=candidate)
         db.session.add(user_rank)
         db.session.commit()
@@ -220,7 +214,6 @@ def lastSearches():
             .order_by(desc(UserSearch.id)) \
             .limit(limit). \
             all()
-        # group_by(UserSearch.selected_name).\
 
         if results:
             return {i: results[i][0] for i in range(len(results))}

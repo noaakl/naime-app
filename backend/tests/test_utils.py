@@ -409,7 +409,6 @@ class TestHelpFunctions(TestCase):
     def test_create_results_dict_without_key(self):
         selected_name = 'Thomas'
         index = 0
-        # key = 'JUgdURmFEXTJ8tzgO3riZw'  # TODO: change
         key = None
         result_dict = create_results_dict(selected_name, key, index)
         self.assertEqual(result_dict, {'double_metaphone': [{'candidate': 'Damacia',

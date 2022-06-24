@@ -12,8 +12,6 @@ class NameSuggestion(db.Model):
     candidate = db.Column(db.TEXT, primary_key=True)
     distance = db.Column(db.FLOAT, nullable=False)
     rank = db.Column(db.Integer, nullable=False)
-    # like = db.Column(db.Integer, nullable=False)
-    # dislike = db.Column(db.Integer, nullable=False)
     edit_distance = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
