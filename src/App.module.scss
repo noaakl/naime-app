@@ -425,11 +425,15 @@ body:before {
 .spinner {
 	margin-top: 20px;
 	color: #6c757d;
+	justify-content: center;
+	text-align: center;
+	margin-top: 30px;
+	font-size: 18px;
 }
 .no_result_wrapper {
     width: 100%;
     margin-bottom: 8px;
-	margin-top: 10px;
+	margin-top: 30px;
 	h2 {
         list-style: none;
         position: relative;

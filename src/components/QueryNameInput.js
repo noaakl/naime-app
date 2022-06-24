@@ -8,9 +8,7 @@ import { ListUl, ArrowUp, ArrowDown } from 'react-bootstrap-icons';
 
 const QueryNameInput = ({ nameSplit, nameIndex, numberIndex, algorithmsData }) => {
     const dispatch = useDispatch()
-    // const [index, setIndex] = useState(nameIndex)
     const [showQueryModal, setShowQueryModal] = useState(false)
-    // const [queryNameValue, setQueryNameValue] = useState(name)
     const [algorithmIndex, setAlgorithmIndex] = useState(null)
     const algorithmsNames = [
         "SpokenName2Vec",
@@ -23,12 +21,7 @@ const QueryNameInput = ({ nameSplit, nameIndex, numberIndex, algorithmsData }) =
     ]
     const queryNames = useSelector((state) => state.reduser.queryNames);
     const queryNameValue = nameSplit[nameIndex]
-    // const queryNameValue = queryNames[numberIndex];
-    // const reduser = useSelector((state) => state.reduser);
-    // console.log(reduser)
-
     const handleSelectName = (selectedName, index) => {
-        // setQueryNameValue(selectedName)
         setAlgorithmIndex(index)
         dispatch(editQueryNames(selectedName, numberIndex, nameIndex))
         getUserQuery()
