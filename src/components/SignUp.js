@@ -86,7 +86,7 @@ const SingUp = () => {
                 <Form.Label className="label">User Name</Form.Label>
                 <Form.Control placeholder="Enter User Name" onChange={(e) => handleFill(e, setUsername)} className="input"
                   value={username} type="text" />
-                {validateValue(username, "User name must contain atleat 2 characters", 2)}
+                {validateValue(username, "User name must contain at least 2 characters", 2)}
                 {validateValue(isNameNotTaken, "User Name already exist. Please try again")}
               </Form.Group>
 
@@ -94,14 +94,14 @@ const SingUp = () => {
                 <Form.Label className="label">First Name</Form.Label>
                 <Form.Control placeholder="Enter First Name" onChange={(e) => handleFill(e, setFirstName)} className="input"
                   value={firstName} type="text" />
-                {validateValue(firstName, "First name must contain atleat 2 characters", 2)}
+                {validateValue(firstName, "First name must contain at least 2 characters", 2)}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formLastName">
                 <Form.Label className="label">Last Name</Form.Label>
                 <Form.Control placeholder="Enter Last Name" onChange={(e) => handleFill(e, setLastName)} className="input"
                   value={lastName} type="text" />
-                {validateValue(lastName, "Last name must contain atleat 2 characters", 2)}
+                {validateValue(lastName, "Last name must contain at least 2 characters", 2)}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formEmail">
@@ -115,7 +115,7 @@ const SingUp = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Enter Password" onChange={(e) => handleFill(e, setPassword)} className="input"
                   value={password} />
-                {validateValue(password, "Password must contain atleat 6 characters", 6)}
+                {validateValue(password, "Password must contain at least 6 characters", 6)}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formConfirmationPassword">

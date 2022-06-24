@@ -8,11 +8,11 @@ describe('Signup', () => {
       cy.get('#formBasicPassword').click().type("u")
       cy.get('#formConfirmationPassword').click().type("s")
       cy.get('form > .btn').click()
-      cy.contains('User name must contain atleat 2 characters').should('be.visible');
-      cy.contains('First name must contain atleat 2 characters').should('be.visible');
-      cy.contains('Last name must contain atleat 2 characters').should('be.visible');
+      cy.contains('User name must contain at least 2 characters').should('be.visible');
+      cy.contains('First name must contain at least 2 characters').should('be.visible');
+      cy.contains('Last name must contain at least 2 characters').should('be.visible');
       cy.contains('Please enter a valid E-Mail Address, e.g user@naime.com').should('be.visible');
-      cy.contains('Password must contain atleat 6 characters').should('be.visible');
+      cy.contains('Password must contain at least 6 characters').should('be.visible');
       cy.contains("Confirmation Password does't match the password. Please try again").should('be.visible');
       cy.get('#formUserName').click().type("sername1")
       cy.get('form > .btn').click()

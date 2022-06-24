@@ -52,6 +52,14 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^10.1.0"
+    "@cypress/code-coverage": "^3.10.0",
+    "babel-plugin-istanbul": "^6.1.1",
+    "cypress": "^10.1.0",
+    "vite": "^2.9.12"
+  },
+  "nyc": {
+    "all": true,
+    "include": "backend/*.py",
+    "report-dir": "coverage-e2e"
   }
 }
