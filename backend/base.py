@@ -259,9 +259,14 @@ def query():
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
     user_likes = request.json.get("userLikes", [])
-    numOfQueryNames = request.json.get("numOfQueryNames", 4)
+    numOfQueryNames = request.json.get("numOfQueryNames", 3)
+    fullNumOfQueryNames = 10
     query = createQuery(name, suggestions, user_likes, numOfQueryNames)
-    return json.dumps({"query": query})
+    full_query = createQuery(name, suggestions, user_likes, fullNumOfQueryNames)
+    return json.dumps({
+        "query": query,
+        "full_query": full_query
+    })
 
 
 @api.route('/api/userQuery', methods=["POST"])

@@ -42,6 +42,10 @@ describe('Home', () => {
     cy.get("#filter-algorithm-dropdown-basic").click();
     cy.get('.form-check > #SpokenName2Vec').click();
     cy.get("#filter-algorithm-dropdown-basic").click();
-    cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > :nth-child(2) > :nth-child(1) > svg > path').click();
+    cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > :nth-child(2) > :nth-child(2) > svg').click();
+    cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > :nth-child(2) > :nth-child(2) > svg').click();
+    cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > :nth-child(2) > :nth-child(1) > svg').click();
+    cy.get('#SpokenName2Vec > .card-body > :nth-child(2) > .row > :nth-child(2) > :nth-child(1) > svg').click();
+    cy.contains('Click Here to Change the Query').click()
   })
 })

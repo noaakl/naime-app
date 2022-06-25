@@ -16,13 +16,22 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
     const likes = useSelector((state) => state.reduser.likes);
     const query = useSelector((state) => state.reduser.query);
     const queryNames = useSelector((state) => state.reduser.queryNames);
-    const defultNumOfNames = 5
+    const defultNumOfNames = 4
     const [tempNumOfQueryNames, setTempNumOfQueryNames] = useState(defultNumOfNames);
+    const [fullQueryNames, setFullQueryNames] = useState([]);
     const searchedNameSplit = searchedName.split(" ")
 
     const handleChangeNum = (newNum) => {
+        const oldNum = tempNumOfQueryNames
         setTempNumOfQueryNames(newNum)
-        getQuery(newNum)
+        let names = []
+        if (oldNum < newNum) {
+            names = queryNames.concat(fullQueryNames.slice(oldNum, newNum))
+        }
+        else {
+            names = queryNames.slice(0, newNum)
+        }
+        updateQuery(names)
     }
 
     useEffect(() => {
@@ -44,7 +53,24 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
             .then((response) => {
                 const query = response.data['query']
                 const querySplit = query.replaceAll('"', "").split(" OR ")
+                const fullquery = response.data['full_query']
+                const fullQuerySplit = fullquery.replaceAll('"', "").split(" OR ")
+                const transformedNames = fullQuerySplit.map((name) => {return name.split(" ")})
+                setFullQueryNames(transformedNames)
                 dispatch(setQuery(query))
+                dispatch(addQueryNames(querySplit))
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const updateQuery = (names) => {
+        axios.post('/api/userQuery', { queryNames: names })
+            .then((response) => {
+                const userQuery = response.data['query']
+                dispatch(setQuery(userQuery))
+                const querySplit = userQuery.replaceAll('"', "").split(" OR ")
                 dispatch(addQueryNames(querySplit))
             })
             .catch(function (error) {
@@ -86,11 +112,8 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                 <Row style={{ marginTop: '30px' }} >
                     <Accordion alwaysOpen className={Styles.edit_query_accordion}>
                         <Accordion.Item eventKey={0}>
-                            {/* <Accordion.Header style={{ textAlign: "center" }} className={Styles.accordion_header}> */}
                             <Accordion.Header style={{display: 'inline-block', margin: "10px", textAlign: "center" }}>
                                 <Row>
-                                    {/* <p><u>Search query includes the names</u>: <i>{query.replaceAll(' OR', ',').replaceAll('"', '')}</i></p> */}
-                                    {/* <div style={{ margin: "10px 10px 10px 210%",}}> */}
                                     <div >
                                         <b>Click Here to Change the Query </b></div>
                                 </Row>
@@ -101,13 +124,12 @@ const ExternalSearch = ({ searchedName, suggestions, suggestionsExist, algorithm
                                     <div className={Styles.query_name_count_text}>
                                         Choose number of names to include in the query
                                     </div>
-                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} className={Styles.query_name_count_form_control} style={{width: '50px'}} onChange={(e) => { handleChangeNum(e.target.value) }}></Form.Control>
+                                    <Form.Control type="number" min="2" max="10" size="sm" value={tempNumOfQueryNames} className={Styles.query_name_count_form_control} style={{width: '50px'}} onChange={(e) => { handleChangeNum(Number(e.target.value)) }}></Form.Control>
                                 </div>
                                 </Row>
                                 <Form>
 
                                     {
-
                                         Array.from({ length: queryNames.length })
                                             .map((_, numberIndex) => {
                                                 const nameSplit = queryNames[numberIndex]
