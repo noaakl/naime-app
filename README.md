@@ -9,6 +9,8 @@ You will be able to rank the quality of the retrieved names, and sort and filter
 The nAime website is part of our Name Search Final Project.
 For more information about this project [Click Here](https://github.com/noaakl/Final_Project_Names)
 
+Website available on [nAIme.cs.bgu.ac.il](https://naime.cs.bgu.ac.il/)
+
 ##
 
 ### Use-cases
