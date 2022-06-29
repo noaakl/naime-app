@@ -341,7 +341,7 @@ class TestHelpFunctions(TestCase):
     def test_create_results_dict_with_key(self):
         selected_name = 'Thomas'
         index = 0
-        key = 'JUgdURmFEXTJ8tzgO3riZw'  # TODO: change
+        key = 'FJm4zh2QP2aVRA0yC2Ou5Q'  # TODO: change
         result_dict = create_results_dict(selected_name, key, index)
         self.assertEqual(result_dict, {'Double Metaphone': ['Damacia',
                                                             'Damacio',
