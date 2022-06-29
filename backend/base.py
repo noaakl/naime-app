@@ -33,6 +33,30 @@ def index():
 # def index():
 #     
 
+@api.route('/about')
+def aboutPage():
+    return send_from_directory(api.static_folder,'index.html')
+
+@api.route('/AlgorithmsInfo')
+def algorithmsInfoPage():
+    return send_from_directory(api.static_folder,'index.html')
+
+@api.route('/login')
+def loginPage():
+    return send_from_directory(api.static_folder,'index.html')
+
+@api.route('/signUp')
+def signUpPage():
+    return send_from_directory(api.static_folder,'index.html')
+
+@api.route('/userInfo')
+def userInfoPage():
+    return send_from_directory(api.static_folder,'index.html')
+
+@api.route('/search/<string:name>')
+def searchNamePage(name):
+    return send_from_directory(api.static_folder,'index.html')
+
 @api.route('/api/suggestions', methods=['GET'])
 def dashboard():
     suggestions = []
@@ -265,9 +289,14 @@ def query():
     name = request.json.get("name", "")
     suggestions = request.json.get("suggestions", {})
     user_likes = request.json.get("userLikes", [])
-    numOfQueryNames = request.json.get("numOfQueryNames", 4)
+    numOfQueryNames = request.json.get("numOfQueryNames", 3)
+    fullNumOfQueryNames = 10
     query = createQuery(name, suggestions, user_likes, numOfQueryNames)
-    return json.dumps({"query": query})
+    full_query = createQuery(name, suggestions, user_likes, fullNumOfQueryNames)
+    return json.dumps({
+        "query": query,
+        "full_query": full_query
+    })
 
 
 @api.route('/api/userQuery', methods=["POST"])

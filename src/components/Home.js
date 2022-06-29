@@ -8,6 +8,7 @@ import ExternalSearch from './ExternalSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Search, XCircle } from 'react-bootstrap-icons';
 import { Card, Row, Col, Container } from 'react-bootstrap'
+import Spinner from 'react-bootstrap/Spinner'
 
 
 const Home = () => {
@@ -20,8 +21,23 @@ const Home = () => {
     const [searchedNames, setSearchedNames] = useState([])
     const [didSearch, setDidSearch] = useState(false)
     const [showResults, setShowResults] = useState(false)
+    const [waitForResults, setWaitForResults] = useState(true)
     const suggestionsExist = algorithmsData.length > 0
     const { name } = useParams();
+
+    const waitingForResults = () => {
+        setWaitForResults(true)
+        setTimeout(() => {
+            setWaitForResults(false)
+        }, "2000")
+    }
+
+    // const waitingForResults = () => {
+    //     return (setTimeout(() => {
+    //         <h2>No Synonyms Suggested for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h2>
+    //     }, "1000"))
+    // }
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -68,6 +84,7 @@ const Home = () => {
             const doSearch = searchVal !== '' && isValidSearchVal(searchVal)
             setDidSearch(doSearch)
             if (doSearch) {
+                waitingForResults()
                 setNameToSearch(searchVal)
                 setAlgorithmsData([])
                 setRanks([])
@@ -176,8 +193,16 @@ const Home = () => {
 
                 <div style={{ display: nameToSearch !== "" ? 'inline' : 'none', }} >
 
-                    {!showResults ? (<div className={Styles.no_result_wrapper}>
-                        <h2>No Synonyms Suggested for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h2>
+                    {!showResults ? (<div className={Styles.no_result_wrapper} >
+                        <div className={Styles.spinner} style={{ display: waitForResults ? '' : 'none', }}><Spinner
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                            style={{marginRight: '10px'}}
+                        /> Looking for Results...</div>
+
+                        <h2 style={{ display: !waitForResults ? '' : 'none', }}> No Synonyms Suggested for the Name <b><i>{nameToSearch.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</i></b></h2>
                     </div>)
                         : (<><Row className={Styles.result_wrapper}>
                             <Col className={Styles.result_title} style={{ margin: "30px 0 0 0 " }}>
