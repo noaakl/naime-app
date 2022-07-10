@@ -1,4 +1,4 @@
-![logo](https://github.com/noaakl/naime-app/blob/main/src/images/nAIme-Similar-Name_suggestion-System.png)
+![logo](https://github.com/noaakl/naime-app/blob/main/src/images/nAIme.png)
 
 # nAIme
 Our nAime website delivers the SpokenName2Vec and GRAFT novelty algorithms along with the Jellyfish package algorithms.
