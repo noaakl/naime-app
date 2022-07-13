@@ -19,6 +19,10 @@ const NavBar = () => {
                         <Nav className="me-auto" navbarScroll>
                             <Nav.Link as={Link} to="/about">About</Nav.Link>
                             <Nav.Link as={Link} to="/AlgorithmsInfo">Algorithms</Nav.Link>
+                            <Nav.Link as={Link} to="/" onClick={() => window.open('http://naime.data4good.io/', '_blank').focus()} >Project</Nav.Link>
+                            {/* <Nav.Link as='a' href="http://naime.data4good.io/" target="_blank">Project</Nav.Link> */}
+                            {/* <Link to={{ pathname: "https://example.com" }} target="_blank" /> */}
+
                         </Nav>
                         <Nav className="ml-auto my-2 my-lg-0" >
                             <Nav.Link as={Link} to="/signUp" style={{ display: !username ? '' : 'none' }}>Sign Up</Nav.Link>
